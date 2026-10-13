@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Support FineLab</title>
+    <meta name="description"
+        content="Suka plugin FineLab? Dukung pengembangannya. Pilih via Ko-fi (internasional) atau Traktirkan (dalam negeri).">
+    <meta name="theme-color" content="#fbfbfd">
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <link rel="apple-touch-icon" href="img/Logo.png">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
+    <style>
+        /* ===== Token: sama persis dengan index.html ===== */
+        :root {
+            --phi: 1.618;
+            --s1: 8px;
+            --s2: 13px;
+            --s3: 21px;
+            --s4: 34px;
+            --s5: 55px;
+            --s6: 89px;
+            --s7: 144px;
+            --bg: #fbfbfd;
+            --bg2: #f5f5f7;
+            --card: #ffffff;
+            --ink: #1d1d1f;
+            --ink2: #6e6e73;
+            --line: rgba(0, 0, 0, .08);
+            --blue: #0071e3;
+            --blue-h: #0077ed;
+            --nav: rgba(251, 251, 253, .72);
+            --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 34px rgba(0, 0, 0, .06);
+            --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+            --ease: cubic-bezier(.16, 1, .3, 1);
+            --t0: 1.0625rem;
+            --t1: calc(var(--t0)*1.618);
+            --t2: calc(var(--t1)*1.618);
+            --t3: calc(var(--t2)*1.618);
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --bg: #000;
+                --bg2: #161617;
+                --card: #1c1c1e;
+                --ink: #f5f5f7;
+                --ink2: #a1a1a6;
+                --line: rgba(255, 255, 255, .12);
+                --nav: rgba(0, 0, 0, .72);
+                --blue: #2997ff;
+                --blue-h: #409cff;
+                --shadow: 0 8px 34px rgba(0, 0, 0, .5);
+                color-scheme: dark;
+            }
+
+            .sup-badge {
+                color: #2997ff;
+                background: rgba(41, 151, 255, .14);
+                border-color: rgba(41, 151, 255, .22)
+            }
+
+            .card-badge-intl {
+                color: #2997ff;
+                background: rgba(41, 151, 255, .14)
+            }
+
+            .card-badge-dom {
+                color: #2997ff;
+                background: rgba(41, 151, 255, .14)
+            }
+
+            .card.kofi {
+                border-color: rgba(41, 151, 255, .18)
+            }
+
+            .card.trakteer {
+                border-color: rgba(41, 151, 255, .18)
+            }
+
+            .kofi .card-icon-wrap {
+                background: rgba(41, 151, 255, .12);
+                color: #2997ff
+            }
+
+            .trakteer .card-icon-wrap {
+                background: rgba(41, 151, 255, .12);
+                color: #2997ff
+            }
+
+            .pill {
+                background: rgba(41, 151, 255, .08);
+                border-color: rgba(41, 151, 255, .15);
+                color: #a1a1a6
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            scroll-padding-top: var(--s5)
+        }
+
+        body {
+            font-family: var(--font);
+            font-size: var(--t0);
+            line-height: 1.47;
+            color: var(--ink);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 3px;
+            border-radius: 12px
+        }
+
+        .wrap {
+            width: min(1080px, 100% - 2*var(--s3));
+            margin-inline: auto
+        }
+
+        .inner-wrap {
+            width: min(640px, 100% - 2*var(--s3));
+            margin-inline: auto
+        }
+
+        /* ===== Material Icons ===== */
+        .mi {
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 1.25em;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            vertical-align: middle;
+            flex: none;
+        }
+
+        /* ===== Nav ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding-top: env(safe-area-inset-top, 0);
+            background: var(--nav);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        nav .wrap {
+            height: var(--s5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -.03em
+        }
+
+        .logo b {
+            color: var(--blue);
+            font-weight: 800
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .8125rem;
+            color: var(--ink2);
+            transition: color .2s;
+        }
+
+        .nav-back:hover {
+            color: var(--ink)
+        }
+
+        .nav-back .mi {
+            font-size: 1.1rem
+        }
+
+        /* ===== Btn ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--s1);
+            min-height: 44px;
+            padding: 0 var(--s3);
+            border-radius: 999px;
+            font: inherit;
+            font-weight: 500;
+            border: 0;
+            cursor: pointer;
+            transition: background .25s, transform .25s var(--ease);
+        }
+
+        .btn:active {
+            transform: scale(.97)
+        }
+
+        .btn.p {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .btn.p:hover {
+            background: var(--blue-h)
+        }
+
+        .btn.g {
+            background: transparent;
+            color: var(--blue)
+        }
+
+        .btn.g:hover {
+            background: rgba(0, 113, 227, .08)
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: var(--s6) 0 var(--s5);
+            text-align: center;
+            animation: fadeUp .9s var(--ease) both
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(21px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .sup-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: .8125rem;
+            font-weight: 600;
+            color: var(--blue);
+            background: rgba(0, 113, 227, .08);
+            border: 1px solid rgba(0, 113, 227, .15);
+            padding: 5px 14px;
+            border-radius: 999px;
+            margin-bottom: var(--s3);
+        }
+
+        .sup-badge .mi {
+            font-size: 1rem
+        }
+
+        .hero h1 {
+            font-size: clamp(2.1rem, 1.2rem + 3.6vw, var(--t3));
+            line-height: 1.06;
+            letter-spacing: -.035em;
+            font-weight: 700;
+            margin-bottom: var(--s3);
+        }
+
+        .hero h1 span {
+            color: var(--blue)
+        }
+
+        .hero p {
+            font-size: var(--t1);
+            color: var(--ink2);
+            line-height: 1.3;
+            max-width: 38ch;
+            margin-inline: auto
+        }
+
+        /* ===== Cards ===== */
+        .cards {
+            margin-top: var(--s5);
+            display: grid;
+            gap: var(--s3);
+            animation: fadeUp .9s var(--ease) .18s both
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: var(--s4);
+            display: flex;
+            flex-direction: column;
+            gap: var(--s3);
+            transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow)
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--s3)
+        }
+
+        .card-icon-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: rgba(0, 113, 227, .08);
+            color: var(--blue);
+            display: grid;
+            place-items: center;
+            flex: none;
+            border: 1px solid var(--line);
+        }
+
+        .card-icon-wrap .mi {
+            font-size: 1.75rem
+        }
+
+        .card-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .card-badge-intl,
+        .card-badge-dom {
+            font-size: .75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .card-badge-intl {
+            color: var(--blue);
+            background: rgba(0, 113, 227, .1)
+        }
+
+        .card-badge-dom {
+            color: var(--blue);
+            background: rgba(0, 113, 227, .1)
+        }
+
+        .card h2 {
+            font-size: var(--t1);
+            font-weight: 700;
+            letter-spacing: -.025em;
+            line-height: 1.1;
+            margin-bottom: 5px
+        }
+
+        .card p {
+            font-size: .9375rem;
+            color: var(--ink2);
+            line-height: 1.5
+        }
+
+        .card-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 50px;
+            border-radius: 999px;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 600;
+            border: 0;
+            cursor: pointer;
+            text-decoration: none;
+            background: var(--blue);
+            color: #fff;
+            transition: background .25s, transform .3s var(--ease), box-shadow .3s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-cta:hover {
+            background: var(--blue-h);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0, 113, 227, .28)
+        }
+
+        .card-cta:active {
+            transform: scale(.97)
+        }
+
+        .card-cta .mi {
+            font-size: 1.15rem
+        }
+
+        /* ===== Divider ===== */
+        .or-div {
+            display: flex;
+            align-items: center;
+            gap: var(--s2);
+            color: var(--ink2);
+            font-size: .875rem
+        }
+
+        .or-div::before,
+        .or-div::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--line)
+        }
+
+        /* ===== Thanks section ===== */
+        .thanks {
+            background: var(--bg2);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: var(--s4);
+            margin-top: var(--s3);
+            text-align: center;
+            animation: fadeUp .9s var(--ease) .35s both;
+        }
+
+        .thanks-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(0, 113, 227, .1);
+            color: var(--blue);
+            display: grid;
+            place-items: center;
+            margin: 0 auto var(--s2);
+        }
+
+        .thanks-icon .mi {
+            font-size: 1.5rem
+        }
+
+        .thanks h3 {
+            font-size: var(--t1);
+            font-weight: 700;
+            letter-spacing: -.02em;
+            margin-bottom: var(--s2)
+        }
+
+        .thanks p {
+            font-size: .9375rem;
+            color: var(--ink2);
+            max-width: 42ch;
+            margin-inline: auto;
+            line-height: 1.5
+        }
+
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--s2);
+            justify-content: center;
+            margin-top: var(--s3)
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .875rem;
+            font-weight: 500;
+            color: var(--ink2);
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        .pill .mi {
+            font-size: 1rem;
+            color: var(--blue)
+        }
+
+        /* ===== Section header ===== */
+        section {
+            padding: var(--s6) 0
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 1.1rem + 2.4vw, var(--t2));
+            line-height: 1.1;
+            letter-spacing: -.03em;
+            font-weight: 700
+        }
+
+        .sub {
+            margin-top: var(--s2);
+            color: var(--ink2);
+            font-size: var(--t1);
+            line-height: 1.25;
+            letter-spacing: -.015em
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: var(--s4) 0 var(--s5);
+            color: var(--ink2);
+            font-size: .8125rem;
+            border-top: 1px solid var(--line);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--ink2);
+            transition: color .2s
+        }
+
+        footer a:hover {
+            color: var(--ink)
+        }
+
+        /* ===== Mobile ===== */
+        @media (max-width:600px) {
+            .hero {
+                padding: var(--s5) 0 var(--s4)
+            }
+
+            .hero h1 {
+                font-size: 2rem
+            }
+
+            .card {
+                border-radius: 22px;
+                padding: var(--s3)
+            }
+
+            .card-icon-wrap {
+                width: 50px;
+                height: 50px;
+                border-radius: 14px
+            }
+
+            .card-icon-wrap .mi {
+                font-size: 1.4rem
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="wrap">
+            <a href="index.html" class="logo">Fine<b>Lab</b></a>
+            <a href="index.html" class="nav-back" aria-label="Kembali ke beranda">
+                <span class="mi">arrow_back_ios</span>
+                Kembali
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="inner-wrap">
+
+            <!-- Hero -->
+            <header class="hero">
+                <h1>Satu kopi kecil,<br><span>dampak besar.</span></h1>
+                <p class="lead"
+                    style="font-size:var(--t1);color:var(--ink2);line-height:1.25;letter-spacing:-.015em;max-width:32ch;margin:var(--s3) auto 0">
+                    Semua plugin FineLab dibuat sendiri, dari nol. Dukungan Anda membantu saya terus berkarya.</p>
+            </header>
+
+            <!-- Cards -->
+            <div class="cards" id="support-options">
+
+                <!-- Ko-fi -->
+                <div class="card kofi">
+                    <div class="card-top">
+                        <div class="card-icon-wrap" aria-hidden="true">
+                            <span class="mi">language</span>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge-intl">Internasional</span>
+                            <h2>Ko-fi</h2>
+                            <p>Untuk pembayaran internasional — kartu kredit, PayPal, dan metode global lainnya.</p>
+                        </div>
+                    </div>
+                    <a id="btn-kofi" class="card-cta" href="https://ko-fi.com/finelab" target="_blank"
+                        rel="noopener noreferrer">
+                        <span class="mi">open_in_new</span>
+                        Support via Ko-fi
+                    </a>
+                </div>
+
+                <!-- Or divider -->
+                <div class="or-div" aria-hidden="true">atau</div>
+
+                <!-- Traktirkan -->
+                <div class="card trakteer">
+                    <div class="card-top">
+                        <div class="card-icon-wrap" aria-hidden="true">
+                            <span class="mi">account_balance_wallet</span>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-badge-dom">Dalam Negeri</span>
+                            <h2>Traktirkan</h2>
+                            <p>Untuk pembayaran dalam negeri — QRIS, transfer bank, GoPay, OVO, Dana, dan dompet digital
+                                lainnya.</p>
+                        </div>
+                    </div>
+                    <a id="btn-traktirkan" class="card-cta" href="https://www.traktirkan.com/u/finelab" target="_blank"
+                        rel="noopener noreferrer">
+                        <span class="mi">open_in_new</span>
+                        Support via Traktirkan
+                    </a>
+                </div>
+
+                <!-- Thanks -->
+                <div class="thanks">
+                    <div class="thanks-icon">
+                        <span class="mi">volunteer_activism</span>
+                    </div>
+                    <h3>Terima kasih sudah support!</h3>
+                    <div class="pills">
+                        <span class="pill"><span class="mi">bolt</span>Plugin lebih cepat rilis</span>
+                        <span class="pill"><span class="mi">check_circle</span>Update &amp; perbaikan rutin</span>
+                        <span class="pill"><span class="mi">auto_awesome</span>Lebih banyak fitur baru</span>
+                        <span class="pill"><span class="mi">lock_open</span>Plugin tetap gratis</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <span>&copy; <span id="yr"></span> FineLab &nbsp;&middot;&nbsp; <a href="index.html">Kembali ke
+                    beranda</a></span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('yr').textContent = new Date().getFullYear();
+
+        // Ripple effect on CTA buttons
+        document.querySelectorAll('.card-cta').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                var r = document.createElement('span');
+                var rect = btn.getBoundingClientRect();
+                var size = Math.max(rect.width, rect.height) * 2;
+                r.style.cssText = [
+                    'position:absolute',
+                    'width:' + size + 'px', 'height:' + size + 'px',
+                    'left:' + (e.clientX - rect.left - size / 2) + 'px',
+                    'top:' + (e.clientY - rect.top - size / 2) + 'px',
+                    'background:rgba(255,255,255,.18)', 'border-radius:50%',
+                    'transform:scale(0)', 'transition:transform .55s ease-out, opacity .55s ease-out',
+                    'pointer-events:none'
+                ].join(';');
+                btn.appendChild(r);
+                requestAnimationFrame(function () { r.style.transform = 'scale(1)'; r.style.opacity = '0' });
+                setTimeout(function () { r.remove() }, 600);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

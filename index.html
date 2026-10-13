@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>FineLab — Plugin untuk DaVinci Resolve</title>
+    <meta name="description"
+        content="FineLab membuat plugin dan macro Fusion untuk DaVinci Resolve. Animasi teks dan objek cukup dengan drag and drop.">
+    <meta name="theme-color" content="#fbfbfd">
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <link rel="apple-touch-icon" href="img/Logo.png">
+    <style>
+        /* ===== Token: Fibonacci spacing, skala tipe φ (1.618), grid 1 : φ ===== */
+        :root {
+            --phi: 1.618;
+            --s1: 8px;
+            --s2: 13px;
+            --s3: 21px;
+            --s4: 34px;
+            --s5: 55px;
+            --s6: 89px;
+            --s7: 144px;
+            --bg: #fbfbfd;
+            --bg2: #f5f5f7;
+            --card: #ffffff;
+            --ink: #1d1d1f;
+            --ink2: #6e6e73;
+            --line: rgba(0, 0, 0, .08);
+            --blue: #0071e3;
+            --blue-h: #0077ed;
+            --nav: rgba(251, 251, 253, .72);
+            --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 34px rgba(0, 0, 0, .06);
+            --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+            --ease: cubic-bezier(.16, 1, .3, 1);
+            --t0: 1.0625rem;
+            /* 17px — teks isi */
+            --t1: calc(var(--t0)*var(--phi));
+            /* ≈27.5px */
+            --t2: calc(var(--t1)*var(--phi));
+            /* ≈44.5px */
+            --t3: calc(var(--t2)*var(--phi));
+            /* ≈72px */
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --bg: #000;
+                --bg2: #161617;
+                --card: #1c1c1e;
+                --ink: #f5f5f7;
+                --ink2: #a1a1a6;
+                --line: rgba(255, 255, 255, .12);
+                --nav: rgba(0, 0, 0, .72);
+                --blue: #2997ff;
+                --blue-h: #409cff;
+                --shadow: 0 8px 34px rgba(0, 0, 0, .5);
+                color-scheme: dark
+            }
+
+            .tag.free {
+                color: #34c759;
+                background: rgba(52, 199, 89, .18);
+            }
+
+            .tag.upcoming {
+                color: #fbbf24;
+                background: rgba(245, 158, 11, .2);
+            }
+
+            .dl-check-ic {
+                color: #34c759;
+                background: rgba(52, 199, 89, .18);
+            }
+
+            .dl-btn-support {
+                background: rgba(255, 55, 95, .15);
+                color: #ff375f;
+                border-color: rgba(255, 55, 95, .3);
+            }
+
+            .dl-btn-support:hover {
+                background: rgba(255, 55, 95, .25);
+            }
+
+            .dl-btn-support .heart-ic {
+                fill: #ff375f;
+                color: #ff375f;
+            }
+
+            meta[name=theme-color] {
+                content: #000
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            scroll-padding-top: var(--s5)
+        }
+
+        body {
+            font-family: var(--font);
+            font-size: var(--t0);
+            line-height: 1.47;
+            color: var(--ink);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: env(safe-area-inset-bottom, 0)
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 3px;
+            border-radius: 12px
+        }
+
+        .wrap {
+            width: min(1080px, 100% - 2*var(--s3));
+            margin-inline: auto
+        }
+
+        svg.i {
+            width: 1em;
+            height: 1em;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.7;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex: none
+        }
+
+        /* ===== Nav (kaca buram ala iOS) ===== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding-top: env(safe-area-inset-top, 0);
+            background: var(--nav);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--line)
+        }
+
+        nav .wrap {
+            height: var(--s5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -.03em
+        }
+
+        .logo b {
+            color: var(--blue);
+            font-weight: 800
+        }
+
+        .links {
+            display: flex;
+            align-items: center;
+            gap: var(--s4);
+            font-size: .8125rem;
+            color: var(--ink2)
+        }
+
+        .links a:hover {
+            color: var(--ink)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--s1);
+            min-height: 44px;
+            padding: 0 var(--s3);
+            border-radius: 999px;
+            font: inherit;
+            font-weight: 500;
+            border: 0;
+            cursor: pointer;
+            transition: background .25s, transform .25s var(--ease)
+        }
+
+        .btn:active {
+            transform: scale(.97)
+        }
+
+        .btn.p {
+            background: var(--blue);
+            color: #fff
+        }
+
+        .btn.p:hover {
+            background: var(--blue-h)
+        }
+
+        .btn.g {
+            background: transparent;
+            color: var(--blue)
+        }
+
+        .btn.g:hover {
+            background: rgba(0, 113, 227, .08)
+        }
+
+        nav .btn {
+            min-height: 34px;
+            padding: 0 var(--s2);
+            font-size: .8125rem
+        }
+
+        /* ===== Hero: grid 1 : φ ===== */
+        .hero {
+            padding: var(--s6) 0 var(--s5)
+        }
+
+        .hero .wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.618fr;
+            gap: var(--s5);
+            align-items: center
+        }
+
+        h1 {
+            font-size: clamp(2.1rem, 1.2rem + 3.6vw, var(--t3));
+            line-height: 1.06;
+            letter-spacing: -.035em;
+            font-weight: 700
+        }
+
+        .lead {
+            margin-top: var(--s3);
+            font-size: var(--t1);
+            line-height: 1.25;
+            color: var(--ink2);
+            letter-spacing: -.015em;
+            max-width: 21ch
+        }
+
+        .cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--s2);
+            margin-top: var(--s4)
+        }
+
+        .hero-in {
+            animation: in 1.1s var(--ease) both
+        }
+
+        @keyframes in {
+            from {
+                opacity: 0;
+                transform: translateY(21px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        /* Demo interaktif */
+        .demo {
+            background: var(--card);
+            border-radius: 34px;
+            box-shadow: var(--shadow);
+            padding: var(--s3);
+            aspect-ratio: 1.618/1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--line)
+        }
+
+        .dots {
+            display: flex;
+            gap: 7px
+        }
+
+        .dots i {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5f57
+        }
+
+        .dots i:nth-child(2) {
+            background: #febc2e
+        }
+
+        .dots i:nth-child(3) {
+            background: #28c840
+        }
+
+        .stage {
+            flex: 1;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 21px;
+            margin: var(--s2) 0 0;
+            background: var(--bg2)
+        }
+
+        .stage span {
+            font-size: clamp(1.7rem, 1rem + 3.2vw, var(--t2));
+            font-weight: 700;
+            letter-spacing: -.03em;
+            will-change: transform, opacity, filter;
+            display: inline-block
+        }
+
+        /* ===== Seksi ===== */
+        section {
+            padding: var(--s6) 0
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 1.1rem + 2.4vw, var(--t2));
+            line-height: 1.1;
+            letter-spacing: -.03em;
+            font-weight: 700;
+            max-width: 16ch
+        }
+
+        .sub {
+            margin-top: var(--s2);
+            color: var(--ink2);
+            font-size: var(--t1);
+            line-height: 1.25;
+            letter-spacing: -.015em;
+            max-width: 26ch
+        }
+
+        .band {
+            background: var(--bg2)
+        }
+
+        .shelf {
+            margin-top: var(--s5);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--s3)
+        }
+
+        .item {
+            background: var(--card);
+            border-radius: 28px;
+            padding: var(--s4);
+            border: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            gap: var(--s2);
+            min-height: 288px;
+            transition: transform .5s var(--ease), box-shadow .5s var(--ease)
+        }
+
+        button.item {
+            font: inherit;
+            color: inherit;
+            text-align: left;
+            width: 100%;
+            cursor: pointer
+        }
+
+        button.item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow)
+        }
+
+        button.item:active {
+            transform: scale(.985)
+        }
+
+        dialog {
+            border: 0;
+            padding: 0;
+            background: transparent;
+            color: inherit;
+            max-width: none;
+            max-height: none;
+            margin: auto;
+            overflow: visible
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, .38);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px)
+        }
+
+        dialog[open] {
+            animation: pop .5s var(--ease)
+        }
+
+        dialog[open]::backdrop {
+            animation: fade .4s ease
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: translateY(34px) scale(.96)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .sheet {
+            position: relative;
+            width: min(640px, 100vw - 2*var(--s3));
+            max-height: calc(100dvh - 2*var(--s3));
+            display: flex;
+            flex-direction: column;
+            background: var(--card);
+            border-radius: 34px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, .35);
+            border: 1px solid var(--line);
+            overflow: hidden
+        }
+
+        .sbody {
+            overflow: auto;
+            overscroll-behavior: contain;
+            padding: var(--s4)
+        }
+
+        .sheet .x {
+            position: absolute;
+            top: var(--s2);
+            right: var(--s2);
+            z-index: 2;
+            width: 34px;
+            height: 34px;
+            min-height: 0;
+            padding: 0;
+            border-radius: 50%;
+            background: var(--nav);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            color: var(--ink);
+            font-size: 1.1rem
+        }
+
+        .media {
+            aspect-ratio: 16/9;
+            border-radius: 21px;
+            overflow: hidden;
+            background: var(--bg2);
+            display: grid;
+            place-items: center;
+            color: var(--ink2);
+            margin-bottom: var(--s3)
+        }
+
+        .media video,
+        .media iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            background: #000
+        }
+
+        .media .ph {
+            display: grid;
+            gap: var(--s1);
+            justify-items: center;
+            font-size: .9375rem
+        }
+
+        .media .ph .i {
+            font-size: 44px
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            gap: var(--s3)
+        }
+
+        .sheet .ic {
+            margin: 0;
+            flex: none
+        }
+
+        .sheet h3 {
+            font-size: var(--t1);
+            letter-spacing: -.025em;
+            line-height: 1.1;
+            margin-top: var(--s1)
+        }
+
+        .desc {
+            margin-top: var(--s3);
+            color: var(--ink2)
+        }
+
+        .sheet h4 {
+            margin-top: var(--s4);
+            font-size: 1.0625rem;
+            font-weight: 600;
+            letter-spacing: -.015em
+        }
+
+        .list,
+        .steps {
+            list-style: none;
+            padding: 0;
+            margin-top: var(--s2);
+            display: grid;
+            gap: var(--s2)
+        }
+
+        .list li,
+        .steps li {
+            display: flex;
+            gap: var(--s2);
+            align-items: flex-start
+        }
+
+        .list .i {
+            color: #30b94f;
+            font-size: 1.3em;
+            margin-top: 1px
+        }
+
+        .steps {
+            counter-reset: st
+        }
+
+        .steps li::before {
+            counter-increment: st;
+            content: counter(st);
+            flex: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg2);
+            color: var(--ink2);
+            font-size: .8125rem;
+            font-weight: 600;
+            display: grid;
+            place-items: center;
+            margin-top: 1px
+        }
+
+        .compat {
+            margin-top: var(--s2);
+            color: var(--ink2);
+            font-size: .9375rem
+        }
+
+        .buyrow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--s3);
+            flex-wrap: wrap;
+            margin-top: var(--s4);
+            padding-top: var(--s3);
+            border-top: 1px solid var(--line)
+        }
+
+        .buyrow .price {
+            font-size: var(--t1)
+        }
+
+        .buyrow .btn {
+            min-width: 162px
+        }
+
+        .tag.free {
+            color: #248a3d;
+            background: rgba(40, 200, 64, .12);
+        }
+
+        .tag.upcoming {
+            color: #b45309;
+            background: rgba(245, 158, 11, .14);
+        }
+
+        /* ===== Modal Pop-up Download & Traktirkan (Layer depan dengan blur) ===== */
+        dialog.dl-modal,
+        dialog#dl-pop {
+            border: 0;
+            padding: var(--s3);
+            background: transparent;
+            max-width: 440px;
+            width: calc(100% - var(--s4));
+            height: auto;
+            max-height: calc(100dvh - var(--s6));
+            margin: auto;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        dialog.dl-modal:not([open]),
+        dialog#dl-pop:not([open]) {
+            display: none;
+        }
+
+        .dl-modal::backdrop {
+            background: rgba(0, 0, 0, .45);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+
+        .dl-modal[open] {
+            animation: pop .35s var(--ease);
+        }
+
+        .dl-panel {
+            position: relative;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 30px;
+            padding: var(--s4);
+            box-shadow: 0 28px 72px rgba(0, 0, 0, .3);
+            width: 100%;
+        }
+
+        .dl-panel .x {
+            position: absolute;
+            top: var(--s3);
+            right: var(--s3);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg2);
+            color: var(--ink);
+            display: grid;
+            place-items: center;
+            border: 0;
+            cursor: pointer;
+            transition: transform .2s, background .2s;
+        }
+
+        .dl-panel .x:hover {
+            transform: scale(1.08);
+            background: var(--line);
+        }
+
+        .dl-pop-head {
+            text-align: center;
+            margin-bottom: var(--s3);
+            padding: 0 var(--s1);
+        }
+
+        .dl-pop-head .tag {
+            margin-bottom: var(--s2);
+        }
+
+        .dl-pop-head h3 {
+            font-size: 1.45rem;
+            letter-spacing: -.025em;
+            margin-bottom: var(--s1);
+            font-weight: 700;
+        }
+
+        .dl-pop-head p {
+            font-size: .9375rem;
+            color: var(--ink2);
+            line-height: 1.45;
+        }
+
+        .dl-pop-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--s2);
+        }
+
+        .dl-field .dl-input {
+            width: 100%;
+            min-height: 48px;
+            padding: 0 var(--s3);
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--bg2);
+            color: var(--ink);
+            font: inherit;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .dl-field .dl-input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, .18);
+        }
+
+        .dl-pop-submit {
+            width: 100%;
+            min-height: 48px;
+            justify-content: center;
+            gap: 8px;
+            font-size: .95rem;
+            font-weight: 600;
+        }
+
+        .dl-note {
+            font-size: .75rem;
+            color: var(--ink2);
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .dl-check-ic {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto var(--s2);
+            border-radius: 50%;
+            background: rgba(40, 200, 64, .12);
+            color: #248a3d;
+            display: grid;
+            place-items: center;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .dl-pop-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--s2);
+            margin-top: var(--s2);
+        }
+
+        .dl-btn-drive {
+            width: 100%;
+            min-height: 48px;
+            justify-content: center;
+            gap: 8px;
+            font-size: .9375rem;
+            font-weight: 600;
+        }
+
+        .dl-btn-support {
+            width: 100%;
+            min-height: 48px;
+            justify-content: center;
+            gap: 8px;
+            font-size: .9375rem;
+            font-weight: 600;
+            background: rgba(255, 45, 85, .1);
+            color: #e0245e;
+            border: 1px solid rgba(255, 45, 85, .25);
+            border-radius: 999px;
+            transition: background .2s, transform .2s;
+        }
+
+        .dl-btn-support:hover {
+            background: rgba(255, 45, 85, .18);
+            transform: translateY(-1px);
+        }
+
+        .dl-btn-support .heart-ic {
+            fill: #e0245e;
+            color: #e0245e;
+        }
+
+        .dl-change-btn {
+            background: none;
+            border: 0;
+            color: var(--ink2);
+            font: inherit;
+            font-size: .8125rem;
+            text-align: center;
+            margin-top: var(--s1);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .dl-change-btn:hover {
+            color: var(--ink);
+        }
+
+        @media(max-width:860px) {
+            dialog#sheet {
+                margin: auto 0 0;
+                width: 100%
+            }
+
+            .sheet {
+                width: 100%;
+                max-height: 92dvh;
+                border-radius: 34px 34px 0 0
+            }
+
+            .sbody {
+                padding: var(--s3) var(--s3) calc(var(--s4) + env(safe-area-inset-bottom, 0))
+            }
+
+            .buyrow .btn {
+                width: 100%
+            }
+        }
+
+        body.lock {
+            overflow: hidden
+        }
+
+        .item .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: var(--s2)
+        }
+
+        .item .ic {
+            margin: 0
+        }
+
+        .item h3 {
+            font-size: var(--t1);
+            letter-spacing: -.025em;
+            line-height: 1.1;
+            margin-top: auto
+        }
+
+        .item p {
+            color: var(--ink2);
+            font-size: 1rem;
+            max-width: 34ch
+        }
+
+        .item .more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--blue);
+            font-weight: 500;
+            font-size: .9375rem;
+            margin-top: var(--s1)
+        }
+
+        .item .more .i {
+            font-size: .95em
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: .8125rem;
+            font-weight: 600;
+            color: var(--blue);
+            background: rgba(0, 113, 227, .1);
+            padding: 4px var(--s2);
+            border-radius: 999px;
+            white-space: nowrap
+        }
+
+
+
+        details {
+            border-bottom: 1px solid var(--line);
+            padding: var(--s3) 0
+        }
+
+        details:first-of-type {
+            border-top: 1px solid var(--line)
+        }
+
+        summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--s3);
+            font-size: 1.3125rem;
+            font-weight: 600;
+            letter-spacing: -.02em
+        }
+
+        summary::-webkit-details-marker {
+            display: none
+        }
+
+        summary .i {
+            font-size: 1.2em;
+            color: var(--ink2);
+            transition: transform .45s var(--ease)
+        }
+
+        details[open] summary .i {
+            transform: rotate(45deg)
+        }
+
+        details p {
+            margin-top: var(--s2);
+            color: var(--ink2);
+            max-width: 55ch
+        }
+
+        .faq {
+            margin-top: var(--s5);
+            max-width: 720px
+        }
+
+        .final {
+            text-align: center
+        }
+
+        .final h2,
+        .final .sub {
+            margin-inline: auto
+        }
+
+        .final .cta {
+            justify-content: center
+        }
+
+        footer {
+            padding: var(--s4) 0 var(--s5);
+            color: var(--ink2);
+            font-size: .8125rem;
+            border-top: 1px solid var(--line)
+        }
+
+        footer .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: var(--s2)
+        }
+
+        /* ===== Mobile ===== */
+        @media(max-width:860px) {
+            .hero {
+                padding: var(--s5) 0 var(--s4)
+            }
+
+            .hero .wrap {
+                grid-template-columns: 1fr;
+                gap: var(--s4)
+            }
+
+            .lead {
+                max-width: none
+            }
+
+            .shelf {
+                grid-template-columns: 1fr
+            }
+
+            .item {
+                min-height: 0
+            }
+
+            section {
+                padding: var(--s5) 0
+            }
+
+            .links a:not(.btn) {
+                display: none
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important
+            }
+        }
+
+        [hidden] {
+            display: none !important
+        }
+
+        .pvgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--s3);
+            margin-top: var(--s5)
+        }
+
+        .pv {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            overflow: hidden
+        }
+
+        .pv header {
+            display: flex;
+            align-items: center;
+            gap: var(--s2);
+            padding: var(--s2) var(--s3);
+            font-weight: 600;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .pv header em {
+            font: 600 .75rem ui-monospace, SFMono-Regular, Menlo, monospace;
+            color: var(--blue);
+            background: rgba(0, 113, 227, .1);
+            padding: 3px 8px;
+            border-radius: 8px
+        }
+
+        .pv header i {
+            color: var(--blue);
+            font-style: normal
+        }
+
+        .scene {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #0a0a0c;
+            container-type: inline-size
+        }
+
+        .clip {
+            position: absolute;
+            inset: 0;
+            will-change: transform, filter;
+            display: grid;
+            place-items: center;
+            background: radial-gradient(circle at 28% 38%, #5ac8fa 0, transparent 38%), radial-gradient(circle at 74% 66%, #ff9f0a 0, transparent 42%), linear-gradient(135deg, #1c1c3a, #4a1c4a)
+        }
+
+        .clip::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .08) 0 1px, transparent 1px 12.5%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .08) 0 1px, transparent 1px 12.5%)
+        }
+
+        .clip b {
+            position: relative;
+            color: #fff;
+            font-size: 12cqw;
+            letter-spacing: -.04em
+        }
+
+        .play {
+            margin-top: var(--s5);
+            display: grid;
+            grid-template-columns: 1.618fr 1fr;
+            gap: var(--s3);
+            align-items: start
+        }
+
+        .play>.scene {
+            border-radius: 28px;
+            border: 1px solid var(--line)
+        }
+
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: var(--s3);
+            display: grid;
+            gap: var(--s3)
+        }
+
+        .fld label {
+            display: flex;
+            justify-content: space-between;
+            font-size: .875rem;
+            color: var(--ink2);
+            margin-bottom: var(--s1)
+        }
+
+        .fld output {
+            color: var(--ink);
+            font-variant-numeric: tabular-nums
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+
+        .chip {
+            min-height: 34px;
+            padding: 0 var(--s2);
+            border: 0;
+            border-radius: 999px;
+            background: var(--bg2);
+            color: var(--ink);
+            font: inherit;
+            font-size: .875rem;
+            cursor: pointer;
+            transition: background .25s, color .25s
+        }
+
+        .chip[aria-pressed=true] {
+            background: var(--blue);
+            color: #fff
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: var(--blue)
+        }
+
+        #crv {
+            width: 100%;
+            max-width: 260px;
+            aspect-ratio: 1;
+            touch-action: none;
+            background: var(--bg2);
+            border-radius: 21px;
+            color: var(--ink);
+            display: block;
+            margin-bottom: var(--s2)
+        }
+
+        @media(max-width:860px) {
+
+            .pvgrid,
+            .play {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .cap {
+            padding: var(--s2) var(--s3) var(--s3);
+            color: var(--ink2);
+            font-size: .875rem;
+            line-height: 1.4
+        }
+
+        .dl {
+            position: absolute;
+            top: var(--s2);
+            right: var(--s2);
+            z-index: 1;
+            font-size: .75rem;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(0, 0, 0, .45);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 4px 10px;
+            border-radius: 999px
+        }
+
+        .media.g {
+            aspect-ratio: auto;
+            background: none;
+            border-radius: 0;
+            overflow: visible;
+            display: block
+        }
+
+        .gal {
+            display: flex;
+            gap: var(--s2);
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch
+        }
+
+        .gal::-webkit-scrollbar {
+            display: none
+        }
+
+        .gal .pv {
+            flex: 0 0 84%;
+            scroll-snap-align: start
+        }
+
+        @media(min-width:861px) {
+            dialog#sheet {
+                width: 100vw;
+                height: 100dvh;
+                margin: 0
+            }
+
+            .sheet {
+                width: 100vw;
+                height: 100dvh;
+                max-height: none;
+                border-radius: 0;
+                border: 0;
+                box-shadow: none
+            }
+
+            .sbody {
+                flex: 1;
+                min-height: 0;
+                padding: var(--s6) var(--s5) var(--s5)
+            }
+
+            .inner {
+                display: block;
+                max-width: 1100px;
+                margin: 0 auto
+            }
+
+            .icol {
+                max-width: 760px;
+                margin: 0 auto
+            }
+
+            .mq .fm {
+                width: 300px
+            }
+
+            .sheet .x {
+                top: var(--s3);
+                right: var(--s4);
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem
+            }
+
+            .sheet h3 {
+                font-size: var(--t2)
+            }
+
+            .media {
+                margin-bottom: var(--s5)
+            }
+
+            .gal {
+                display: flex;
+                flex-direction: row;
+                overflow: hidden;
+                width: 100%;
+                gap: var(--s2)
+            }
+
+            .gal .pv {
+                flex: 1 1 0;
+                min-width: 0;
+                width: 0
+            }
+
+            .gal .pv .scene {
+                border-radius: 20px;
+                width: 100%
+            }
+        }
+
+        button.item[data-plugin=slidezoom] {
+            overflow: hidden
+        }
+
+        button.item[data-plugin=finemotion] {
+            overflow: hidden
+        }
+
+        .fm {
+            position: relative;
+            overflow: hidden;
+            background: #0b0b0e;
+            aspect-ratio: 1.618;
+            container-type: inline-size;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        .fm .el {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            white-space: nowrap;
+            will-change: transform, opacity, filter
+        }
+
+        .fm .el.t {
+            font-size: 15cqw
+        }
+
+        .fm .el.s {
+            width: 24cqw;
+            height: 24cqw
+        }
+
+        .sc {
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a84ff, #5ac8fa)
+        }
+
+        .ss {
+            border-radius: 22%;
+            background: linear-gradient(135deg, #ff9f0a, #ff453a)
+        }
+
+        .sr {
+            border-radius: 50%;
+            border: 2.6cqw solid #bf5af2
+        }
+
+        .sp {
+            width: 36cqw !important;
+            height: 15cqw !important;
+            border-radius: 99px;
+            background: linear-gradient(135deg, #30d158, #64d2ff)
+        }
+
+        .st {
+            clip-path: polygon(50% 6%, 95% 92%, 5% 92%);
+            background: linear-gradient(135deg, #ff375f, #ff9f0a)
+        }
+
+        .sd {
+            clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+            background: linear-gradient(135deg, #5e5ce6, #bf5af2)
+        }
+
+        .mq {
+            overflow: hidden;
+            margin-bottom: var(--s2);
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent)
+        }
+
+        .mq .tr {
+            display: flex;
+            width: max-content;
+            animation: mq 46s linear infinite
+        }
+
+        .mq.r .tr {
+            animation-direction: reverse
+        }
+
+        .mq.s .tr {
+            animation-duration: 58s
+        }
+
+        .mq .fm {
+            flex: none;
+            width: 250px;
+            margin-right: var(--s2)
+        }
+
+        @keyframes mq {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        @media(max-width:860px) {
+            .mq .fm {
+                width: 200px
+            }
+        }
+
+        .mcol,
+        .icol {
+            min-width: 0
+        }
+
+        .mcol {
+            overflow: hidden
+        }
+
+        .mq {
+            max-width: 100%;
+            contain: paint
+        }
+
+        button.item .scene {
+            aspect-ratio: 1.618
+        }
+
+        .fm {
+            background: radial-gradient(circle at 24% 28%, rgba(10, 132, 255, .11), transparent 46%), radial-gradient(circle at 80% 74%, rgba(191, 90, 242, .09), transparent 50%), #09090c
+        }
+
+        .fm::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px 12.5%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px 12.5%)
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ikon bergaya SF Symbols: garis bulat, ketebalan seragam -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="hand" viewBox="0 0 24 24">
+            <path
+                d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-1.2a6 6 0 0 1-4.7-2.3L4 15.5a1.6 1.6 0 0 1 2.4-2.1L9 15.5" />
+        </symbol>
+        <symbol id="curve" viewBox="0 0 24 24">
+            <path d="M3 20c8 0 4-16 18-16" />
+            <circle cx="3" cy="20" r="1.2" />
+            <circle cx="21" cy="4" r="1.2" />
+        </symbol>
+        <symbol id="bolt" viewBox="0 0 24 24">
+            <path d="M13 3 5 13.5h6L10 21l9-11.5h-6.2z" />
+        </symbol>
+        <symbol id="check" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path d="m8 12.3 2.8 2.8L16.2 9.5" />
+        </symbol>
+        <symbol id="zoom" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="6.5" />
+            <path d="m20 20-4.9-4.9M10.5 8v5M8 10.5h5" />
+        </symbol>
+        <symbol id="x" viewBox="0 0 24 24">
+            <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" />
+        </symbol>
+        <symbol id="play" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M10.2 8.6v6.8l5.6-3.4z" />
+        </symbol>
+        <symbol id="plus" viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12h14" />
+        </symbol>
+        <symbol id="replay" viewBox="0 0 24 24">
+            <path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5" />
+        </symbol>
+        <symbol id="arrow" viewBox="0 0 24 24">
+            <path d="M9 5l7 7-7 7" />
+        </symbol>
+        <symbol id="download" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+        </symbol>
+        <symbol id="heart" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </symbol>
+    </svg>
+
+    <nav>
+        <div class="wrap">
+            <a href="#top" class="logo" aria-label="FineLab">Fine<b>Lab</b></a>
+            <div class="links">
+                <a href="#produk">Produk</a>
+                <a href="#faq">FAQ</a>
+                <a href="#produk" class="btn p">Koleksi</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="top">
+        <header class="hero">
+            <div class="wrap">
+                <div class="hero-in">
+                    <h1> Cukup sekali drag.</h1>
+                    <p class="lead">Plugin DaVinci Resolve untuk editor yang ingin cepat selesai.</p>
+                    <div class="cta">
+                        <a class="btn p" href="#produk">Lihat koleksi</a>
+                    </div>
+                </div>
+
+                <div class="demo hero-in" style="animation-delay:.15s" aria-label="Preview animasi teks">
+                    <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                    <div class="stage"><span id="txt">FineMotion</span></div>
+                </div>
+            </div>
+        </header>
+
+        <section id="produk" class="band">
+            <div class="wrap">
+                <h2>Koleksi plugin</h2>
+                <p class="sub">Satu per satu, untuk satu pekerjaan.</p>
+                <div class="shelf">
+                    <button type="button" class="item" data-plugin="finemotion" aria-haspopup="dialog"><span
+                            class="fmslot"
+                            style="display:block;margin:calc(var(--s1) - var(--s4)) calc(var(--s1) - var(--s4)) var(--s2)"></span>
+                        <div class="top"><span class="tag upcoming">Segera Hadir</span></div>
+                        <h3>FineMotion</h3>
+                        <p>Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker, Shake, dan Blur.</p>
+                        <span class="more">Ingatkan saya <svg class="i">
+                                <use href="#arrow" />
+                            </svg></span>
+                    </button>
+                    <button type="button" class="item" data-plugin="slidezoom" aria-haspopup="dialog"><span
+                            class="scene" data-pv="2"
+                            style="display:block;margin:calc(var(--s1) - var(--s4)) calc(var(--s1) - var(--s4)) var(--s2);border-radius:20px"><span
+                                class="clip"><b>FineLab</b></span></span>
+                        <div class="top"><span class="tag free">Gratis</span></div>
+                        <h3>SlideZoom</h3>
+                        <p>Zoom, slide, dan blur yang smooth dengan kurva yang bisa diatur.</p>
+                        <span class="more">Lihat detail <svg class="i">
+                                <use href="#arrow" />
+                            </svg></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq">
+            <div class="wrap">
+                <h2>Pertanyaan umum</h2>
+                <div class="faq">
+                    <details>
+                        <summary>Versi DaVinci Resolve apa yang didukung?<svg class="i">
+                                <use href="#plus" />
+                            </svg></summary>
+                        <p>Plugin dibuat sebagai macro Fusion, jadi bisa dipakai di DaVinci Resolve versi gratis maupun
+                            Studio. Info kompatibilitas tertera di halaman detail tiap plugin.</p>
+                    </details>
+                    <details>
+                        <summary>Bagaimana cara memasangnya?<svg class="i">
+                                <use href="#plus" />
+                            </svg></summary>
+                        <p>Salin file .setting ke folder Templates Fusion di komputer Anda. Setelah Resolve dibuka
+                            ulang, macro muncul di panel Effects.</p>
+                    </details>
+                    <details>
+                        <summary>Bisa dipakai di Windows dan macOS?<svg class="i">
+                                <use href="#plus" />
+                            </svg></summary>
+                        <p>Ya. Macro Fusion tidak terikat sistem operasi, hanya lokasi foldernya yang berbeda.</p>
+                    </details>
+                    <details>
+                        <summary>Bagaimana cara membeli?<svg class="i">
+                                <use href="#plus" />
+                            </svg></summary>
+                        <p>Pilih plugin di bagian Koleksi, buka detailnya, lalu tekan Beli sekarang.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="final band">
+            <div class="wrap">
+                <h2>Edit lebih cepat, mulai hari ini.</h2>
+                <p class="sub">Pilih plugin yang cocok untuk alur kerja Anda.</p>
+                <div class="cta"><a class="btn p" href="#produk">Lihat koleksi</a></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <span>© <span id="yr">2026</span> FineLab</span>
+            <span>FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah merek dagang Blackmagic
+                Design.</span>
+        </div>
+    </footer>
+
+    <dialog id="sheet" aria-labelledby="sh-t">
+        <div class="sheet">
+            <button type="button" class="btn x" id="sh-x" aria-label="Tutup"><svg class="i">
+                    <use href="#x" />
+                </svg></button>
+            <div class="sbody">
+                <div class="inner">
+                    <div class="mcol">
+                        <div class="media" id="sh-m"></div>
+                    </div>
+                    <div class="icol">
+                        <div class="head">
+                            <div class="ic" id="sh-ic"><svg class="i">
+                                    <use id="sh-use" href="#hand" />
+                                </svg></div>
+                            <div><span class="tag" id="sh-tag"></span>
+                                <h3 id="sh-t"></h3>
+                            </div>
+                        </div>
+                        <p class="desc" id="sh-d"></p>
+                        <h4>Fitur</h4>
+                        <ul class="list" id="sh-l"></ul>
+                        <h4>Cara pakai</h4>
+                        <ol class="steps" id="sh-s"></ol>
+                        <h4>Kompatibilitas</h4>
+                        <p class="compat" id="sh-k"></p>
+                        <div class="buyrow">
+                            <div class="price" id="sh-p"></div>
+                            <a class="btn p" href="#" id="sh-cta">Beli sekarang</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Pop-up Download & Support (Layer depan dengan backdrop blur) -->
+    <dialog id="dl-pop" class="dl-modal">
+        <div class="dl-panel">
+            <button type="button" class="btn x" id="dl-pop-x" aria-label="Tutup"><svg class="i"><use href="#x" /></svg></button>
+            
+            <!-- Step 1: Form Email -->
+            <div id="dl-step-form">
+                <div class="dl-pop-head">
+                    <span class="tag free">Gratis</span>
+                    <h3>Download SlideZoom</h3>
+                    <p>Masukkan email Anda untuk mendapatkan link file template DaVinci Resolve.</p>
+                </div>
+                <form id="dl-form" class="dl-pop-form">
+                    <div class="dl-field">
+                        <input type="email" id="dl-email" class="dl-input" placeholder="nama@email.com" required autocomplete="email">
+                    </div>
+                    <button type="submit" class="btn p dl-pop-submit" id="dl-btn">
+                        <span>Lanjutkan ke Download</span>
+                        <svg class="i"><use href="#arrow" /></svg>
+                    </button>
+                    <p class="dl-note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
+                </form>
+            </div>
+
+            <!-- Step 2: Download di Drive & Traktirkan -->
+            <div id="dl-step-links" hidden>
+                <div class="dl-pop-head">
+                    <div class="dl-check-ic">✓</div>
+                    <h3>Link Download Siap!</h3>
+                    <p>Terima kasih telah men-download SlideZoom. Unduh file melalui tombol di bawah ini:</p>
+                </div>
+                <div class="dl-pop-actions">
+                    <a class="btn p dl-btn-drive" id="dl-drive-link" href="https://drive.google.com/drive/folders/1tGIJAIG4_gNal3AxfnyaOFdWoXcyuTAR?usp=sharing" target="_blank" rel="noopener">
+                        <svg class="i"><use href="#download" /></svg>
+                        <span>Download di Google Drive</span>
+                    </a>
+                    <a class="btn dl-btn-support" href="support.html" target="_blank" rel="noopener">
+                        <svg class="i heart-ic"><use href="#heart" /></svg>
+                        <span>Support FineLab</span>
+                    </a>
+                    <button type="button" class="dl-change-btn" id="dl-change-btn">Ganti email</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Pop-up Ingatkan Saya FineMotion -->
+    <dialog id="remind-pop" class="dl-modal">
+        <div class="dl-panel">
+            <button type="button" class="btn x" id="remind-pop-x" aria-label="Tutup"><svg class="i"><use href="#x" /></svg></button>
+
+            <!-- Step 1: Form Email -->
+            <div id="remind-step-form">
+                <div class="dl-pop-head">
+                    <span class="tag upcoming" style="margin-bottom:var(--s2);display:inline-block">Segera Hadir</span>
+                    <h3>Ingatkan Saya</h3>
+                    <p>Masukkan email Anda, kami akan kirim notifikasi saat FineMotion resmi dirilis.</p>
+                </div>
+                <form id="remind-form" class="dl-pop-form">
+                    <div class="dl-field">
+                        <input type="email" id="remind-email" class="dl-input" placeholder="nama@email.com" required autocomplete="email">
+                    </div>
+                    <button type="submit" class="btn p dl-pop-submit" id="remind-btn">
+                        <span>Ya, Ingatkan Saya</span>
+                        <svg class="i"><use href="#arrow" /></svg>
+                    </button>
+                    <p class="dl-note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
+                </form>
+            </div>
+
+            <!-- Step 2: Konfirmasi -->
+            <div id="remind-step-done" hidden>
+                <div class="dl-pop-head">
+                    <div class="dl-check-ic">✓</div>
+                    <h3>Siap! Kami Akan Kabari</h3>
+                    <p>Email Anda sudah tersimpan. Kami akan mengirimkan notifikasi saat FineMotion dirilis.</p>
+                </div>
+                <div class="dl-pop-actions">
+                    <a class="btn dl-btn-support" href="support.html" target="_blank" rel="noopener">
+                        <svg class="i heart-ic"><use href="#heart" /></svg>
+                        <span>Support FineLab</span>
+                    </a>
+                    <button type="button" class="dl-change-btn" id="remind-change-btn">Ganti email</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <script>
+        (function () {
+            var txt = document.getElementById('txt'),
+                words = ['FineMotion', 'FineLab', 'SlideZoom'],
+                wordIdx = 0,
+                reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            document.getElementById('yr').textContent = new Date().getFullYear();
+
+            function playHero() {
+                if (!txt || reduce) return;
+                txt.textContent = words[wordIdx];
+                var animIn = txt.animate([
+                    { transform: 'translateY(36px) scale(0.96)', opacity: 0, filter: 'blur(5px)' },
+                    { transform: 'translateY(0) scale(1)', opacity: 1, filter: 'blur(0px)' }
+                ], { duration: 750, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'both' });
+
+                animIn.onfinish = function () {
+                    setTimeout(function () {
+                        var animOut = txt.animate([
+                            { transform: 'translateY(0) scale(1)', opacity: 1, filter: 'blur(0px)' },
+                            { transform: 'translateY(-36px) scale(0.96)', opacity: 0, filter: 'blur(5px)' }
+                        ], { duration: 550, easing: 'cubic-bezier(.7, 0, .84, 0)', fill: 'both' });
+
+                        animOut.onfinish = function () {
+                            wordIdx = (wordIdx + 1) % words.length;
+                            playHero();
+                        };
+                    }, 1300);
+                };
+            }
+            playHero();
+
+            /* ===== Mesin preview SlideZoom (rumus sama dengan macro) ===== */
+            var PRE = [[.33, .33, .67, .67], [.16, 1, .3, 1], [.65, 0, .35, 1], [.064, .553, .888, .413]];
+            var SEQ = [0, 2, 1, 3], NM = ['kanan', 'kiri', 'atas', 'bawah']; /* indeks arah: 0 kanan, 1 kiri, 2 atas, 3 bawah */
+            var CARDS = [
+                { type: 2, len: 1.2, hold: .5, z: 1.6, blur: 0, c: [.16, 1, .3, 1], co: [.7, 0, .84, 0], cycle: 1, chain: 1, seq: [0, 2, 3, 1] }, /* 01: masuk cepat ke lambat, keluar lambat ke cepat; kecepatan keluar = kecepatan masuk berikutnya */
+                { type: 1, len: 1.3, hold: .7, z: 1.6, blur: 0, zs: 0, zo: 1, c: [.16, 1, .3, 1], co: [.7, 0, .84, 0] },     /* 02: In cepat ke lambat, Out lambat ke cepat (Extreme) */
+                {
+                    parts: [ /* 03: klip A = In zoom (dari tidak zoom, seperti 02), Out slide; klip B = In slide, Out zoom (ke Extreme). Tiap sambungan sejenis. */
+                        { ti: 1, to: 2, zs: 0, li: 1.3, lo: 1.2, hold: .6, z: 1.6, blur: 60, c: [.16, 1, .3, 1], co: [.7, 0, .84, 0] },
+                        { ti: 2, to: 1, zo: 1, li: 1.2, lo: 1.3, hold: .6, z: 1.6, blur: 60, c: [.16, 1, .3, 1], co: [.7, 0, .84, 0] }
+                    ], seq: [0, 2, 3, 1], chain: 1
+                }
+            ];
+            function bz(c) { function f(a, b, t) { return 3 * a * t * (1 - t) * (1 - t) + 3 * b * t * t * (1 - t) + t * t * t } return function (x) { if (x <= 0) return 0; if (x >= 1) return 1; var lo = 0, hi = 1, t = .5; for (var i = 0; i < 20; i++) { t = (lo + hi) / 2; if (f(c[0], c[2], t) < x) lo = t; else hi = t } return f(c[1], c[3], t) } }
+            function frame(c, t) {
+                var L = c.li || c.len, Lo = c.lo || c.len, ei = bz(c.c), eo = bz(c.co || c.c), vi = ei(Math.min(t / L, 1)), vo = 1 - (t > L + c.hold ? eo((t - L - c.hold) / Lo) : 0), Z = c.z, k = Z - 1, s = Z, dx = 0, dy = 0, ti = c.ti || c.type, to = c.to || c.type;
+                var Ai = c.zs ? 3 : 1, Ao = (c.zo === undefined ? c.zs : c.zo) ? 3 : 1;
+                var o = function (d) { return d === 0 ? [-k / 2, 0] : d === 1 ? [k / 2, 0] : d === 2 ? [0, -k / 2] : [0, k / 2] };
+                if (ti === 1) s += (Ai - Z) * (1 - vi);
+                if (to === 1) s += (Ao - Z) * (1 - vo);
+                if (ti === 2) { var a = o(c.dir); dx += (1 - vi) * a[0]; dy += (1 - vi) * a[1] }
+                if (to === 2) { var b = o(c.od === undefined ? c.dir ^ 1 : c.od); dx += (1 - vo) * b[0]; dy += (1 - vo) * b[1] }
+                var bl = c.blur * (2 - vi - vo) * .22;
+                return ['translate(' + dx * 100 + '%,' + -dy * 100 + '%) scale(' + s + ')', bl > .3 ? 'blur(' + bl + 'px)' : 'none'];
+            }
+            var pvs = [], io = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target._o.on = e.isIntersecting }) });
+            function reg(el, cfg) { var o = { clip: el.firstChild, cfg: cfg, on: true, lbl: el.querySelector('.dl') }; el._o = o; pvs.push(o); io.observe(el) }
+            function tick(ms) {
+                pvs = pvs.filter(function (o) { return o.clip.isConnected });
+                pvs.forEach(function (o) {
+                    if (!o.on) return;
+                    var R = o.cfg, c = R, t = ms / 1000, n, lt, lb;
+                    if (R.parts) {
+                        var A = R.parts[0], B = R.parts[1], TA = (A.li || A.len) + A.hold + (A.lo || A.len), D = TA + (B.li || B.len) + B.hold + (B.lo || B.len), m = Math.floor(t / D), u = t - m * D, sq = R.seq;
+                        if (reduce) { c = A; lt = (A.li || A.len) + A.hold / 2; n = 0 } else if (u < TA) { c = A; lt = u; n = 2 * m } else { c = B; lt = u - TA; n = 2 * m + 1 }
+                        B.dir = sq[m % 4]; A.od = B.dir ^ 1; lb = c === A ? 'Zoom › Slide' : 'Slide dari ' + NM[B.dir] + ' › Zoom';
+                    } else {
+                        var T = (c.li || c.len) + c.hold + (c.lo || c.len); n = Math.floor(t / T); lt = reduce ? (c.li || c.len) + c.hold / 2 : t % T;
+                        if (c.cycle) { var s2 = c.seq || SEQ, d = s2[n % 4]; c.dir = d; c.od = c.chain ? s2[(n + 1) % 4] ^ 1 : d ^ 1; lb = 'Slide dari ' + NM[d] }
+                    }
+                    if (o.lbl && lb && o.n !== lb) { o.n = lb; o.lbl.textContent = lb }
+                    var r = frame(c, lt); o.clip.style.transform = r[0];
+                    o.clip.style.filter = ((R.chain ? 'hue-rotate(' + (n * 70 % 360) + 'deg) ' : '') + (r[1] === 'none' ? '' : r[1])) || 'none';
+                });
+                fmTick(ms);
+                if (!reduce) requestAnimationFrame(tick);
+            }
+            /* ===== Mesin preview FineMotion (rumus dari macro) ===== */
+            var fms = [], DV = { 1: [0, -1], 2: [0, 1], 3: [-1, 0], 4: [1, 0] }, SH = { c: 'sc', s: 'ss', r: 'sr', p: 'sp', t: 'st', d: 'sd' };
+            /* k: t=teks s=shape | i,o: arah masuk/keluar (1 atas,2 bawah,3 kiri,4 kanan) | is,os: 1=Bounce | d: jarak | fl: Flicker | ish: Shake masuk | bl,obl,blen: Blur | fx: gl Glow, j Jitter, sc Scribble, sh Shake */
+            var EX = [
+                { k: 't', w: 'Motion', i: 4, o: 3, d: .14 },
+                { k: 's', s: 'c', i: 1, is: 1, ib: 3.5, o: 2, os: 1, d: .2 },
+                { k: 't', w: 'Flow', i: 4, o: 3, d: .12, fl: .35 },
+                { k: 's', s: 's', i: 2, o: 1, d: .16, bl: 1.5, blen: .4 },
+                { k: 't', w: 'Pop', i: 1, is: 1, ib: 4, o: 2, os: 1, d: .18, ish: 2 },
+                { k: 's', s: 'r', i: 3, o: 4, d: .15, fx: { gl: 1.2 } },
+                { k: 't', w: 'Glow', i: 1, o: 2, d: .1, fx: { gl: 1.6 } },
+                { k: 's', s: 'p', i: 4, is: 1, ib: 3, o: 3, os: 1, d: .2, fx: { j: 2.5 } },
+                { k: 't', w: 'Snap', i: 2, o: 1, d: .12, bl: 1.2, obl: 1.2, blen: .35 },
+                { k: 's', s: 't', i: 3, is: 1, ib: 3, o: 4, os: 1, d: .2, ish: 1.5 },
+                { k: 't', w: 'Wave', i: 4, is: 1, ib: 2.5, o: 3, os: 1, d: .14, fx: { sc: 2 } },
+                { k: 's', s: 'd', i: 1, o: 2, d: .14, fx: { sh: 3 } },
+                { k: 't', w: 'Drift', i: 3, o: 4, d: .3, id: .7, od: .6 },
+                { k: 's', s: 'c', i: 4, o: 3, d: .16, bl: 1.6, blen: .4 },
+                { k: 't', w: 'Lab', i: 2, is: 1, ib: 3, o: 1, os: 1, d: .16, fl: .4 },
+                { k: 's', s: 's', i: 1, is: 1, ib: 4, o: 2, os: 1, d: .22, fx: { j: 3 } },
+                { k: 't', w: 'Fine', i: 4, o: 3, d: .15, bl: 1.4, blen: .35, ish: 1.5 },
+                { k: 's', s: 'r', i: 3, is: 1, ib: 3.5, o: 4, os: 1, d: .18, fx: { gl: 1.4 } }
+            ];
+            function ss(x) { x = Math.min(Math.max(x, 0), 1); return x * x * (3 - 2 * x) }
+            function fmDur(c) { return (c.id || .5) + (c.h || 1) + (c.od || .45) + .5 }
+            function fmFrame(c, t) {
+                var I = c.id || .5, H = c.h || 1, O = c.od || .45, fr = t * 30, d = c.d || .12, ib = c.ib || 2.5, ob = c.ob || 2.5;
+                var ti = Math.min(t / I, 1), to = Math.min(Math.max((t - I - H) / O, 0), 1);
+                var ie = c.is ? 1 + (ib + 1) * Math.pow(ti - 1, 3) + ib * Math.pow(ti - 1, 2) : 1 - Math.pow(1 - ti, 3);
+                var oe = c.os ? (ob + 1) * Math.pow(to, 3) - ob * Math.pow(to, 2) : Math.pow(to, 3);
+                var vi = DV[c.i] || [0, 0], vo = DV[c.o] || [0, 0];
+                var x = -vi[0] * d * (1 - ie) + vo[0] * d * oe, y = -vi[1] * d * (1 - ie) + vo[1] * d * oe, rot = 0, sc = 1, bl = 0, gl = 0, op = ss(ti * 2) * (1 - ss((to - .5) * 2));
+                if (c.ish) { var a = c.ish * (1 - ti) * .01; x += a * (Math.sin(fr * 3.7) + .5 * Math.sin(fr * 7.3 + 1)); y += a * (Math.cos(fr * 4.9) + .5 * Math.sin(fr * 8.1 + 2)) }
+                if (c.fl && t < c.fl) op *= Math.sin(Math.floor(t * 14) * 91.3) > 0 ? 1 : .15;
+                if (c.bl) bl = c.bl * 10 * Math.pow(Math.max(0, 1 - t / (c.blen || .3)), 2);
+                if (c.obl) bl = Math.max(bl, c.obl * 10 * Math.pow(to, 2));
+                var f = c.fx;
+                if (f) {
+                    var f2 = Math.floor(fr / 2), f3 = Math.floor(fr / 3);
+                    if (f.sh) { var k = f.sh * .005; x += k * (Math.sin(fr * 3.7) + .5 * Math.sin(fr * 7.3 + 1)); y += k * (Math.cos(fr * 4.9) + .5 * Math.sin(fr * 8.1 + 2)) }
+                    if (f.j) { rot += f.j * .5 * Math.sin(f2 * 12.9898); x += f.j * .004 * Math.sin(f2 * 78.233); y += f.j * .004 * Math.sin(f2 * 39.346 + 1.7) }
+                    if (f.sc) { rot += f.sc * Math.sin(f3 * 53.1 + 2.1); sc *= 1 + f.sc * .01 * Math.sin(f3 * 17.3); x += f.sc * .006 * Math.sin(f3 * 91.7 + .4); y += f.sc * .006 * Math.sin(f3 * 57.3 + 1.1) }
+                    if (f.gl) gl = f.gl
+                }
+                return { x: x, y: y, rot: rot, sc: sc, op: op, bl: bl, gl: gl };
+            }
+            function fmTile(list, off) {
+                var d = document.createElement('div'); d.className = 'fm'; d.innerHTML = '<div class="el"></div>';
+                var o = { el: d.firstChild, list: list, on: true, off: off || 0, i: -1 }; d._o = o; fms.push(o); io.observe(d); return d;
+            }
+            function fmTick(ms) {
+                fms = fms.filter(function (o) { return o.el.isConnected });
+                fms.forEach(function (o) {
+                    if (!o.on) return;
+                    var L = o.list, tot = 0, i = 0, t; L.forEach(function (c) { tot += fmDur(c) });
+                    t = reduce ? .9 : (ms / 1000 + o.off) % tot;
+                    while (i < L.length - 1 && t >= fmDur(L[i])) { t -= fmDur(L[i]); i++ }
+                    var c = L[i];
+                    if (o.i !== i) { o.i = i; o.el.className = 'el ' + (c.k === 't' ? 't' : 's ' + SH[c.s]); o.el.textContent = c.k === 't' ? c.w : '' }
+                    var r = fmFrame(c, t), f = [];
+                    o.el.style.transform = 'translate(-50%,-50%) translate(' + r.x * 100 + 'cqw,' + r.y * 61.8 + 'cqw) rotate(' + r.rot + 'deg) scale(' + r.sc + ')';
+                    o.el.style.opacity = r.op;
+                    if (r.bl > .2) f.push('blur(' + r.bl * .3 + 'px)');
+                    if (r.gl) f.push('drop-shadow(0 0 ' + r.gl * 3 + 'px rgba(10,132,255,.9))');
+                    o.el.style.filter = f.join(' ') || 'none';
+                });
+            }
+            var fslot = document.querySelector('.fmslot');
+            if (fslot) fslot.appendChild(fmTile(EX.slice(0, 12), 0));
+
+            [].forEach.call(document.querySelectorAll('.scene[data-pv]'), function (el) { reg(el, CARDS[+el.dataset.pv]) });
+            tick(0);
+
+            /* ===== DATA PLUGIN — edit di sini =====
+               link  : isi dengan link beli (WhatsApp, Lynk.id, Gumroad, dll). Kosong = tombol belum aktif.
+               video : isi link YouTube atau file .mp4 (mis. 'video/finemotion.mp4'). Kosong = tampil placeholder. */
+            var P = {
+                finemotion: {
+                    n: 'FineMotion', i: '', c: '', t: 'Segera Hadir', price: '—', link: '', video: '', fm: 1, upcoming: true,
+                    d: 'FineMotion adalah macro Fusion untuk DaVinci Resolve yang menganimasikan teks dan shape. Atur animasi masuk dan keluar, tambahkan efek, lalu putar. Tidak perlu keyframe manual.',
+                    f: ['Animasi masuk dan keluar dengan arah atas, bawah, kiri, atau kanan', 'Gaya Slide atau Bounce, lengkap dengan jarak, durasi (frame), dan kekuatan bounce', 'Ekstra masuk dan keluar: Flicker, Shake, dan Blur', 'Efek berkelanjutan: Shake, Jitter, Scribble, Glow, dan Blur', 'Motion blur dengan kekuatan yang bisa diatur', 'Fade halus otomatis di awal dan akhir klip'],
+                    s: ['Klik 2x file FineMotion.dfrx — DaVinci Resolve otomatis menginstalnya.', 'Tarik FineMotion ke teks atau shape di timeline.', 'Atur bagian IN, OUT, dan FX di Inspector.'],
+                    k: 'DaVinci Resolve versi gratis dan Studio. Windows dan macOS.'
+                },
+                slidezoom: {
+                    n: 'SlideZoom', i: '', c: 'o', t: 'Gratis', price: 'Gratis', free: true,
+                    driveUrl: 'https://drive.google.com/drive/folders/1tGIJAIG4_gNal3AxfnyaOFdWoXcyuTAR?usp=sharing',
+                    link: '', video: '', demo: 1,
+                    d: 'SlideZoom membuat transisi zoom dan slide yang smooth di awal dan akhir klip. In dan Out diatur terpisah, lengkap dengan blur dan kurva keyframe yang bisa Anda edit sendiri. Durasi mengikuti frame rate proyek.',
+                    f: ['Zoom in dan zoom out, gaya Normal atau Extreme', 'Slide masuk dan keluar dari kanan, kiri, atas, atau bawah', 'Blur masuk dan keluar dengan kekuatan yang bisa diatur', 'Kurva animasi In dan Out bisa diedit lewat grafik bezier', 'Durasi In dan Out dalam detik', 'Titik zoom (pivot), motion blur, dan shutter angle'],
+                    s: ['Klik 2x file SlideZoom.dfrx — DaVinci Resolve otomatis menginstalnya.', 'Tarik SlideZoom ke klip atau adjustment layer.', 'Atur bagian IN dan OUT di Inspector.'],
+                    k: 'DaVinci Resolve versi gratis dan Studio. Windows dan macOS.'
+                }
+            };
+            var dlg = document.getElementById('sheet'),
+                med = document.getElementById('sh-m'),
+                cta = document.getElementById('sh-cta'),
+                dlPop = document.getElementById('dl-pop'),
+                dlPopX = document.getElementById('dl-pop-x'),
+                dlStepForm = document.getElementById('dl-step-form'),
+                dlStepLinks = document.getElementById('dl-step-links'),
+                dlForm = document.getElementById('dl-form'),
+                dlEmail = document.getElementById('dl-email'),
+                dlBtn = document.getElementById('dl-btn'),
+                dlDriveLink = document.getElementById('dl-drive-link'),
+                dlChangeBtn = document.getElementById('dl-change-btn'),
+                remindPop = document.getElementById('remind-pop'),
+                remindPopX = document.getElementById('remind-pop-x'),
+                remindStepForm = document.getElementById('remind-step-form'),
+                remindStepDone = document.getElementById('remind-step-done'),
+                remindForm = document.getElementById('remind-form'),
+                remindEmail = document.getElementById('remind-email'),
+                remindBtn = document.getElementById('remind-btn'),
+                remindChangeBtn = document.getElementById('remind-change-btn'),
+                lastBtn, activePluginKey;
+
+            var GAS_URL = 'https://script.google.com/macros/s/AKfycbyh0dPn-tKIk2lV51Km0eCZaNYoaprL062FmDbONmbM3imRNw6Trwnnu5achTP20obz/exec';
+
+            function fill(id, items) { var ul = document.getElementById(id); ul.innerHTML = ''; items.forEach(function (x) { var li = document.createElement('li'); if (id === 'sh-l') li.innerHTML = '<svg class="i"><use href="#check"/></svg>'; li.appendChild(document.createTextNode(x)); ul.appendChild(li) }) }
+            function media(d) {
+                var u = d.video; med.className = 'media';
+                med.innerHTML = '';
+                if (!u && d.fm) {
+                    med.className = 'media g'; med.innerHTML = '';
+                    [[0, 6], [6, 12], [12, 18]].forEach(function (r, ri) {
+                        var mq = document.createElement('div'), tr = document.createElement('div');
+                        mq.className = 'mq' + (ri % 2 ? ' r' : '') + (ri === 2 ? ' s' : ''); tr.className = 'tr';
+                        for (var k = 0; k < 2; k++)for (var j = r[0]; j < r[1]; j++)tr.appendChild(fmTile([EX[j]], j * .6));
+                        mq.appendChild(tr); med.appendChild(mq)
+                    });
+                    return
+                }
+                if (!u && d.demo) {
+                    var G = [0, 1, 2];
+                    med.className = 'media g';
+                    med.innerHTML = '<div class="gal">' + G.map(function (pv) { return '<article class="pv"><div class="scene" data-pv="' + pv + '"><div class="clip"><b>FineLab</b></div></div></article>' }).join('') + '</div>';
+                    [].forEach.call(med.querySelectorAll('.scene[data-pv]'), function (el) { reg(el, CARDS[+el.dataset.pv]) });
+                    return
+                }
+                if (!u) { med.innerHTML = '<div class="ph"><svg class="i"><use href="#play"/></svg><span>Video demo segera ditambahkan</span></div>'; return }
+                var y = u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/), el;
+                if (y) { el = document.createElement('iframe'); el.src = 'https://www.youtube-nocookie.com/embed/' + y[1]; el.allow = 'encrypted-media; picture-in-picture; fullscreen'; el.allowFullscreen = true; el.loading = 'lazy'; el.title = 'Video demo' }
+                else { el = document.createElement('video'); el.src = u; el.controls = true; el.playsInline = true; el.preload = 'metadata' }
+                med.appendChild(el);
+            }
+            function openDlPop() {
+                var d = P[activePluginKey] || {};
+                dlDriveLink.setAttribute('href', d.driveUrl || '#');
+                var prevEmail = '';
+                try { prevEmail = localStorage.getItem('finelab_dl_' + activePluginKey); } catch (e) {}
+                if (prevEmail) {
+                    dlStepForm.hidden = true;
+                    dlStepLinks.hidden = false;
+                } else {
+                    dlStepForm.hidden = false;
+                    dlStepLinks.hidden = true;
+                    dlEmail.value = '';
+                }
+                dlPop.showModal();
+                if (!prevEmail) setTimeout(function () { dlEmail.focus() }, 100);
+            }
+            function openRemindPop() {
+                var prevEmail = '';
+                try { prevEmail = localStorage.getItem('finelab_remind_finemotion'); } catch (e) {}
+                if (prevEmail) {
+                    remindStepForm.hidden = true;
+                    remindStepDone.hidden = false;
+                } else {
+                    remindStepForm.hidden = false;
+                    remindStepDone.hidden = true;
+                    remindEmail.value = '';
+                }
+                remindPop.showModal();
+                if (!prevEmail) setTimeout(function () { remindEmail.focus() }, 100);
+            }
+            function openSheet(k, btn) {
+                var d = P[k]; lastBtn = btn; activePluginKey = k;
+                document.getElementById('sh-t').textContent = d.n;
+                document.getElementById('sh-tag').className = 'tag' + (d.upcoming ? ' upcoming' : d.free ? ' free' : '');
+                document.getElementById('sh-tag').textContent = d.t;
+                document.getElementById('sh-d').textContent = d.d;
+                document.getElementById('sh-k').textContent = d.k;
+                document.getElementById('sh-p').textContent = d.price;
+                document.getElementById('sh-ic').className = 'ic ' + d.c;
+                document.getElementById('sh-use').setAttribute('href', '#' + (d.i || 'hand')); document.getElementById('sh-ic').hidden = !d.i;
+                fill('sh-l', d.f); fill('sh-s', d.s); media(d);
+
+                if (d.upcoming) {
+                    cta.textContent = 'Ingatkan Saya';
+                    cta.removeAttribute('target');
+                    cta.setAttribute('href', '#');
+                } else if (d.free) {
+                    cta.textContent = 'Download Gratis';
+                    cta.removeAttribute('target');
+                    cta.setAttribute('href', '#');
+                } else {
+                    cta.textContent = 'Beli sekarang';
+                    cta.setAttribute('href', d.link || '#');
+                    if (d.link) { cta.target = '_blank'; cta.rel = 'noopener' } else { cta.removeAttribute('target') }
+                }
+
+                document.body.classList.add('lock');
+                dlg.showModal();
+                dlg.querySelector('.sbody').scrollTop = 0;
+            }
+
+            dlForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var email = dlEmail.value.trim();
+                if (!email) return;
+
+                var origBtn = dlBtn.innerHTML;
+                dlBtn.disabled = true;
+                dlBtn.innerHTML = '<span>Mengirim...</span>';
+
+                var d = P[activePluginKey] || {};
+                var pluginName = d.n || 'SlideZoom';
+
+                fetch(GAS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, plugin: pluginName })
+                }).then(function () {
+                    try { localStorage.setItem('finelab_dl_' + activePluginKey, email); } catch (e) {}
+                    dlBtn.disabled = false;
+                    dlBtn.innerHTML = origBtn;
+                    dlStepForm.hidden = true;
+                    dlStepLinks.hidden = false;
+                }).catch(function () {
+                    dlBtn.disabled = false;
+                    dlBtn.innerHTML = origBtn;
+                    dlStepForm.hidden = true;
+                    dlStepLinks.hidden = false;
+                });
+            });
+
+            dlChangeBtn.addEventListener('click', function () {
+                dlStepForm.hidden = false;
+                dlStepLinks.hidden = true;
+                dlEmail.value = '';
+                dlEmail.focus();
+            });
+
+            dlPopX.addEventListener('click', function () { dlPop.close() });
+            dlPop.addEventListener('click', function (e) { if (e.target === dlPop) dlPop.close() });
+
+            [].forEach.call(document.querySelectorAll('button.item'), function (b) { b.addEventListener('click', function () { openSheet(b.dataset.plugin, b) }) });
+            document.getElementById('sh-x').addEventListener('click', function () { dlg.close() });
+            dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close() });
+            dlg.addEventListener('close', function () { med.innerHTML = ''; document.body.classList.remove('lock'); if (lastBtn) lastBtn.focus() });
+            remindForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var email = remindEmail.value.trim();
+                if (!email) return;
+                var origBtn = remindBtn.innerHTML;
+                remindBtn.disabled = true;
+                remindBtn.innerHTML = '<span>Mengirim...</span>';
+                fetch(GAS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, plugin: 'FineMotion (Notifikasi Rilis)' })
+                }).then(function () {
+                    try { localStorage.setItem('finelab_remind_finemotion', email); } catch (e) {}
+                    remindBtn.disabled = false;
+                    remindBtn.innerHTML = origBtn;
+                    remindStepForm.hidden = true;
+                    remindStepDone.hidden = false;
+                }).catch(function () {
+                    remindBtn.disabled = false;
+                    remindBtn.innerHTML = origBtn;
+                    remindStepForm.hidden = true;
+                    remindStepDone.hidden = false;
+                });
+            });
+            remindChangeBtn.addEventListener('click', function () {
+                remindStepForm.hidden = false;
+                remindStepDone.hidden = true;
+                remindEmail.value = '';
+                remindEmail.focus();
+            });
+            remindPopX.addEventListener('click', function () { remindPop.close() });
+            remindPop.addEventListener('click', function (e) { if (e.target === remindPop) remindPop.close() });
+
+            cta.addEventListener('click', function (e) {
+                var d = P[activePluginKey] || {};
+                if (d.upcoming) {
+                    e.preventDefault();
+                    openRemindPop();
+                    return;
+                }
+                if (d.free) {
+                    e.preventDefault();
+                    openDlPop();
+                    return;
+                }
+                if (this.getAttribute('href') === '#') e.preventDefault();
+            });
+        })();
+    </script>
+</body>
+
+</html>
