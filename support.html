@@ -577,6 +577,51 @@
                 transition: none !important
             }
         }
+
+        /* ===== Floating Language Switcher ===== */
+        .lang-switch {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 99;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--card);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: .6875rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: .02em;
+            transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .2s;
+            user-select: none;
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+
+        .lang-switch:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, .16);
+            border-color: var(--blue);
+        }
+
+        .lang-switch:active {
+            transform: scale(.92);
+        }
+
+        .lang-switch .mi {
+            font-size: 1.125rem;
+            margin-bottom: 2px;
+            color: var(--blue);
+        }
     </style>
 </head>
 
@@ -587,7 +632,7 @@
             <a href="index.html" class="logo">Fine<b>Lab</b></a>
             <a href="index.html" class="nav-back" aria-label="Kembali ke beranda">
                 <span class="mi">arrow_back_ios</span>
-                Kembali
+                <span data-i18n="nav_back">Kembali</span>
             </a>
         </div>
     </nav>
@@ -597,8 +642,8 @@
 
             <!-- Hero -->
             <header class="hero">
-                <h1>Satu kopi kecil,<br><span>dampak besar.</span></h1>
-                <p class="lead"
+                <h1 data-i18n="hero_title">Satu kopi kecil,<br><span>dampak besar.</span></h1>
+                <p class="lead" data-i18n="hero_desc"
                     style="font-size:var(--t1);color:var(--ink2);line-height:1.25;letter-spacing:-.015em;max-width:32ch;margin:var(--s3) auto 0">
                     Semua plugin FineLab dibuat sendiri, dari nol. Dukungan Anda membantu saya terus berkarya.</p>
             </header>
@@ -613,20 +658,20 @@
                             <span class="mi">language</span>
                         </div>
                         <div class="card-info">
-                            <span class="card-badge-intl">Internasional</span>
+                            <span class="card-badge-intl" data-i18n="badge_intl">Internasional</span>
                             <h2>Ko-fi</h2>
-                            <p>Untuk pembayaran internasional — kartu kredit, PayPal, dan metode global lainnya.</p>
+                            <p data-i18n="kofi_desc">Untuk pembayaran internasional — kartu kredit, PayPal, dan metode global lainnya.</p>
                         </div>
                     </div>
                     <a id="btn-kofi" class="card-cta" href="https://ko-fi.com/finelab" target="_blank"
                         rel="noopener noreferrer">
                         <span class="mi">open_in_new</span>
-                        Support via Ko-fi
+                        <span data-i18n="kofi_btn">Support via Ko-fi</span>
                     </a>
                 </div>
 
                 <!-- Or divider -->
-                <div class="or-div" aria-hidden="true">atau</div>
+                <div class="or-div" data-i18n="divider_or" aria-hidden="true">atau</div>
 
                 <!-- Traktirkan -->
                 <div class="card trakteer">
@@ -635,16 +680,16 @@
                             <span class="mi">account_balance_wallet</span>
                         </div>
                         <div class="card-info">
-                            <span class="card-badge-dom">Dalam Negeri</span>
+                            <span class="card-badge-dom" data-i18n="badge_dom">Dalam Negeri</span>
                             <h2>Traktirkan</h2>
-                            <p>Untuk pembayaran dalam negeri — QRIS, transfer bank, GoPay, OVO, Dana, dan dompet digital
+                            <p data-i18n="trakteer_desc">Untuk pembayaran dalam negeri — QRIS, transfer bank, GoPay, OVO, Dana, dan dompet digital
                                 lainnya.</p>
                         </div>
                     </div>
                     <a id="btn-traktirkan" class="card-cta" href="https://www.traktirkan.com/u/finelab" target="_blank"
                         rel="noopener noreferrer">
                         <span class="mi">open_in_new</span>
-                        Support via Traktirkan
+                        <span data-i18n="trakteer_btn">Support via Traktirkan</span>
                     </a>
                 </div>
 
@@ -653,12 +698,12 @@
                     <div class="thanks-icon">
                         <span class="mi">volunteer_activism</span>
                     </div>
-                    <h3>Terima kasih sudah support!</h3>
+                    <h3 data-i18n="thanks_title">Terima kasih sudah support!</h3>
                     <div class="pills">
-                        <span class="pill"><span class="mi">bolt</span>Plugin lebih cepat rilis</span>
-                        <span class="pill"><span class="mi">check_circle</span>Update &amp; perbaikan rutin</span>
-                        <span class="pill"><span class="mi">auto_awesome</span>Lebih banyak fitur baru</span>
-                        <span class="pill"><span class="mi">lock_open</span>Plugin tetap gratis</span>
+                        <span class="pill"><span class="mi">bolt</span><span data-i18n="pill_1">Plugin lebih cepat rilis</span></span>
+                        <span class="pill"><span class="mi">check_circle</span><span data-i18n="pill_2">Update &amp; perbaikan rutin</span></span>
+                        <span class="pill"><span class="mi">auto_awesome</span><span data-i18n="pill_3">Lebih banyak fitur baru</span></span>
+                        <span class="pill"><span class="mi">lock_open</span><span data-i18n="pill_4">Plugin tetap gratis</span></span>
                     </div>
                 </div>
 
@@ -669,10 +714,15 @@
 
     <footer>
         <div class="wrap">
-            <span>&copy; <span id="yr"></span> FineLab &nbsp;&middot;&nbsp; <a href="index.html">Kembali ke
-                    beranda</a></span>
+            <span>&copy; <span id="yr"></span> FineLab &nbsp;&middot;&nbsp; <a href="index.html" data-i18n="footer_back">Kembali ke beranda</a></span>
         </div>
     </footer>
+
+    <!-- Floating Language Switcher -->
+    <button id="lang-btn" class="lang-switch" type="button" aria-label="Ganti Bahasa / Switch Language" title="Ganti Bahasa / Switch Language">
+        <span class="mi">language</span>
+        <span id="lang-code">ID</span>
+    </button>
 
     <script>
         document.getElementById('yr').textContent = new Date().getFullYear();
@@ -697,6 +747,125 @@
                 setTimeout(function () { r.remove() }, 600);
             });
         });
+
+        /* ===== I18N SYSTEM ===== */
+        var I18N = {
+            id: {
+                page_title: "Support FineLab",
+                nav_back: "Kembali",
+                hero_title: "Satu kopi kecil,<br><span>dampak besar.</span>",
+                hero_desc: "Semua plugin FineLab dibuat sendiri, dari nol. Dukungan Anda membantu saya terus berkarya.",
+                badge_intl: "Internasional",
+                kofi_desc: "Untuk pembayaran internasional — kartu kredit, PayPal, dan metode global lainnya.",
+                kofi_btn: "Support via Ko-fi",
+                divider_or: "atau",
+                badge_dom: "Dalam Negeri",
+                trakteer_desc: "Untuk pembayaran dalam negeri — QRIS, transfer bank, GoPay, OVO, Dana, dan dompet digital lainnya.",
+                trakteer_btn: "Support via Traktirkan",
+                thanks_title: "Terima kasih sudah support!",
+                pill_1: "Plugin lebih cepat rilis",
+                pill_2: "Update & perbaikan rutin",
+                pill_3: "Lebih banyak fitur baru",
+                pill_4: "Plugin tetap gratis",
+                footer_back: "Kembali ke beranda"
+            },
+            en: {
+                page_title: "Support FineLab",
+                nav_back: "Back",
+                hero_title: "One small coffee,<br><span>huge impact.</span>",
+                hero_desc: "Every FineLab plugin is built from scratch. Your support helps me keep creating and updating.",
+                badge_intl: "International",
+                kofi_desc: "For international payments — credit cards, PayPal, and global payment methods.",
+                kofi_btn: "Support via Ko-fi",
+                divider_or: "or",
+                badge_dom: "Indonesia",
+                trakteer_desc: "For Indonesian payments — QRIS, bank transfer, GoPay, OVO, Dana, and local e-wallets.",
+                trakteer_btn: "Support via Traktirkan",
+                thanks_title: "Thank you for your support!",
+                pill_1: "Faster plugin releases",
+                pill_2: "Regular updates & fixes",
+                pill_3: "More new features",
+                pill_4: "Keep plugins free",
+                footer_back: "Back to home"
+            }
+        };
+
+        var currentLang = 'id';
+
+        function applyLang(lang, save) {
+            if (!I18N[lang]) lang = 'id';
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.title = I18N[lang].page_title || 'Support FineLab';
+
+            var dict = I18N[lang];
+            document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                var k = el.getAttribute('data-i18n');
+                if (dict[k] !== undefined) {
+                    el.innerHTML = dict[k];
+                }
+            });
+
+            var btnCode = document.getElementById('lang-code');
+            if (btnCode) {
+                btnCode.textContent = lang.toUpperCase();
+            }
+
+            if (save) {
+                try { localStorage.setItem('finelab_lang', lang); } catch (e) {}
+            }
+        }
+
+        function detectLang() {
+            // 1. Saved preference in localStorage
+            try {
+                var saved = localStorage.getItem('finelab_lang');
+                if (saved === 'id' || saved === 'en') return saved;
+            } catch (e) {}
+
+            // 2. Browser language check
+            var navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || '').toLowerCase();
+            if (navLang.startsWith('id')) return 'id';
+
+            // 3. Timezone heuristic (Indonesia: Asia/Jakarta, Asia/Makassar, Asia/Jayapura, Asia/Pontianak)
+            try {
+                var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                if (/Jakarta|Makassar|Jayapura|Pontianak/i.test(tz)) return 'id';
+            } catch (e) {}
+
+            // Default for all non-Indonesia users: English
+            return 'en';
+        }
+
+        // Initialize language
+        applyLang(detectLang(), false);
+
+        // Background Cloudflare location verification (if not explicitly chosen by user)
+        try {
+            if (!localStorage.getItem('finelab_lang')) {
+                fetch('/cdn-cgi/trace')
+                    .then(function (res) { return res.text(); })
+                    .then(function (text) {
+                        var m = text.match(/loc=([A-Z]{2})/);
+                        if (m && m[1]) {
+                            var detected = (m[1] === 'ID') ? 'id' : 'en';
+                            if (detected !== currentLang) {
+                                applyLang(detected, false);
+                            }
+                        }
+                    })
+                    .catch(function () {});
+            }
+        } catch (e) {}
+
+        // Floating button click toggle
+        var langBtn = document.getElementById('lang-btn');
+        if (langBtn) {
+            langBtn.addEventListener('click', function () {
+                var nextLang = (currentLang === 'id') ? 'en' : 'id';
+                applyLang(nextLang, true);
+            });
+        }
     </script>
 
 </body>

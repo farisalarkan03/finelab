@@ -1415,6 +1415,51 @@
             inset: 0;
             background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px 12.5%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px 12.5%)
         }
+        /* ===== Floating Language Switcher ===== */
+        .lang-switch {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 99;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--card);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: .6875rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: .02em;
+            transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .2s;
+            user-select: none;
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+
+        .lang-switch:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, .16);
+            border-color: var(--blue);
+        }
+
+        .lang-switch:active {
+            transform: scale(.92);
+        }
+
+        .lang-switch svg.i {
+            width: 17px;
+            height: 17px;
+            margin-bottom: 2px;
+            color: var(--blue);
+        }
     </style>
 </head>
 
@@ -1422,6 +1467,10 @@
 
     <!-- Ikon bergaya SF Symbols: garis bulat, ketebalan seragam -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="globe" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </symbol>
         <symbol id="hand" viewBox="0 0 24 24">
             <path
                 d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-1.2a6 6 0 0 1-4.7-2.3L4 15.5a1.6 1.6 0 0 1 2.4-2.1L9 15.5" />
@@ -1470,9 +1519,9 @@
         <div class="wrap">
             <a href="#top" class="logo" aria-label="FineLab">Fine<b>Lab</b></a>
             <div class="links">
-                <a href="#produk">Produk</a>
-                <a href="#faq">FAQ</a>
-                <a href="#produk" class="btn p">Koleksi</a>
+                <a href="#produk" data-i18n="nav_products">Produk</a>
+                <a href="#faq" data-i18n="nav_faq">FAQ</a>
+                <a href="#produk" class="btn p" data-i18n="nav_collection">Koleksi</a>
             </div>
         </div>
     </nav>
@@ -1481,10 +1530,10 @@
         <header class="hero">
             <div class="wrap">
                 <div class="hero-in">
-                    <h1> Cukup sekali drag.</h1>
-                    <p class="lead">Plugin DaVinci Resolve untuk editor yang ingin cepat selesai.</p>
+                    <h1 data-i18n="hero_h1"> Cukup sekali drag.</h1>
+                    <p class="lead" data-i18n="hero_lead">Plugin DaVinci Resolve untuk editor yang ingin cepat selesai.</p>
                     <div class="cta">
-                        <a class="btn p" href="#produk">Lihat koleksi</a>
+                        <a class="btn p" href="#produk" data-i18n="hero_cta">Lihat koleksi</a>
                     </div>
                 </div>
 
@@ -1497,16 +1546,16 @@
 
         <section id="produk" class="band">
             <div class="wrap">
-                <h2>Koleksi plugin</h2>
-                <p class="sub">Satu per satu, untuk satu pekerjaan.</p>
+                <h2 data-i18n="sec_prod_h2">Koleksi plugin</h2>
+                <p class="sub" data-i18n="sec_prod_sub">Satu per satu, untuk satu pekerjaan.</p>
                 <div class="shelf">
                     <button type="button" class="item" data-plugin="finemotion" aria-haspopup="dialog"><span
                             class="fmslot"
                             style="display:block;margin:calc(var(--s1) - var(--s4)) calc(var(--s1) - var(--s4)) var(--s2)"></span>
-                        <div class="top"><span class="tag upcoming">Segera Hadir</span></div>
+                        <div class="top"><span class="tag upcoming" data-i18n="tag_upcoming">Segera Hadir</span></div>
                         <h3>FineMotion</h3>
-                        <p>Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker, Shake, dan Blur.</p>
-                        <span class="more">Ingatkan saya <svg class="i">
+                        <p data-i18n="fm_card_desc">Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker, Shake, dan Blur.</p>
+                        <span class="more"><span data-i18n="fm_card_btn">Ingatkan saya</span> <svg class="i">
                                 <use href="#arrow" />
                             </svg></span>
                     </button>
@@ -1514,10 +1563,10 @@
                             class="scene" data-pv="2"
                             style="display:block;margin:calc(var(--s1) - var(--s4)) calc(var(--s1) - var(--s4)) var(--s2);border-radius:20px"><span
                                 class="clip"><b>FineLab</b></span></span>
-                        <div class="top"><span class="tag free">Gratis</span></div>
+                        <div class="top"><span class="tag free" data-i18n="tag_free">Gratis</span></div>
                         <h3>SlideZoom</h3>
-                        <p>Zoom, slide, dan blur yang smooth dengan kurva yang bisa diatur.</p>
-                        <span class="more">Lihat detail <svg class="i">
+                        <p data-i18n="sz_card_desc">Zoom, slide, dan blur yang smooth dengan kurva yang bisa diatur.</p>
+                        <span class="more"><span data-i18n="sz_card_btn">Lihat detail</span> <svg class="i">
                                 <use href="#arrow" />
                             </svg></span>
                     </button>
@@ -1527,33 +1576,33 @@
 
         <section id="faq">
             <div class="wrap">
-                <h2>Pertanyaan umum</h2>
+                <h2 data-i18n="faq_h2">Pertanyaan umum</h2>
                 <div class="faq">
                     <details>
-                        <summary>Versi DaVinci Resolve apa yang didukung?<svg class="i">
+                        <summary><span data-i18n="faq_q1">Versi DaVinci Resolve apa yang didukung?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p>Plugin dibuat sebagai macro Fusion, jadi bisa dipakai di DaVinci Resolve versi gratis maupun
+                        <p data-i18n="faq_a1">Plugin dibuat sebagai macro Fusion, jadi bisa dipakai di DaVinci Resolve versi gratis maupun
                             Studio. Info kompatibilitas tertera di halaman detail tiap plugin.</p>
                     </details>
                     <details>
-                        <summary>Bagaimana cara memasangnya?<svg class="i">
+                        <summary><span data-i18n="faq_q2">Bagaimana cara memasangnya?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p>Salin file .setting ke folder Templates Fusion di komputer Anda. Setelah Resolve dibuka
+                        <p data-i18n="faq_a2">Salin file .setting ke folder Templates Fusion di komputer Anda. Setelah Resolve dibuka
                             ulang, macro muncul di panel Effects.</p>
                     </details>
                     <details>
-                        <summary>Bisa dipakai di Windows dan macOS?<svg class="i">
+                        <summary><span data-i18n="faq_q3">Bisa dipakai di Windows dan macOS?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p>Ya. Macro Fusion tidak terikat sistem operasi, hanya lokasi foldernya yang berbeda.</p>
+                        <p data-i18n="faq_a3">Ya. Macro Fusion tidak terikat sistem operasi, hanya lokasi foldernya yang berbeda.</p>
                     </details>
                     <details>
-                        <summary>Bagaimana cara membeli?<svg class="i">
+                        <summary><span data-i18n="faq_q4">Bagaimana cara membeli?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p>Pilih plugin di bagian Koleksi, buka detailnya, lalu tekan Beli sekarang.</p>
+                        <p data-i18n="faq_a4">Pilih plugin di bagian Koleksi, buka detailnya, lalu tekan Beli sekarang.</p>
                     </details>
                 </div>
             </div>
@@ -1561,9 +1610,9 @@
 
         <section class="final band">
             <div class="wrap">
-                <h2>Edit lebih cepat, mulai hari ini.</h2>
-                <p class="sub">Pilih plugin yang cocok untuk alur kerja Anda.</p>
-                <div class="cta"><a class="btn p" href="#produk">Lihat koleksi</a></div>
+                <h2 data-i18n="final_h2">Edit lebih cepat, mulai hari ini.</h2>
+                <p class="sub" data-i18n="final_sub">Pilih plugin yang cocok untuk alur kerja Anda.</p>
+                <div class="cta"><a class="btn p" href="#produk" data-i18n="final_cta">Lihat koleksi</a></div>
             </div>
         </section>
     </main>
@@ -1571,10 +1620,16 @@
     <footer>
         <div class="wrap">
             <span>© <span id="yr">2026</span> FineLab</span>
-            <span>FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah merek dagang Blackmagic
+            <span data-i18n="footer_affil">FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah merek dagang Blackmagic
                 Design.</span>
         </div>
     </footer>
+
+    <!-- Floating Language Switcher -->
+    <button id="lang-btn" class="lang-switch" type="button" aria-label="Ganti Bahasa / Switch Language" title="Ganti Bahasa / Switch Language">
+        <svg class="i"><use href="#globe" /></svg>
+        <span id="lang-code">ID</span>
+    </button>
 
     <dialog id="sheet" aria-labelledby="sh-t">
         <div class="sheet">
@@ -1596,15 +1651,15 @@
                             </div>
                         </div>
                         <p class="desc" id="sh-d"></p>
-                        <h4>Fitur</h4>
+                        <h4 data-i18n="sheet_feat">Fitur</h4>
                         <ul class="list" id="sh-l"></ul>
-                        <h4>Cara pakai</h4>
+                        <h4 data-i18n="sheet_steps">Cara pakai</h4>
                         <ol class="steps" id="sh-s"></ol>
-                        <h4>Kompatibilitas</h4>
+                        <h4 data-i18n="sheet_compat">Kompatibilitas</h4>
                         <p class="compat" id="sh-k"></p>
                         <div class="buyrow">
                             <div class="price" id="sh-p"></div>
-                            <a class="btn p" href="#" id="sh-cta">Beli sekarang</a>
+                            <a class="btn p" href="#" id="sh-cta" data-i18n="sheet_buy">Beli sekarang</a>
                         </div>
                     </div>
                 </div>
@@ -1620,39 +1675,39 @@
             <!-- Step 1: Form Email -->
             <div id="dl-step-form">
                 <div class="dl-pop-head">
-                    <span class="tag free">Gratis</span>
-                    <h3>Download SlideZoom</h3>
-                    <p>Masukkan email Anda untuk mendapatkan link file template DaVinci Resolve.</p>
+                    <span class="tag free" data-i18n="tag_free">Gratis</span>
+                    <h3 data-i18n="dl_pop_title">Download SlideZoom</h3>
+                    <p data-i18n="dl_pop_desc">Masukkan email Anda untuk mendapatkan link file template DaVinci Resolve.</p>
                 </div>
                 <form id="dl-form" class="dl-pop-form">
                     <div class="dl-field">
                         <input type="email" id="dl-email" class="dl-input" placeholder="nama@email.com" required autocomplete="email">
                     </div>
                     <button type="submit" class="btn p dl-pop-submit" id="dl-btn">
-                        <span>Lanjutkan ke Download</span>
+                        <span data-i18n="dl_btn_submit">Lanjutkan ke Download</span>
                         <svg class="i"><use href="#arrow" /></svg>
                     </button>
-                    <p class="dl-note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
+                    <p class="dl-note" data-i18n="dl_note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
                 </form>
             </div>
 
-            <!-- Step 2: Download di Drive & Traktirkan -->
+            <!-- Step 2: Download di Drive & Support -->
             <div id="dl-step-links" hidden>
                 <div class="dl-pop-head">
                     <div class="dl-check-ic">✓</div>
-                    <h3>Link Download Siap!</h3>
-                    <p>Terima kasih telah men-download SlideZoom. Unduh file melalui tombol di bawah ini:</p>
+                    <h3 data-i18n="dl_ready_title">Link Download Siap!</h3>
+                    <p data-i18n="dl_ready_desc">Terima kasih telah men-download SlideZoom. Unduh file melalui tombol di bawah ini:</p>
                 </div>
                 <div class="dl-pop-actions">
                     <a class="btn p dl-btn-drive" id="dl-drive-link" href="https://drive.google.com/drive/folders/1tGIJAIG4_gNal3AxfnyaOFdWoXcyuTAR?usp=sharing" target="_blank" rel="noopener">
                         <svg class="i"><use href="#download" /></svg>
-                        <span>Download di Google Drive</span>
+                        <span data-i18n="dl_drive_btn">Download di Google Drive</span>
                     </a>
                     <a class="btn dl-btn-support" href="support.html" target="_blank" rel="noopener">
                         <svg class="i heart-ic"><use href="#heart" /></svg>
-                        <span>Support FineLab</span>
+                        <span data-i18n="btn_support">Support FineLab</span>
                     </a>
-                    <button type="button" class="dl-change-btn" id="dl-change-btn">Ganti email</button>
+                    <button type="button" class="dl-change-btn" id="dl-change-btn" data-i18n="change_email">Ganti email</button>
                 </div>
             </div>
         </div>
@@ -1666,19 +1721,19 @@
             <!-- Step 1: Form Email -->
             <div id="remind-step-form">
                 <div class="dl-pop-head">
-                    <span class="tag upcoming" style="margin-bottom:var(--s2);display:inline-block">Segera Hadir</span>
-                    <h3>Ingatkan Saya</h3>
-                    <p>Masukkan email Anda, kami akan kirim notifikasi saat FineMotion resmi dirilis.</p>
+                    <span class="tag upcoming" data-i18n="tag_upcoming" style="margin-bottom:var(--s2);display:inline-block">Segera Hadir</span>
+                    <h3 data-i18n="remind_pop_title">Ingatkan Saya</h3>
+                    <p data-i18n="remind_pop_desc">Masukkan email Anda, kami akan kirim notifikasi saat FineMotion resmi dirilis.</p>
                 </div>
                 <form id="remind-form" class="dl-pop-form">
                     <div class="dl-field">
                         <input type="email" id="remind-email" class="dl-input" placeholder="nama@email.com" required autocomplete="email">
                     </div>
                     <button type="submit" class="btn p dl-pop-submit" id="remind-btn">
-                        <span>Ya, Ingatkan Saya</span>
+                        <span data-i18n="remind_btn_submit">Ya, Ingatkan Saya</span>
                         <svg class="i"><use href="#arrow" /></svg>
                     </button>
-                    <p class="dl-note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
+                    <p class="dl-note" data-i18n="dl_note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
                 </form>
             </div>
 
@@ -1686,15 +1741,15 @@
             <div id="remind-step-done" hidden>
                 <div class="dl-pop-head">
                     <div class="dl-check-ic">✓</div>
-                    <h3>Siap! Kami Akan Kabari</h3>
-                    <p>Email Anda sudah tersimpan. Kami akan mengirimkan notifikasi saat FineMotion dirilis.</p>
+                    <h3 data-i18n="remind_ready_title">Siap! Kami Akan Kabari</h3>
+                    <p data-i18n="remind_ready_desc">Email Anda sudah tersimpan. Kami akan mengirimkan notifikasi saat FineMotion dirilis.</p>
                 </div>
                 <div class="dl-pop-actions">
                     <a class="btn dl-btn-support" href="support.html" target="_blank" rel="noopener">
                         <svg class="i heart-ic"><use href="#heart" /></svg>
-                        <span>Support FineLab</span>
+                        <span data-i18n="btn_support">Support FineLab</span>
                     </a>
-                    <button type="button" class="dl-change-btn" id="remind-change-btn">Ganti email</button>
+                    <button type="button" class="dl-change-btn" id="remind-change-btn" data-i18n="change_email">Ganti email</button>
                 </div>
             </div>
         </div>
@@ -1852,25 +1907,52 @@
             [].forEach.call(document.querySelectorAll('.scene[data-pv]'), function (el) { reg(el, CARDS[+el.dataset.pv]) });
             tick(0);
 
-            /* ===== DATA PLUGIN — edit di sini =====
-               link  : isi dengan link beli (WhatsApp, Lynk.id, Gumroad, dll). Kosong = tombol belum aktif.
-               video : isi link YouTube atau file .mp4 (mis. 'video/finemotion.mp4'). Kosong = tampil placeholder. */
+            /* ===== DATA PLUGIN — bilingual ===== */
             var P = {
                 finemotion: {
-                    n: 'FineMotion', i: '', c: '', t: 'Segera Hadir', price: '—', link: '', video: '', fm: 1, upcoming: true,
-                    d: 'FineMotion adalah macro Fusion untuk DaVinci Resolve yang menganimasikan teks dan shape. Atur animasi masuk dan keluar, tambahkan efek, lalu putar. Tidak perlu keyframe manual.',
-                    f: ['Animasi masuk dan keluar dengan arah atas, bawah, kiri, atau kanan', 'Gaya Slide atau Bounce, lengkap dengan jarak, durasi (frame), dan kekuatan bounce', 'Ekstra masuk dan keluar: Flicker, Shake, dan Blur', 'Efek berkelanjutan: Shake, Jitter, Scribble, Glow, dan Blur', 'Motion blur dengan kekuatan yang bisa diatur', 'Fade halus otomatis di awal dan akhir klip'],
-                    s: ['Klik 2x file FineMotion.dfrx — DaVinci Resolve otomatis menginstalnya.', 'Tarik FineMotion ke teks atau shape di timeline.', 'Atur bagian IN, OUT, dan FX di Inspector.'],
-                    k: 'DaVinci Resolve versi gratis dan Studio. Windows dan macOS.'
+                    n: 'FineMotion', i: '', c: '', fm: 1, upcoming: true,
+                    link: '', video: '',
+                    t: { id: 'Segera Hadir', en: 'Coming Soon' },
+                    price: { id: '—', en: '—' },
+                    d: {
+                        id: 'FineMotion adalah macro Fusion untuk DaVinci Resolve yang menganimasikan teks dan shape. Atur animasi masuk dan keluar, tambahkan efek, lalu putar. Tidak perlu keyframe manual.',
+                        en: 'FineMotion is a Fusion macro for DaVinci Resolve that animates text and shapes. Set in and out animations, add effects, and play. No manual keyframes required.'
+                    },
+                    f: {
+                        id: ['Animasi masuk dan keluar dengan arah atas, bawah, kiri, atau kanan', 'Gaya Slide atau Bounce, lengkap dengan jarak, durasi (frame), dan kekuatan bounce', 'Ekstra masuk dan keluar: Flicker, Shake, dan Blur', 'Efek berkelanjutan: Shake, Jitter, Scribble, Glow, dan Blur', 'Motion blur dengan kekuatan yang bisa diatur', 'Fade halus otomatis di awal dan akhir klip'],
+                        en: ['In and Out animations with top, bottom, left, or right directions', 'Slide or Bounce styles, customizable distance, duration (frames), and bounce strength', 'Extra in & out transitions: Flicker, Shake, and Blur', 'Continuous effects: Shake, Jitter, Scribble, Glow, and Blur', 'Adjustable motion blur strength', 'Smooth automatic fade at clip head and tail']
+                    },
+                    s: {
+                        id: ['Klik 2x file FineMotion.dfrx — DaVinci Resolve otomatis menginstalnya.', 'Tarik FineMotion ke teks atau shape di timeline.', 'Atur bagian IN, OUT, dan FX di Inspector.'],
+                        en: ['Double-click the FineMotion.dfrx file — DaVinci Resolve installs it automatically.', 'Drag FineMotion onto text or shape on your timeline.', 'Customize IN, OUT, and FX controls in the Inspector.']
+                    },
+                    k: {
+                        id: 'DaVinci Resolve versi gratis dan Studio. Windows dan macOS.',
+                        en: 'DaVinci Resolve Free and Studio versions. Windows and macOS.'
+                    }
                 },
                 slidezoom: {
-                    n: 'SlideZoom', i: '', c: 'o', t: 'Gratis', price: 'Gratis', free: true,
+                    n: 'SlideZoom', i: '', c: 'o', free: true,
                     driveUrl: 'https://drive.google.com/drive/folders/1tGIJAIG4_gNal3AxfnyaOFdWoXcyuTAR?usp=sharing',
                     link: '', video: '', demo: 1,
-                    d: 'SlideZoom membuat transisi zoom dan slide yang smooth di awal dan akhir klip. In dan Out diatur terpisah, lengkap dengan blur dan kurva keyframe yang bisa Anda edit sendiri. Durasi mengikuti frame rate proyek.',
-                    f: ['Zoom in dan zoom out, gaya Normal atau Extreme', 'Slide masuk dan keluar dari kanan, kiri, atas, atau bawah', 'Blur masuk dan keluar dengan kekuatan yang bisa diatur', 'Kurva animasi In dan Out bisa diedit lewat grafik bezier', 'Durasi In dan Out dalam detik', 'Titik zoom (pivot), motion blur, dan shutter angle'],
-                    s: ['Klik 2x file SlideZoom.dfrx — DaVinci Resolve otomatis menginstalnya.', 'Tarik SlideZoom ke klip atau adjustment layer.', 'Atur bagian IN dan OUT di Inspector.'],
-                    k: 'DaVinci Resolve versi gratis dan Studio. Windows dan macOS.'
+                    t: { id: 'Gratis', en: 'Free' },
+                    price: { id: 'Gratis', en: 'Free' },
+                    d: {
+                        id: 'SlideZoom membuat transisi zoom dan slide yang smooth di awal dan akhir klip. In dan Out diatur terpisah, lengkap dengan blur dan kurva keyframe yang bisa Anda edit sendiri. Durasi mengikuti frame rate proyek.',
+                        en: 'SlideZoom creates ultra-smooth zoom and slide transitions at clip start and end. In and Out configured separately, complete with blur and customizable bezier curves. Matches your project frame rate.'
+                    },
+                    f: {
+                        id: ['Zoom in dan zoom out, gaya Normal atau Extreme', 'Slide masuk dan keluar dari kanan, kiri, atas, atau bawah', 'Blur masuk dan keluar dengan kekuatan yang bisa diatur', 'Kurva animasi In dan Out bisa diedit lewat grafik bezier', 'Durasi In dan Out dalam detik', 'Titik zoom (pivot), motion blur, dan shutter angle'],
+                        en: ['Zoom in and zoom out, Normal or Extreme modes', 'Slide in and out from right, left, top, or bottom', 'Customizable In and Out motion blur strength', 'Editable In and Out bezier animation curves', 'In and Out duration specified in seconds', 'Custom zoom pivot, motion blur, and shutter angle']
+                    },
+                    s: {
+                        id: ['Klik 2x file SlideZoom.dfrx — DaVinci Resolve otomatis menginstalnya.', 'Tarik SlideZoom ke klip atau adjustment layer.', 'Atur bagian IN dan OUT di Inspector.'],
+                        en: ['Double-click the SlideZoom.dfrx file — DaVinci Resolve installs it automatically.', 'Drag SlideZoom onto your clip or adjustment layer.', 'Adjust IN and OUT properties in the Inspector.']
+                    },
+                    k: {
+                        id: 'DaVinci Resolve versi gratis dan Studio. Windows dan macOS.',
+                        en: 'DaVinci Resolve Free and Studio versions. Windows and macOS.'
+                    }
                 }
             };
             var dlg = document.getElementById('sheet'),
@@ -1956,26 +2038,30 @@
             }
             function openSheet(k, btn) {
                 var d = P[k]; lastBtn = btn; activePluginKey = k;
+                var lang = currentLang || 'id';
                 document.getElementById('sh-t').textContent = d.n;
                 document.getElementById('sh-tag').className = 'tag' + (d.upcoming ? ' upcoming' : d.free ? ' free' : '');
-                document.getElementById('sh-tag').textContent = d.t;
-                document.getElementById('sh-d').textContent = d.d;
-                document.getElementById('sh-k').textContent = d.k;
-                document.getElementById('sh-p').textContent = d.price;
+                document.getElementById('sh-tag').textContent = (typeof d.t === 'object') ? d.t[lang] : d.t;
+                document.getElementById('sh-d').textContent = (typeof d.d === 'object') ? d.d[lang] : d.d;
+                document.getElementById('sh-k').textContent = (typeof d.k === 'object') ? d.k[lang] : d.k;
+                document.getElementById('sh-p').textContent = (typeof d.price === 'object') ? d.price[lang] : d.price;
                 document.getElementById('sh-ic').className = 'ic ' + d.c;
-                document.getElementById('sh-use').setAttribute('href', '#' + (d.i || 'hand')); document.getElementById('sh-ic').hidden = !d.i;
-                fill('sh-l', d.f); fill('sh-s', d.s); media(d);
+                document.getElementById('sh-use').setAttribute('href', '#' + (d.i || 'hand'));
+                document.getElementById('sh-ic').hidden = !d.i;
+                fill('sh-l', (typeof d.f === 'object' && !Array.isArray(d.f)) ? d.f[lang] : d.f);
+                fill('sh-s', (typeof d.s === 'object' && !Array.isArray(d.s)) ? d.s[lang] : d.s);
+                media(d);
 
                 if (d.upcoming) {
-                    cta.textContent = 'Ingatkan Saya';
+                    cta.textContent = (lang === 'id' ? 'Ingatkan Saya' : 'Remind Me');
                     cta.removeAttribute('target');
                     cta.setAttribute('href', '#');
                 } else if (d.free) {
-                    cta.textContent = 'Download Gratis';
+                    cta.textContent = (lang === 'id' ? 'Download Gratis' : 'Free Download');
                     cta.removeAttribute('target');
                     cta.setAttribute('href', '#');
                 } else {
-                    cta.textContent = 'Beli sekarang';
+                    cta.textContent = (lang === 'id' ? 'Beli sekarang' : 'Buy now');
                     cta.setAttribute('href', d.link || '#');
                     if (d.link) { cta.target = '_blank'; cta.rel = 'noopener' } else { cta.removeAttribute('target') }
                 }
@@ -1992,7 +2078,7 @@
 
                 var origBtn = dlBtn.innerHTML;
                 dlBtn.disabled = true;
-                dlBtn.innerHTML = '<span>Mengirim...</span>';
+                dlBtn.innerHTML = '<span>' + (currentLang === 'id' ? 'Mengirim...' : 'Sending...') + '</span>';
 
                 var d = P[activePluginKey] || {};
                 var pluginName = d.n || 'SlideZoom';
@@ -2036,7 +2122,7 @@
                 if (!email) return;
                 var origBtn = remindBtn.innerHTML;
                 remindBtn.disabled = true;
-                remindBtn.innerHTML = '<span>Mengirim...</span>';
+                remindBtn.innerHTML = '<span>' + (currentLang === 'id' ? 'Mengirim...' : 'Sending...') + '</span>';
                 fetch(GAS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -2078,6 +2164,188 @@
                 }
                 if (this.getAttribute('href') === '#') e.preventDefault();
             });
+
+            /* ===== I18N SYSTEM ===== */
+            var I18N = {
+                id: {
+                    page_title: "FineLab — Plugin untuk DaVinci Resolve",
+                    nav_products: "Produk",
+                    nav_faq: "FAQ",
+                    nav_collection: "Koleksi",
+                    hero_h1: " Cukup sekali drag.",
+                    hero_lead: "Plugin DaVinci Resolve untuk editor yang ingin cepat selesai.",
+                    hero_cta: "Lihat koleksi",
+                    sec_prod_h2: "Koleksi plugin",
+                    sec_prod_sub: "Satu per satu, untuk satu pekerjaan.",
+                    tag_upcoming: "Segera Hadir",
+                    tag_free: "Gratis",
+                    fm_card_desc: "Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker, Shake, dan Blur.",
+                    fm_card_btn: "Ingatkan saya",
+                    sz_card_desc: "Zoom, slide, dan blur yang smooth dengan kurva yang bisa diatur.",
+                    sz_card_btn: "Lihat detail",
+                    faq_h2: "Pertanyaan umum",
+                    faq_q1: "Versi DaVinci Resolve apa yang didukung?",
+                    faq_a1: "Plugin dibuat sebagai macro Fusion, jadi bisa dipakai di DaVinci Resolve versi gratis maupun Studio. Info kompatibilitas tertera di halaman detail tiap plugin.",
+                    faq_q2: "Bagaimana cara memasangnya?",
+                    faq_a2: "Salin file .setting ke folder Templates Fusion di komputer Anda. Setelah Resolve dibuka ulang, macro muncul di panel Effects.",
+                    faq_q3: "Bisa dipakai di Windows dan macOS?",
+                    faq_a3: "Ya. Macro Fusion tidak terikat sistem operasi, hanya lokasi foldernya yang berbeda.",
+                    faq_q4: "Bagaimana cara membeli?",
+                    faq_a4: "Pilih plugin di bagian Koleksi, buka detailnya, lalu tekan Beli sekarang.",
+                    final_h2: "Edit lebih cepat, mulai hari ini.",
+                    final_sub: "Pilih plugin yang cocok untuk alur kerja Anda.",
+                    final_cta: "Lihat koleksi",
+                    footer_affil: "FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah merek dagang Blackmagic Design.",
+                    sheet_feat: "Fitur",
+                    sheet_steps: "Cara pakai",
+                    sheet_compat: "Kompatibilitas",
+                    sheet_buy: "Beli sekarang",
+                    dl_pop_title: "Download SlideZoom",
+                    dl_pop_desc: "Masukkan email Anda untuk mendapatkan link file template DaVinci Resolve.",
+                    dl_btn_submit: "Lanjutkan ke Download",
+                    dl_note: "Email hanya digunakan untuk update plugin FineLab. Tanpa spam.",
+                    dl_ready_title: "Link Download Siap!",
+                    dl_ready_desc: "Terima kasih telah men-download SlideZoom. Unduh file melalui tombol di bawah ini:",
+                    dl_drive_btn: "Download di Google Drive",
+                    btn_support: "Support FineLab",
+                    change_email: "Ganti email",
+                    remind_pop_title: "Ingatkan Saya",
+                    remind_pop_desc: "Masukkan email Anda, kami akan kirim notifikasi saat FineMotion resmi dirilis.",
+                    remind_btn_submit: "Ya, Ingatkan Saya",
+                    remind_ready_title: "Siap! Kami Akan Kabari",
+                    remind_ready_desc: "Email Anda sudah tersimpan. Kami akan mengirimkan notifikasi saat FineMotion dirilis."
+                },
+                en: {
+                    page_title: "FineLab — Plugins for DaVinci Resolve",
+                    nav_products: "Products",
+                    nav_faq: "FAQ",
+                    nav_collection: "Collection",
+                    hero_h1: " Just drag and drop.",
+                    hero_lead: "DaVinci Resolve plugins for video editors who want to finish fast.",
+                    hero_cta: "Explore collection",
+                    sec_prod_h2: "Plugin collection",
+                    sec_prod_sub: "One by one, built for one job.",
+                    tag_upcoming: "Coming Soon",
+                    tag_free: "Free",
+                    fm_card_desc: "Text and shape animations with versatile styles: Slide, Bounce, Flicker, Shake, and Blur.",
+                    fm_card_btn: "Remind me",
+                    sz_card_desc: "Smooth zoom, slide, and blur transitions with customizable animation curves.",
+                    sz_card_btn: "View details",
+                    faq_h2: "Frequently Asked Questions",
+                    faq_q1: "Which DaVinci Resolve versions are supported?",
+                    faq_a1: "Plugins are built as Fusion macros, compatible with both DaVinci Resolve Free and Studio. Compatibility notes are listed in each plugin's details.",
+                    faq_q2: "How do I install them?",
+                    faq_a2: "Copy the .setting or .dfrx file to your Fusion Templates folder. Once Resolve is restarted, the macro appears in the Effects panel.",
+                    faq_q3: "Does it work on Windows and macOS?",
+                    faq_a3: "Yes. Fusion macros are OS-independent; only the folder paths differ between Windows and macOS.",
+                    faq_q4: "How do I get the plugins?",
+                    faq_a4: "Select a plugin in the Collection section, open its details, and click the download or buy button.",
+                    final_h2: "Edit faster, starting today.",
+                    final_sub: "Choose the right plugins built for your editing workflow.",
+                    final_cta: "Explore collection",
+                    footer_affil: "FineLab is not affiliated with Blackmagic Design. DaVinci Resolve is a trademark of Blackmagic Design.",
+                    sheet_feat: "Features",
+                    sheet_steps: "How to use",
+                    sheet_compat: "Compatibility",
+                    sheet_buy: "Buy now",
+                    dl_pop_title: "Download SlideZoom",
+                    dl_pop_desc: "Enter your email to receive the DaVinci Resolve template file link.",
+                    dl_btn_submit: "Continue to Download",
+                    dl_note: "Email is only used for FineLab plugin updates. No spam.",
+                    dl_ready_title: "Download Link Ready!",
+                    dl_ready_desc: "Thank you for downloading SlideZoom. Get your file via the button below:",
+                    dl_drive_btn: "Download on Google Drive",
+                    btn_support: "Support FineLab",
+                    change_email: "Change email",
+                    remind_pop_title: "Remind Me",
+                    remind_pop_desc: "Enter your email and we will notify you when FineMotion is officially released.",
+                    remind_btn_submit: "Yes, Remind Me",
+                    remind_ready_title: "You're All Set!",
+                    remind_ready_desc: "Your email has been saved. We will notify you once FineMotion is released."
+                }
+            };
+
+            var currentLang = 'id';
+
+            function applyLang(lang, save) {
+                if (!I18N[lang]) lang = 'id';
+                currentLang = lang;
+                document.documentElement.lang = lang;
+                document.title = I18N[lang].page_title || 'FineLab';
+
+                var dict = I18N[lang];
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n');
+                    if (dict[k] !== undefined) {
+                        el.innerHTML = dict[k];
+                    }
+                });
+
+                var btnCode = document.getElementById('lang-code');
+                if (btnCode) {
+                    btnCode.textContent = lang.toUpperCase();
+                }
+
+                // If sheet modal is currently open, re-render sheet content
+                if (dlg.open && activePluginKey) {
+                    openSheet(activePluginKey, lastBtn);
+                }
+
+                if (save) {
+                    try { localStorage.setItem('finelab_lang', lang); } catch (e) {}
+                }
+            }
+
+            function detectLang() {
+                // 1. Saved preference in localStorage
+                try {
+                    var saved = localStorage.getItem('finelab_lang');
+                    if (saved === 'id' || saved === 'en') return saved;
+                } catch (e) {}
+
+                // 2. Browser language check
+                var navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || '').toLowerCase();
+                if (navLang.startsWith('id')) return 'id';
+
+                // 3. Timezone heuristic (Indonesia: Asia/Jakarta, Asia/Makassar, Asia/Jayapura, Asia/Pontianak)
+                try {
+                    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                    if (/Jakarta|Makassar|Jayapura|Pontianak/i.test(tz)) return 'id';
+                } catch (e) {}
+
+                // Default for non-Indonesia: English
+                return 'en';
+            }
+
+            // Initialize language
+            applyLang(detectLang(), false);
+
+            // Background Cloudflare location verification
+            try {
+                if (!localStorage.getItem('finelab_lang')) {
+                    fetch('/cdn-cgi/trace')
+                        .then(function (res) { return res.text(); })
+                        .then(function (text) {
+                            var m = text.match(/loc=([A-Z]{2})/);
+                            if (m && m[1]) {
+                                var detected = (m[1] === 'ID') ? 'id' : 'en';
+                                if (detected !== currentLang) {
+                                    applyLang(detected, false);
+                                }
+                            }
+                        })
+                        .catch(function () {});
+                }
+            } catch (e) {}
+
+            // Floating button click toggle
+            var langBtn = document.getElementById('lang-btn');
+            if (langBtn) {
+                langBtn.addEventListener('click', function () {
+                    var nextLang = (currentLang === 'id') ? 'en' : 'id';
+                    applyLang(nextLang, true);
+                });
+            }
         })();
     </script>
 </body>
