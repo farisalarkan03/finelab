@@ -1415,6 +1415,7 @@
             inset: 0;
             background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px 12.5%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .055) 0 1px, transparent 1px 12.5%)
         }
+
         /* ===== Floating Language Switcher ===== */
         .lang-switch {
             position: fixed;
@@ -1460,6 +1461,41 @@
             margin-bottom: 2px;
             color: var(--blue);
         }
+
+        /* ===== FIX: preview SlideZoom mengecil di mobile =====
+           .scene memakai container-type:inline-size sehingga lebar intrinsiknya 0.
+           Beri lebar eksplisit di setiap lapisan (.mcol > .media.g > .gal > .pv > .scene)
+           agar tidak dihitung shrink-to-fit. Harus diletakkan paling akhir. */
+        @media (max-width: 860px) {
+            .mcol {
+                width: 100%;
+            }
+
+            .media.g {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .gal {
+                display: flex;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .gal .pv {
+                flex: 0 0 84%;
+                width: 84%;
+                min-width: 84%;
+                max-width: 84%;
+            }
+
+            .gal .pv .scene {
+                display: block;
+                width: 100%;
+                min-width: 0;
+                aspect-ratio: 16 / 9;
+            }
+        }
     </style>
 </head>
 
@@ -1469,7 +1505,8 @@
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
         <symbol id="globe" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" />
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            <path
+                d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
         </symbol>
         <symbol id="hand" viewBox="0 0 24 24">
             <path
@@ -1511,7 +1548,8 @@
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
         </symbol>
         <symbol id="heart" viewBox="0 0 24 24">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
         </symbol>
     </svg>
 
@@ -1531,7 +1569,8 @@
             <div class="wrap">
                 <div class="hero-in">
                     <h1 data-i18n="hero_h1"> Cukup sekali drag.</h1>
-                    <p class="lead" data-i18n="hero_lead">Plugin DaVinci Resolve untuk editor yang ingin cepat selesai.</p>
+                    <p class="lead" data-i18n="hero_lead">Plugin DaVinci Resolve untuk editor yang ingin cepat selesai.
+                    </p>
                     <div class="cta">
                         <a class="btn p" href="#produk" data-i18n="hero_cta">Lihat koleksi</a>
                     </div>
@@ -1554,7 +1593,8 @@
                             style="display:block;margin:calc(var(--s1) - var(--s4)) calc(var(--s1) - var(--s4)) var(--s2)"></span>
                         <div class="top"><span class="tag upcoming" data-i18n="tag_upcoming">Segera Hadir</span></div>
                         <h3>FineMotion</h3>
-                        <p data-i18n="fm_card_desc">Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker, Shake, dan Blur.</p>
+                        <p data-i18n="fm_card_desc">Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker,
+                            Shake, dan Blur.</p>
                         <span class="more"><span data-i18n="fm_card_btn">Ingatkan saya</span> <svg class="i">
                                 <use href="#arrow" />
                             </svg></span>
@@ -1582,27 +1622,31 @@
                         <summary><span data-i18n="faq_q1">Versi DaVinci Resolve apa yang didukung?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p data-i18n="faq_a1">Plugin dibuat sebagai macro Fusion, jadi bisa dipakai di DaVinci Resolve versi gratis maupun
+                        <p data-i18n="faq_a1">Plugin dibuat sebagai macro Fusion, jadi bisa dipakai di DaVinci Resolve
+                            versi gratis maupun
                             Studio. Info kompatibilitas tertera di halaman detail tiap plugin.</p>
                     </details>
                     <details>
                         <summary><span data-i18n="faq_q2">Bagaimana cara memasangnya?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p data-i18n="faq_a2">Salin file .setting ke folder Templates Fusion di komputer Anda. Setelah Resolve dibuka
+                        <p data-i18n="faq_a2">Salin file .setting ke folder Templates Fusion di komputer Anda. Setelah
+                            Resolve dibuka
                             ulang, macro muncul di panel Effects.</p>
                     </details>
                     <details>
                         <summary><span data-i18n="faq_q3">Bisa dipakai di Windows dan macOS?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p data-i18n="faq_a3">Ya. Macro Fusion tidak terikat sistem operasi, hanya lokasi foldernya yang berbeda.</p>
+                        <p data-i18n="faq_a3">Ya. Macro Fusion tidak terikat sistem operasi, hanya lokasi foldernya yang
+                            berbeda.</p>
                     </details>
                     <details>
                         <summary><span data-i18n="faq_q4">Bagaimana cara membeli?</span><svg class="i">
                                 <use href="#plus" />
                             </svg></summary>
-                        <p data-i18n="faq_a4">Pilih plugin di bagian Koleksi, buka detailnya, lalu tekan Beli sekarang.</p>
+                        <p data-i18n="faq_a4">Pilih plugin di bagian Koleksi, buka detailnya, lalu tekan Beli sekarang.
+                        </p>
                     </details>
                 </div>
             </div>
@@ -1612,7 +1656,10 @@
             <div class="wrap">
                 <h2 data-i18n="final_h2">Edit lebih cepat, mulai hari ini.</h2>
                 <p class="sub" data-i18n="final_sub">Pilih plugin yang cocok untuk alur kerja Anda.</p>
-                <div class="cta"><a class="btn p" href="#produk" data-i18n="final_cta">Lihat koleksi</a></div>
+                <div class="cta">
+                    <a class="btn p" href="#produk" data-i18n="final_cta">Lihat koleksi</a>
+                    <a class="btn p" href="support.html" data-i18n="final_support">Support</a>
+                </div>
             </div>
         </section>
     </main>
@@ -1620,14 +1667,18 @@
     <footer>
         <div class="wrap">
             <span>© <span id="yr">2026</span> FineLab</span>
-            <span data-i18n="footer_affil">FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah merek dagang Blackmagic
+            <span data-i18n="footer_affil">FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah
+                merek dagang Blackmagic
                 Design.</span>
         </div>
     </footer>
 
     <!-- Floating Language Switcher -->
-    <button id="lang-btn" class="lang-switch" type="button" aria-label="Ganti Bahasa / Switch Language" title="Ganti Bahasa / Switch Language">
-        <svg class="i"><use href="#globe" /></svg>
+    <button id="lang-btn" class="lang-switch" type="button" aria-label="Ganti Bahasa / Switch Language"
+        title="Ganti Bahasa / Switch Language">
+        <svg class="i">
+            <use href="#globe" />
+        </svg>
         <span id="lang-code">ID</span>
     </button>
 
@@ -1670,24 +1721,31 @@
     <!-- Pop-up Download & Support (Layer depan dengan backdrop blur) -->
     <dialog id="dl-pop" class="dl-modal">
         <div class="dl-panel">
-            <button type="button" class="btn x" id="dl-pop-x" aria-label="Tutup"><svg class="i"><use href="#x" /></svg></button>
-            
+            <button type="button" class="btn x" id="dl-pop-x" aria-label="Tutup"><svg class="i">
+                    <use href="#x" />
+                </svg></button>
+
             <!-- Step 1: Form Email -->
             <div id="dl-step-form">
                 <div class="dl-pop-head">
                     <span class="tag free" data-i18n="tag_free">Gratis</span>
                     <h3 data-i18n="dl_pop_title">Download SlideZoom</h3>
-                    <p data-i18n="dl_pop_desc">Masukkan email Anda untuk mendapatkan link file template DaVinci Resolve.</p>
+                    <p data-i18n="dl_pop_desc">Masukkan email Anda untuk mendapatkan link file template DaVinci Resolve.
+                    </p>
                 </div>
                 <form id="dl-form" class="dl-pop-form">
                     <div class="dl-field">
-                        <input type="email" id="dl-email" class="dl-input" placeholder="nama@email.com" required autocomplete="email">
+                        <input type="email" id="dl-email" class="dl-input" placeholder="nama@email.com" required
+                            autocomplete="email">
                     </div>
                     <button type="submit" class="btn p dl-pop-submit" id="dl-btn">
                         <span data-i18n="dl_btn_submit">Lanjutkan ke Download</span>
-                        <svg class="i"><use href="#arrow" /></svg>
+                        <svg class="i">
+                            <use href="#arrow" />
+                        </svg>
                     </button>
-                    <p class="dl-note" data-i18n="dl_note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
+                    <p class="dl-note" data-i18n="dl_note">Email hanya digunakan untuk update plugin FineLab. Tanpa
+                        spam.</p>
                 </form>
             </div>
 
@@ -1696,18 +1754,26 @@
                 <div class="dl-pop-head">
                     <div class="dl-check-ic">✓</div>
                     <h3 data-i18n="dl_ready_title">Link Download Siap!</h3>
-                    <p data-i18n="dl_ready_desc">Terima kasih telah men-download SlideZoom. Unduh file melalui tombol di bawah ini:</p>
+                    <p data-i18n="dl_ready_desc">Terima kasih telah men-download SlideZoom. Unduh file melalui tombol di
+                        bawah ini:</p>
                 </div>
                 <div class="dl-pop-actions">
-                    <a class="btn p dl-btn-drive" id="dl-drive-link" href="https://drive.google.com/drive/folders/1tGIJAIG4_gNal3AxfnyaOFdWoXcyuTAR?usp=sharing" target="_blank" rel="noopener">
-                        <svg class="i"><use href="#download" /></svg>
+                    <a class="btn p dl-btn-drive" id="dl-drive-link"
+                        href="https://drive.google.com/drive/folders/1tGIJAIG4_gNal3AxfnyaOFdWoXcyuTAR?usp=sharing"
+                        target="_blank" rel="noopener">
+                        <svg class="i">
+                            <use href="#download" />
+                        </svg>
                         <span data-i18n="dl_drive_btn">Download di Google Drive</span>
                     </a>
                     <a class="btn dl-btn-support" href="support.html" target="_blank" rel="noopener">
-                        <svg class="i heart-ic"><use href="#heart" /></svg>
+                        <svg class="i heart-ic">
+                            <use href="#heart" />
+                        </svg>
                         <span data-i18n="btn_support">Support FineLab</span>
                     </a>
-                    <button type="button" class="dl-change-btn" id="dl-change-btn" data-i18n="change_email">Ganti email</button>
+                    <button type="button" class="dl-change-btn" id="dl-change-btn" data-i18n="change_email">Ganti
+                        email</button>
                 </div>
             </div>
         </div>
@@ -1716,24 +1782,32 @@
     <!-- Pop-up Ingatkan Saya FineMotion -->
     <dialog id="remind-pop" class="dl-modal">
         <div class="dl-panel">
-            <button type="button" class="btn x" id="remind-pop-x" aria-label="Tutup"><svg class="i"><use href="#x" /></svg></button>
+            <button type="button" class="btn x" id="remind-pop-x" aria-label="Tutup"><svg class="i">
+                    <use href="#x" />
+                </svg></button>
 
             <!-- Step 1: Form Email -->
             <div id="remind-step-form">
                 <div class="dl-pop-head">
-                    <span class="tag upcoming" data-i18n="tag_upcoming" style="margin-bottom:var(--s2);display:inline-block">Segera Hadir</span>
+                    <span class="tag upcoming" data-i18n="tag_upcoming"
+                        style="margin-bottom:var(--s2);display:inline-block">Segera Hadir</span>
                     <h3 data-i18n="remind_pop_title">Ingatkan Saya</h3>
-                    <p data-i18n="remind_pop_desc">Masukkan email Anda, kami akan kirim notifikasi saat FineMotion resmi dirilis.</p>
+                    <p data-i18n="remind_pop_desc">Masukkan email Anda, kami akan kirim notifikasi saat FineMotion resmi
+                        dirilis.</p>
                 </div>
                 <form id="remind-form" class="dl-pop-form">
                     <div class="dl-field">
-                        <input type="email" id="remind-email" class="dl-input" placeholder="nama@email.com" required autocomplete="email">
+                        <input type="email" id="remind-email" class="dl-input" placeholder="nama@email.com" required
+                            autocomplete="email">
                     </div>
                     <button type="submit" class="btn p dl-pop-submit" id="remind-btn">
                         <span data-i18n="remind_btn_submit">Ya, Ingatkan Saya</span>
-                        <svg class="i"><use href="#arrow" /></svg>
+                        <svg class="i">
+                            <use href="#arrow" />
+                        </svg>
                     </button>
-                    <p class="dl-note" data-i18n="dl_note">Email hanya digunakan untuk update plugin FineLab. Tanpa spam.</p>
+                    <p class="dl-note" data-i18n="dl_note">Email hanya digunakan untuk update plugin FineLab. Tanpa
+                        spam.</p>
                 </form>
             </div>
 
@@ -1742,14 +1816,18 @@
                 <div class="dl-pop-head">
                     <div class="dl-check-ic">✓</div>
                     <h3 data-i18n="remind_ready_title">Siap! Kami Akan Kabari</h3>
-                    <p data-i18n="remind_ready_desc">Email Anda sudah tersimpan. Kami akan mengirimkan notifikasi saat FineMotion dirilis.</p>
+                    <p data-i18n="remind_ready_desc">Email Anda sudah tersimpan. Kami akan mengirimkan notifikasi saat
+                        FineMotion dirilis.</p>
                 </div>
                 <div class="dl-pop-actions">
                     <a class="btn dl-btn-support" href="support.html" target="_blank" rel="noopener">
-                        <svg class="i heart-ic"><use href="#heart" /></svg>
+                        <svg class="i heart-ic">
+                            <use href="#heart" />
+                        </svg>
                         <span data-i18n="btn_support">Support FineLab</span>
                     </a>
-                    <button type="button" class="dl-change-btn" id="remind-change-btn" data-i18n="change_email">Ganti email</button>
+                    <button type="button" class="dl-change-btn" id="remind-change-btn" data-i18n="change_email">Ganti
+                        email</button>
                 </div>
             </div>
         </div>
@@ -2010,7 +2088,7 @@
                 var d = P[activePluginKey] || {};
                 dlDriveLink.setAttribute('href', d.driveUrl || '#');
                 var prevEmail = '';
-                try { prevEmail = localStorage.getItem('finelab_dl_' + activePluginKey); } catch (e) {}
+                try { prevEmail = localStorage.getItem('finelab_dl_' + activePluginKey); } catch (e) { }
                 if (prevEmail) {
                     dlStepForm.hidden = true;
                     dlStepLinks.hidden = false;
@@ -2024,7 +2102,7 @@
             }
             function openRemindPop() {
                 var prevEmail = '';
-                try { prevEmail = localStorage.getItem('finelab_remind_finemotion'); } catch (e) {}
+                try { prevEmail = localStorage.getItem('finelab_remind_finemotion'); } catch (e) { }
                 if (prevEmail) {
                     remindStepForm.hidden = true;
                     remindStepDone.hidden = false;
@@ -2089,7 +2167,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email, plugin: pluginName })
                 }).then(function () {
-                    try { localStorage.setItem('finelab_dl_' + activePluginKey, email); } catch (e) {}
+                    try { localStorage.setItem('finelab_dl_' + activePluginKey, email); } catch (e) { }
                     dlBtn.disabled = false;
                     dlBtn.innerHTML = origBtn;
                     dlStepForm.hidden = true;
@@ -2129,7 +2207,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email, plugin: 'FineMotion (Notifikasi Rilis)' })
                 }).then(function () {
-                    try { localStorage.setItem('finelab_remind_finemotion', email); } catch (e) {}
+                    try { localStorage.setItem('finelab_remind_finemotion', email); } catch (e) { }
                     remindBtn.disabled = false;
                     remindBtn.innerHTML = origBtn;
                     remindStepForm.hidden = true;
@@ -2195,6 +2273,7 @@
                     final_h2: "Edit lebih cepat, mulai hari ini.",
                     final_sub: "Pilih plugin yang cocok untuk alur kerja Anda.",
                     final_cta: "Lihat koleksi",
+                    final_support: "Support",
                     footer_affil: "FineLab tidak berafiliasi dengan Blackmagic Design. DaVinci Resolve adalah merek dagang Blackmagic Design.",
                     sheet_feat: "Fitur",
                     sheet_steps: "Cara pakai",
@@ -2243,6 +2322,7 @@
                     final_h2: "Edit faster, starting today.",
                     final_sub: "Choose the right plugins built for your editing workflow.",
                     final_cta: "Explore collection",
+                    final_support: "Support",
                     footer_affil: "FineLab is not affiliated with Blackmagic Design. DaVinci Resolve is a trademark of Blackmagic Design.",
                     sheet_feat: "Features",
                     sheet_steps: "How to use",
@@ -2292,7 +2372,7 @@
                 }
 
                 if (save) {
-                    try { localStorage.setItem('finelab_lang', lang); } catch (e) {}
+                    try { localStorage.setItem('finelab_lang', lang); } catch (e) { }
                 }
             }
 
@@ -2301,7 +2381,7 @@
                 try {
                     var saved = localStorage.getItem('finelab_lang');
                     if (saved === 'id' || saved === 'en') return saved;
-                } catch (e) {}
+                } catch (e) { }
 
                 // 2. Browser language check
                 var navLang = (navigator.language || (navigator.languages && navigator.languages[0]) || '').toLowerCase();
@@ -2311,7 +2391,7 @@
                 try {
                     var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
                     if (/Jakarta|Makassar|Jayapura|Pontianak/i.test(tz)) return 'id';
-                } catch (e) {}
+                } catch (e) { }
 
                 // Default for non-Indonesia: English
                 return 'en';
@@ -2334,9 +2414,9 @@
                                 }
                             }
                         })
-                        .catch(function () {});
+                        .catch(function () { });
                 }
-            } catch (e) {}
+            } catch (e) { }
 
             // Floating button click toggle
             var langBtn = document.getElementById('lang-btn');
