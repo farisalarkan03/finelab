@@ -10,6 +10,9 @@
     <meta name="theme-color" content="#fbfbfd">
     <link rel="icon" type="image/png" href="img/Logo.png">
     <link rel="apple-touch-icon" href="img/Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap" rel="stylesheet">
     <style>
         /* ===== Token: Fibonacci spacing, skala tipe φ (1.618), grid 1 : φ ===== */
         :root {
@@ -1496,6 +1499,351 @@
                 aspect-ratio: 16 / 9;
             }
         }
+
+        /* ===== Material Symbols Rounded ===== */
+        .ms {
+            font-family: "Material Symbols Rounded";
+            font-weight: normal;
+            font-style: normal;
+            font-size: inherit;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            vertical-align: middle;
+        }
+
+        /* ===== Blog Section Styles ===== */
+        .blog-section-head {
+            margin-bottom: var(--s4);
+        }
+
+        .blog-pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            font-size: .75rem;
+            font-weight: 600;
+            background: rgba(0, 113, 227, .09);
+            color: var(--blue);
+            margin-bottom: var(--s2);
+            letter-spacing: .02em;
+        }
+
+        .blog-pill-tag .ms {
+            font-size: 15px;
+        }
+
+        .blog-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 44px rgba(0, 0, 0, .09);
+            border-color: rgba(0, 113, 227, .35);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .blog-pill-tag {
+                background: rgba(41, 151, 255, .15);
+                color: var(--blue);
+            }
+            .blog-card:hover {
+                box-shadow: 0 18px 50px rgba(0, 0, 0, .6);
+                border-color: rgba(41, 151, 255, .4);
+            }
+        }
+
+        .blog-card-link {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media (max-width: 860px) {
+            .blog-card-link {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .blog-card-visual {
+            background: linear-gradient(145deg, #0d1117 0%, #161b22 100%);
+            padding: var(--s4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 280px;
+        }
+
+        .blog-visual-glow {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 113, 227, .4) 0%, rgba(124, 58, 237, .25) 50%, transparent 70%);
+            filter: blur(35px);
+            pointer-events: none;
+        }
+
+        .blog-preview-mockup {
+            width: 100%;
+            max-width: 330px;
+            background: rgba(22, 27, 34, 0.92);
+            border: 1px solid rgba(255, 255, 255, .14);
+            border-radius: 16px;
+            padding: 14px 16px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .mockup-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-bottom: 9px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .mock-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .mock-dot.red { background: #ff5f57; }
+        .mock-dot.yellow { background: #febc2e; }
+        .mock-dot.green { background: #28c840; }
+
+        .mock-title {
+            margin-left: auto;
+            font-size: 0.6875rem;
+            color: #8b949e;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        .mockup-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.75rem;
+            line-height: 1.45;
+        }
+
+        .mockup-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #79c0ff;
+        }
+
+        .mockup-step.ai {
+            color: #d2a8ff;
+        }
+
+        .mockup-step .ms {
+            font-size: 14px;
+        }
+
+        .mockup-sub-box {
+            margin-top: 6px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(52, 199, 89, 0.35);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .mockup-sub-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #56d364;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            margin-bottom: 4px;
+        }
+
+        .mockup-sub-tag .ms {
+            font-size: 12px;
+        }
+
+        .mockup-sub-text {
+            color: #fff;
+            font-size: 0.8125rem;
+            font-family: var(--font);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .blog-card-body {
+            padding: var(--s4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--s2);
+            flex-wrap: wrap;
+            margin-bottom: var(--s2);
+        }
+
+        .blog-meta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: .75rem;
+            font-weight: 600;
+        }
+
+        .blog-meta-badge .ms {
+            font-size: 14px;
+        }
+
+        .blog-meta-badge.free {
+            background: rgba(52, 199, 89, .12);
+            color: #2ea043;
+            border: 1px solid rgba(52, 199, 89, .25);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .blog-meta-badge.free {
+                background: rgba(52, 199, 89, .2);
+                color: #34c759;
+            }
+        }
+
+        .blog-meta-badge.ai {
+            background: rgba(124, 58, 237, .12);
+            color: #7c3aed;
+            border: 1px solid rgba(124, 58, 237, .25);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .blog-meta-badge.ai {
+                background: rgba(167, 139, 250, .2);
+                color: #a78bfa;
+            }
+        }
+
+        .blog-meta-badge.time {
+            color: var(--ink2);
+            font-weight: 500;
+            padding: 0;
+            font-size: .8125rem;
+        }
+
+        .blog-card-title {
+            font-size: clamp(1.2rem, 1rem + .8vw, 1.45rem);
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -.02em;
+            color: var(--ink);
+            margin-bottom: var(--s2);
+            transition: color .2s;
+        }
+
+        .blog-card:hover .blog-card-title {
+            color: var(--blue);
+        }
+
+        .blog-card-desc {
+            font-size: .9375rem;
+            color: var(--ink2);
+            line-height: 1.55;
+            margin-bottom: var(--s3);
+        }
+
+        .blog-card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: var(--s3);
+            border-top: 1px solid var(--line);
+            margin-top: auto;
+            flex-wrap: wrap;
+            gap: var(--s2);
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .blog-author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .blog-author-avatar .ms {
+            font-size: 18px;
+        }
+
+        .blog-author-info {
+            display: flex;
+            flex-direction: column;
+            font-size: .8125rem;
+            line-height: 1.25;
+        }
+
+        .blog-author-name {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .blog-author-label {
+            color: var(--ink2);
+            font-size: .75rem;
+        }
+
+        .blog-cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--blue);
+            font-weight: 600;
+            font-size: .875rem;
+            transition: gap .2s ease;
+        }
+
+        .blog-card:hover .blog-cta-link {
+            gap: 10px;
+        }
     </style>
 </head>
 
@@ -1558,6 +1906,7 @@
             <a href="#top" class="logo" aria-label="FineLab">Fine<b>Lab</b></a>
             <div class="links">
                 <a href="#produk" data-i18n="nav_products">Produk</a>
+                <a href="#blog" data-i18n="nav_blog">Blog</a>
                 <a href="#faq" data-i18n="nav_faq">FAQ</a>
                 <a href="#produk" class="btn p" data-i18n="nav_collection">Koleksi</a>
             </div>
@@ -1610,6 +1959,80 @@
                                 <use href="#arrow" />
                             </svg></span>
                     </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog">
+            <div class="wrap">
+                <div class="blog-section-head">
+                    <span class="blog-pill-tag">
+                        <span class="ms">auto_awesome</span>
+                        <span data-i18n="sec_blog_badge">Artikel & Update</span>
+                    </span>
+                    <h2 data-i18n="sec_blog_h2">Blog & Tutorial</h2>
+                    <p class="sub" data-i18n="sec_blog_sub">Rekomendasi plugin dan tips editing DaVinci Resolve untuk boost workflow kamu.</p>
+                </div>
+
+                <div class="blog-card">
+                    <a href="blog-autosubs.html" class="blog-card-link" aria-label="Baca artikel Autosubs">
+                        <div class="blog-card-visual">
+                            <div class="blog-visual-glow"></div>
+                            <div class="blog-preview-mockup">
+                                <div class="mockup-header">
+                                    <span class="mock-dot red"></span>
+                                    <span class="mock-dot yellow"></span>
+                                    <span class="mock-dot green"></span>
+                                    <span class="mock-title">autosubs-generator.py</span>
+                                </div>
+                                <div class="mockup-content">
+                                    <div class="mockup-step"><span class="ms">mic</span> [Audio] Analyzing speech...</div>
+                                    <div class="mockup-step ai"><span class="ms">auto_awesome</span> [Whisper AI] Generating subtitles...</div>
+                                    <div class="mockup-sub-box">
+                                        <div class="mockup-sub-tag"><span class="ms">check_circle</span> Subtitle Auto-Synced</div>
+                                        <div class="mockup-sub-text">"Cukup sekali klik, subtitle langsung muncul di timeline!"</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-card-body">
+                            <div>
+                                <div class="blog-card-meta">
+                                    <span class="blog-meta-badge free">
+                                        <span class="ms">redeem</span>
+                                        <span data-i18n="blog_badge_free">100% Gratis</span>
+                                    </span>
+                                    <span class="blog-meta-badge ai">
+                                        <span class="ms">bolt</span>
+                                        <span>AI Whisper</span>
+                                    </span>
+                                    <span class="blog-meta-badge time">
+                                        <span class="ms" style="font-size:15px;margin-right:2px">schedule</span>
+                                        <span data-i18n="blog_read_time">5 mnt baca</span>
+                                    </span>
+                                </div>
+                                <h3 class="blog-card-title" data-i18n="blog_autosubs_title">
+                                    Autosubs — Plugin Subtitle Otomatis DaVinci Resolve Berbasis AI Whisper
+                                </h3>
+                                <p class="blog-card-desc" data-i18n="blog_autosubs_desc">
+                                    Buat subtitle otomatis super cepat & presisi tanpa biaya langganan bulanan. Menggunakan model AI Whisper offline yang aman, karya open-source dari Tim Moroney.
+                                </p>
+                            </div>
+                            <div class="blog-card-foot">
+                                <div class="blog-author">
+                                    <div class="blog-author-avatar"><span class="ms">person</span></div>
+                                    <div class="blog-author-info">
+                                        <span class="blog-author-name">Tim Moroney / FineLab</span>
+                                        <span class="blog-author-label" data-i18n="blog_author_by">Rekomendasi Plugin Gratis</span>
+                                    </div>
+                                </div>
+                                <span class="blog-cta-link">
+                                    <span data-i18n="blog_read_more">Baca selengkapnya</span>
+                                    <svg class="i"><use href="#arrow" /></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -2248,6 +2671,7 @@
                 id: {
                     page_title: "FineLab — Plugin untuk DaVinci Resolve",
                     nav_products: "Produk",
+                    nav_blog: "Blog",
                     nav_faq: "FAQ",
                     nav_collection: "Koleksi",
                     hero_h1: " Cukup sekali drag.",
@@ -2255,6 +2679,15 @@
                     hero_cta: "Lihat koleksi",
                     sec_prod_h2: "Koleksi plugin",
                     sec_prod_sub: "Satu per satu, untuk satu pekerjaan.",
+                    sec_blog_badge: "Artikel & Update",
+                    sec_blog_h2: "Blog & Tutorial",
+                    sec_blog_sub: "Rekomendasi plugin dan tips editing DaVinci Resolve untuk boost workflow kamu.",
+                    blog_badge_free: "100% Gratis",
+                    blog_read_time: "5 mnt baca",
+                    blog_autosubs_title: "Autosubs — Plugin Subtitle Otomatis DaVinci Resolve Berbasis AI Whisper",
+                    blog_autosubs_desc: "Buat subtitle otomatis super cepat & presisi tanpa biaya langganan bulanan. Menggunakan model AI Whisper offline yang aman, karya open-source dari Tim Moroney.",
+                    blog_author_by: "Rekomendasi Plugin Gratis",
+                    blog_read_more: "Baca selengkapnya",
                     tag_upcoming: "Segera Hadir",
                     tag_free: "Gratis",
                     fm_card_desc: "Animasi teks dan shape dengan banyak opsi: Slide, Bounce, Flicker, Shake, dan Blur.",
@@ -2297,6 +2730,7 @@
                 en: {
                     page_title: "FineLab — Plugins for DaVinci Resolve",
                     nav_products: "Products",
+                    nav_blog: "Blog",
                     nav_faq: "FAQ",
                     nav_collection: "Collection",
                     hero_h1: " Just drag and drop.",
@@ -2304,6 +2738,15 @@
                     hero_cta: "Explore collection",
                     sec_prod_h2: "Plugin collection",
                     sec_prod_sub: "One by one, built for one job.",
+                    sec_blog_badge: "Articles & Updates",
+                    sec_blog_h2: "Blog & Tutorials",
+                    sec_blog_sub: "Plugin recommendations and DaVinci Resolve workflow tips.",
+                    blog_badge_free: "100% Free",
+                    blog_read_time: "5 min read",
+                    blog_autosubs_title: "Autosubs — Free Automatic Subtitle Plugin for DaVinci Resolve",
+                    blog_autosubs_desc: "Generate accurate subtitles automatically in seconds with zero subscription fees. Powered by OpenAI Whisper offline, created open-source by Tim Moroney.",
+                    blog_author_by: "Free Plugin Recommendation",
+                    blog_read_more: "Read article",
                     tag_upcoming: "Coming Soon",
                     tag_free: "Free",
                     fm_card_desc: "Text and shape animations with versatile styles: Slide, Bounce, Flicker, Shake, and Blur.",
