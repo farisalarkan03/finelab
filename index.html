@@ -1591,120 +1591,31 @@
         }
 
         .blog-card-visual {
-            background: linear-gradient(145deg, #0d1117 0%, #161b22 100%);
-            padding: var(--s4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
-            min-height: 280px;
+            min-height: 260px;
+            background: #0d1117;
         }
 
-        .blog-visual-glow {
-            position: absolute;
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 113, 227, .4) 0%, rgba(124, 58, 237, .25) 50%, transparent 70%);
-            filter: blur(35px);
-            pointer-events: none;
-        }
-
-        .blog-preview-mockup {
+        .blog-card-visual img {
             width: 100%;
-            max-width: 330px;
-            background: rgba(22, 27, 34, 0.92);
-            border: 1px solid rgba(255, 255, 255, .14);
-            border-radius: 16px;
-            padding: 14px 16px;
-            box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 1;
+            height: 100%;
+            min-height: 260px;
+            object-fit: cover;
+            object-position: top left;
+            display: block;
+            transition: transform .5s cubic-bezier(.16,1,.3,1);
         }
 
-        .mockup-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding-bottom: 9px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        .blog-card:hover .blog-card-visual img {
+            transform: scale(1.04);
         }
 
-        .mock-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-        }
-
-        .mock-dot.red { background: #ff5f57; }
-        .mock-dot.yellow { background: #febc2e; }
-        .mock-dot.green { background: #28c840; }
-
-        .mock-title {
-            margin-left: auto;
-            font-size: 0.6875rem;
-            color: #8b949e;
-            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        }
-
-        .mockup-content {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 0.75rem;
-            line-height: 1.45;
-        }
-
-        .mockup-step {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #79c0ff;
-        }
-
-        .mockup-step.ai {
-            color: #d2a8ff;
-        }
-
-        .mockup-step .ms {
-            font-size: 14px;
-        }
-
-        .mockup-sub-box {
-            margin-top: 6px;
-            background: rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(52, 199, 89, 0.35);
-            border-radius: 10px;
-            padding: 10px 12px;
-        }
-
-        .mockup-sub-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: #56d364;
-            text-transform: uppercase;
-            letter-spacing: .05em;
-            margin-bottom: 4px;
-        }
-
-        .mockup-sub-tag .ms {
-            font-size: 12px;
-        }
-
-        .mockup-sub-text {
-            color: #fff;
-            font-size: 0.8125rem;
-            font-family: var(--font);
-            font-weight: 500;
-            line-height: 1.4;
+        .blog-visual-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.55) 100%);
+            pointer-events: none;
         }
 
         .blog-card-body {
@@ -1999,23 +1910,8 @@
                 <div class="blog-card">
                     <a href="blog-autosubs.html" class="blog-card-link" aria-label="Baca artikel Autosubs">
                         <div class="blog-card-visual">
-                            <div class="blog-visual-glow"></div>
-                            <div class="blog-preview-mockup">
-                                <div class="mockup-header">
-                                    <span class="mock-dot red"></span>
-                                    <span class="mock-dot yellow"></span>
-                                    <span class="mock-dot green"></span>
-                                    <span class="mock-title">autosubs-generator.py</span>
-                                </div>
-                                <div class="mockup-content">
-                                    <div class="mockup-step"><span class="ms">mic</span> [Audio] Analyzing speech...</div>
-                                    <div class="mockup-step ai"><span class="ms">auto_awesome</span> [Whisper AI] Generating subtitles...</div>
-                                    <div class="mockup-sub-box">
-                                        <div class="mockup-sub-tag"><span class="ms">check_circle</span> Subtitle Auto-Synced</div>
-                                        <div class="mockup-sub-text">"Cukup sekali klik, subtitle langsung muncul di timeline!"</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <img src="img/autosubs.png" alt="Autosubs — Plugin Subtitle DaVinci Resolve" loading="lazy">
+                            <div class="blog-visual-overlay"></div>
                         </div>
                         <div class="blog-card-body">
                             <div>
