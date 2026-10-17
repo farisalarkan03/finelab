@@ -88,16 +88,14 @@
             display: flex; align-items: center; justify-content: space-between; gap: 12px;
         }
         .logo {
-            font-weight: 700; font-size: 1.25rem; letter-spacing: -.03em;
-            display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -.03em;
         }
-        .logo b { color: var(--blue); font-weight: 800; }
-        .logo-sub {
-            font-size: .6875rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;
-            background: rgba(0, 113, 227, .12); color: var(--blue); letter-spacing: .04em; text-transform: uppercase;
-        }
-        @media (prefers-color-scheme: dark) {
-            .logo-sub { background: rgba(41, 151, 255, .2); color: var(--blue); }
+
+        .logo b {
+            color: var(--blue);
+            font-weight: 800;
         }
         .nav-links { display: flex; align-items: center; gap: var(--s3); font-size: .8125rem; color: var(--ink2); flex-shrink: 0; }
         .nav-links a:hover { color: var(--ink); }
@@ -337,7 +335,7 @@
 
 <nav>
     <div class="wrap-wide">
-        <a href="index.html" class="logo" aria-label="FineLab">Fine<b>Lab</b> <span class="logo-sub">Blog</span></a>
+        <a href="index.html" class="logo" aria-label="FineLab">Fine<b>Lab</b></a>
         <div class="nav-links">
             <a href="index.html" class="nav-back"><span class="ms">arrow_back</span> Beranda</a>
             <a href="index.html#produk" class="nav-link-item">Produk</a>
