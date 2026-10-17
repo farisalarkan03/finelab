@@ -8,14 +8,12 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-K4HS5XNDVE');
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Autosubs — Plugin Subtitle Gratis DaVinci Resolve | FineLab Blog</title>
-    <meta name="description"
-        content="Panduan praktis Autosubs: plugin otomatisasi subtitle DaVinci Resolve gratis berbasis AI Whisper. Cara instalasi mudah di macOS via Homebrew dan Windows.">
+    <meta name="description" content="Panduan praktis Autosubs: plugin otomatisasi subtitle DaVinci Resolve gratis berbasis AI Whisper. Cara instalasi mudah di macOS via Homebrew dan Windows.">
     <meta name="theme-color" content="#fbfbfd">
     <link rel="icon" type="image/png" href="img/Logo.png">
     <link rel="apple-touch-icon" href="img/Logo.png">
@@ -39,7 +37,6 @@
             --purple: #7c3aed; --purple-bg: rgba(124,58,237,.1);
             --amber: #f59e0b; --amber-bg: rgba(245,158,11,.1);
         }
-
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #000; --bg2: #161617; --card: #1c1c1e;
@@ -54,214 +51,94 @@
                 --amber: #fbbf24; --amber-bg: rgba(251,191,36,.15);
             }
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 70px; overflow-x: hidden; }
         body { font-family: var(--font); font-size: 1.0625rem; line-height: 1.65; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%; }
         a { color: inherit; text-decoration: none; }
         :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 12px; }
-
         .wrap { width: min(740px, 100% - 32px); margin-inline: auto; }
         .wrap-wide { width: min(1080px, 100% - 32px); margin-inline: auto; }
-
-        .ms {
-            font-family: "Material Symbols Rounded";
-            font-weight: normal; font-style: normal; font-size: inherit; line-height: 1;
-            letter-spacing: normal; text-transform: none; display: inline-block;
-            white-space: nowrap; word-wrap: normal; direction: ltr;
-            -webkit-font-smoothing: antialiased; vertical-align: middle;
-        }
-
-        svg.i { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-
-        /* NAV */
-        nav {
-            position: sticky; top: 0; z-index: 100;
-            padding-top: env(safe-area-inset-top, 0);
-            background: var(--nav);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 1px solid var(--line);
-        }
-        nav .wrap-wide {
-            height: var(--s5);
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        }
-        .logo {
-            font-weight: 700;
-            font-size: 1.25rem;
-            letter-spacing: -.03em;
-        }
-
-        .logo b {
-            color: var(--blue);
-            font-weight: 800;
-        }
-        .nav-links { display: flex; align-items: center; gap: var(--s3); font-size: .8125rem; color: var(--ink2); flex-shrink: 0; }
+        .ms { font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; font-size: inherit; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; vertical-align: middle; }
+        nav { position: sticky; top: 0; z-index: 100; padding-top: env(safe-area-inset-top, 0); background: var(--nav); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--line); }
+        nav .wrap-wide { height: var(--s5); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .logo { font-weight: 700; font-size: 1.25rem; letter-spacing: -.03em; }
+        .logo b { color: var(--blue); font-weight: 800; }
+        .nav-links { display: flex; align-items: center; gap: var(--s2); font-size: .8125rem; color: var(--ink2); flex-shrink: 0; }
         .nav-links a:hover { color: var(--ink); }
-        .nav-back {
-            display: none; align-items: center; gap: 4px; font-weight: 600; color: var(--ink);
-            padding: 6px 12px; border-radius: 999px; background: var(--bg2); border: 1px solid var(--line);
-            transition: background .2s, color .2s;
-        }
+        .nav-back { display: none; align-items: center; gap: 4px; font-weight: 600; color: var(--ink); padding: 6px 12px; border-radius: 999px; background: var(--bg2); border: 1px solid var(--line); transition: background .2s, color .2s; }
         .nav-back .ms { font-size: 16px; }
-        .nav-back:hover { background: rgba(0, 113, 227, .1); color: var(--blue); }
-
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: var(--s1);
-            min-height: 44px; padding: 0 var(--s3); border-radius: 999px; font: inherit; font-weight: 600;
-            border: 0; cursor: pointer; transition: background .25s, transform .25s var(--ease); text-decoration: none;
-        }
+        .nav-back:hover { background: rgba(0,113,227,.1); color: var(--blue); }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--s1); min-height: 44px; padding: 0 var(--s3); border-radius: 999px; font: inherit; font-weight: 600; border: 0; cursor: pointer; transition: background .25s, transform .25s var(--ease); text-decoration: none; }
         .btn:active { transform: scale(.97); }
         .btn.p { background: var(--blue); color: #fff; }
         .btn.p:hover { background: var(--blue-h); }
         nav .btn { min-height: 34px; padding: 0 var(--s2); font-size: .8125rem; }
-
-        /* HERO */
-        .blog-hero {
-            padding: var(--s6) 0 var(--s4);
-            position: relative; overflow: hidden;
-            text-align: left;
-        }
-        .blog-hero::before {
-            content: ""; position: absolute; inset: 0;
-            background: radial-gradient(ellipse 65% 55% at 50% -10%, rgba(0, 113, 227, .12) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .blog-meta {
-            display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s3);
-        }
-        .badge {
-            display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px;
-            font-size: .75rem; font-weight: 600; letter-spacing: .01em;
-        }
+        .lang-toggle { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; height: 30px; padding: 0 10px; border-radius: 999px; font-family: var(--font); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+        .lang-toggle:hover { background: rgba(0,113,227,.1); color: var(--blue); border-color: rgba(0,113,227,.3); }
+        .blog-hero { padding: var(--s6) 0 var(--s4); position: relative; overflow: hidden; text-align: left; }
+        .blog-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 65% 55% at 50% -10%, rgba(0,113,227,.12) 0%, transparent 70%); pointer-events: none; }
+        .blog-meta { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s3); }
+        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; font-size: .75rem; font-weight: 600; letter-spacing: .01em; }
         .badge .ms { font-size: 14px; }
         .badge.free { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,199,89,.25); }
         .badge.ai { background: rgba(124,58,237,.12); color: var(--purple); border: 1px solid rgba(124,58,237,.25); }
         .badge.tool { background: var(--bg2); color: var(--ink2); border: 1px solid var(--line); }
-
         .blog-date { font-size: .8125rem; color: var(--ink2); display: flex; align-items: center; gap: 5px; }
         .blog-date .ms { font-size: 15px; opacity: .7; }
-
-        .blog-hero h1 {
-            font-size: clamp(2rem, 1.3rem + 3vw, 3.2rem);
-            line-height: 1.1; letter-spacing: -.035em; font-weight: 800; word-break: break-word;
-        }
-        .blog-hero h1 .accent {
-            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .blog-hero .lead {
-            margin-top: var(--s3); font-size: clamp(1.05rem, .95rem + .6vw, 1.25rem);
-            color: var(--ink2); line-height: 1.5; max-width: 58ch;
-        }
-
+        .blog-hero h1 { font-size: clamp(2rem, 1.3rem + 3vw, 3.2rem); line-height: 1.1; letter-spacing: -.035em; font-weight: 800; word-break: break-word; }
+        .blog-hero h1 .accent { background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .blog-hero .lead { margin-top: var(--s3); font-size: clamp(1.05rem, .95rem + .6vw, 1.25rem); color: var(--ink2); line-height: 1.5; max-width: 58ch; }
         .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s4); }
-        .btn-gh {
-            display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px;
-            border-radius: 14px; font-weight: 600; font-size: .9375rem;
-            transition: transform .25s var(--ease), box-shadow .25s; text-decoration: none;
-        }
+        .btn-gh { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 14px; font-weight: 600; font-size: .9375rem; transition: transform .25s var(--ease), box-shadow .25s; text-decoration: none; }
         .btn-gh .ms { font-size: 20px; }
         .btn-gh.primary { background: var(--ink); color: var(--bg); box-shadow: 0 4px 18px rgba(0,0,0,.15); }
         .btn-gh.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(0,0,0,.22); }
         .btn-gh.secondary { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
         .btn-gh.secondary:hover { transform: translateY(-2px); background: var(--bg2); }
-
-        /* CONTENT */
+        .hero-image-wrap { margin-top: var(--s4); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,.05), 0 24px 64px rgba(0,0,0,.14); border: 1px solid var(--line); }
+        .hero-image-wrap img { width: 100%; height: auto; display: block; }
         .blog-content { padding: var(--s5) 0 var(--s6); }
         .blog-content > .wrap > * + * { margin-top: var(--s5); }
-
-        h2 {
-            font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.85rem);
-            font-weight: 700; letter-spacing: -.03em; line-height: 1.25; margin-bottom: var(--s2);
-            word-break: break-word;
-        }
+        h2 { font-size: clamp(1.4rem, 1.1rem + 1.2vw, 1.85rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.25; margin-bottom: var(--s2); word-break: break-word; }
         p { color: var(--ink); line-height: 1.7; word-break: break-word; }
-
-        /* SUMMARY HIGHLIGHTS */
-        .highlight-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-            gap: var(--s2); margin-top: var(--s3);
-        }
-        .highlight-card {
-            background: var(--card); border: 1px solid var(--line); border-radius: 16px;
-            padding: var(--s3); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px;
-        }
+        .content-image-wrap { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+        .content-image-wrap img { width: 100%; height: auto; display: block; }
+        .img-caption { padding: 10px 16px; font-size: .8125rem; color: var(--ink2); text-align: center; background: var(--bg2); border-top: 1px solid var(--line); }
+        .highlight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--s2); margin-top: var(--s3); }
+        .highlight-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: var(--s3); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 6px; }
         .highlight-card .ms { font-size: 24px; color: var(--blue); }
         .highlight-card strong { font-size: .95rem; font-weight: 600; color: var(--ink); }
         .highlight-card span { font-size: .85rem; color: var(--ink2); line-height: 1.45; }
-
-        /* OS INSTALL TABS / SECTIONS */
-        .install-box {
-            background: var(--card); border: 1px solid var(--line); border-radius: 20px;
-            overflow: hidden; box-shadow: var(--shadow); margin-top: var(--s3);
-        }
-        .install-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px var(--s3); background: var(--bg2); border-bottom: 1px solid var(--line);
-        }
-        .install-title {
-            display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .95rem;
-        }
-        .install-title .ms { font-size: 20px; color: var(--blue); }
-        .install-badge {
-            font-size: .72rem; font-weight: 700; text-transform: uppercase;
-            padding: 2px 8px; border-radius: 6px; background: rgba(0,113,227,.12); color: var(--blue);
-        }
+        .install-box { background: var(--card); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); margin-top: var(--s3); }
+        .install-header { display: flex; align-items: center; justify-content: space-between; padding: 14px var(--s3); background: var(--bg2); border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 8px; }
+        .install-title { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .95rem; flex: 1; min-width: 0; }
+        .install-title .ms { font-size: 20px; color: var(--blue); flex-shrink: 0; }
+        .install-badge { font-size: .72rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: rgba(0,113,227,.12); color: var(--blue); flex-shrink: 0; }
         .install-body { padding: var(--s3); display: flex; flex-direction: column; gap: var(--s3); }
-
         .install-step-item { display: flex; gap: 12px; align-items: flex-start; }
-        .step-badge {
-            width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: #fff;
-            display: grid; place-items: center; font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
-        }
+        .step-badge { width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
         .step-desc { flex: 1; min-width: 0; font-size: .92rem; line-height: 1.55; }
         .step-desc strong { color: var(--ink); display: block; margin-bottom: 4px; }
-
-        /* CODE BOX */
-        .code-box {
-            background: #0d1117; color: #79c0ff; border-radius: 10px;
-            padding: 10px 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: .8125rem; line-height: 1.5; margin-top: 6px;
-            overflow-x: auto; -webkit-overflow-scrolling: touch; word-break: break-all;
-            white-space: pre-wrap; border: 1px solid #30363d; display: flex; align-items: center; justify-content: space-between;
-            gap: 10px;
-        }
-        .code-box code { color: #56d364; flex: 1; min-width: 0; }
+        .step-desc span { display: block; }
+        .code-box { background: #0d1117; border-radius: 10px; padding: 10px 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8125rem; line-height: 1.5; margin-top: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: pre; border: 1px solid #30363d; display: block; max-width: 100%; }
+        .code-box code { color: #56d364; display: block; }
         .code-box code.cmd { color: #e1e4e8; }
         .code-box code.cmd span.c-blue { color: #79c0ff; }
         .code-box code.cmd span.c-purple { color: #d2a8ff; }
-
-        /* RESOLVE FINAL STEP */
-        .resolve-run-box {
-            background: linear-gradient(135deg, rgba(0, 113, 227, .06) 0%, rgba(124, 58, 237, .06) 100%);
-            border: 1px solid rgba(0, 113, 227, .25); border-radius: 18px;
-            padding: var(--s3); margin-top: var(--s3);
-        }
+        .resolve-run-box { background: linear-gradient(135deg, rgba(0,113,227,.06) 0%, rgba(124,58,237,.06) 100%); border: 1px solid rgba(0,113,227,.25); border-radius: 18px; padding: var(--s3); margin-top: var(--s3); }
         .resolve-run-head { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
         .resolve-run-head .ms { font-size: 22px; }
-
-        /* MODEL TIPS CALLOUT */
-        .callout {
-            border-radius: 16px; padding: var(--s3); border: 1px solid;
-            display: flex; gap: var(--s2); align-items: flex-start;
-        }
+        .callout { border-radius: 16px; padding: var(--s3); border: 1px solid; display: flex; gap: var(--s2); align-items: flex-start; }
         .callout.success { background: var(--green-bg); border-color: rgba(52,199,89,.3); }
         .callout-icon { flex-shrink: 0; line-height: 1; margin-top: 2px; }
         .callout-icon .ms { font-size: 24px; color: var(--green); }
         .callout-body { flex: 1; min-width: 0; }
-        .callout-body strong { display: block; margin-bottom: 6px; font-weight: 600; font-size: .95rem; }
+        .callout-body > strong { display: block; margin-bottom: 6px; font-weight: 600; font-size: .95rem; }
         .callout-body p { font-size: .9rem; line-height: 1.6; color: var(--ink); }
         .model-pill-list { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; font-size: .88rem; }
         .model-pill-list li { list-style: none; display: flex; align-items: baseline; gap: 6px; }
         .model-pill-list li .ms { font-size: 14px; color: var(--green); flex-shrink: 0; }
-
-        /* TABLE */
-        .comp-table-wrap {
-            width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
-            border-radius: 16px; border: 1px solid var(--line); box-shadow: var(--shadow); margin-top: var(--s3);
-        }
+        .comp-table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 16px; border: 1px solid var(--line); box-shadow: var(--shadow); margin-top: var(--s3); }
         .comp-table { width: 100%; min-width: 480px; border-collapse: collapse; }
         .comp-table thead { background: var(--bg2); }
         .comp-table th { padding: 12px 16px; text-align: left; font-size: .82rem; font-weight: 700; color: var(--ink2); text-transform: uppercase; letter-spacing: .02em; }
@@ -270,50 +147,24 @@
         .check .ms { font-size: 16px; }
         .cross { color: #ff3b30; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
         .cross .ms { font-size: 16px; }
-
-        /* CREATOR MINI */
-        .creator-box {
-            background: var(--card); border: 1px solid var(--line); border-radius: 18px;
-            padding: var(--s3); box-shadow: var(--shadow); display: flex; gap: var(--s3); align-items: center;
-        }
-        .creator-avatar {
-            width: 54px; height: 54px; border-radius: 50%;
-            background: linear-gradient(135deg, #0071e3 0%, #7c3aed 100%);
-            display: grid; place-items: center; flex-shrink: 0; color: #fff;
-        }
+        .creator-box { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: var(--s3); box-shadow: var(--shadow); display: flex; gap: var(--s3); align-items: center; }
+        .creator-avatar { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #0071e3 0%, #7c3aed 100%); display: grid; place-items: center; flex-shrink: 0; color: #fff; }
         .creator-avatar .ms { font-size: 28px; }
         .creator-info { flex: 1; min-width: 0; }
         .creator-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 2px; }
         .creator-info p { font-size: .85rem; color: var(--ink2); line-height: 1.5; margin-bottom: 6px; }
-        .creator-link {
-            display: inline-flex; align-items: center; gap: 5px; font-size: .8125rem; font-weight: 600; color: var(--blue);
-        }
+        .creator-link { display: inline-flex; align-items: center; gap: 5px; font-size: .8125rem; font-weight: 600; color: var(--blue); }
         .creator-link:hover { text-decoration: underline; }
-
-        /* DOWNLOAD BANNER */
-        .download-banner {
-            border-radius: 24px; padding: var(--s4) var(--s3);
-            background: linear-gradient(135deg, #0071e3 0%, #7c3aed 100%);
-            text-align: center; color: #fff; box-shadow: 0 12px 36px rgba(0, 113, 227, .25);
-        }
+        .download-banner { border-radius: 24px; padding: var(--s4) var(--s3); background: linear-gradient(135deg, #0071e3 0%, #7c3aed 100%); text-align: center; color: #fff; box-shadow: 0 12px 36px rgba(0,113,227,.25); }
         .download-banner h2 { font-size: clamp(1.4rem, 1.1rem + 1.5vw, 1.85rem); margin-bottom: 6px; color: #fff; }
         .download-banner p { font-size: .95rem; opacity: .9; max-width: 44ch; margin: 0 auto var(--s3); color: #fff; }
-        .btn-white {
-            display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px;
-            font-weight: 700; font-size: .95rem; background: #fff; color: #1d1d1f; text-decoration: none;
-            transition: transform .25s var(--ease), box-shadow .25s;
-        }
+        .btn-white { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: .95rem; background: #fff; color: #1d1d1f; text-decoration: none; transition: transform .25s var(--ease), box-shadow .25s; }
         .btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
-
         .divider { height: 1px; background: var(--line); border: none; }
-
-        /* FOOTER */
         footer { padding: var(--s4) 0; border-top: 1px solid var(--line); font-size: .8125rem; color: var(--ink2); }
         .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--s2); }
-        .footer-links { display: flex; gap: var(--s3); }
+        .footer-links { display: flex; gap: var(--s3); flex-wrap: wrap; }
         .footer-links a:hover { color: var(--ink); }
-
-        /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
             nav .wrap-wide { height: 52px; }
             .nav-link-item { display: none !important; }
@@ -324,9 +175,10 @@
             .blog-hero h1 { font-size: 1.85rem; }
             .hero-cta { flex-direction: column; }
             .btn-gh { width: 100%; justify-content: center; }
+            .hero-image-wrap { border-radius: 14px; }
             .creator-box { flex-direction: column; text-align: center; }
             .footer-inner { flex-direction: column; text-align: center; }
-            .footer-links { justify-content: center; flex-wrap: wrap; gap: 12px; }
+            .footer-links { justify-content: center; gap: 12px; }
         }
     </style>
 </head>
@@ -337,12 +189,16 @@
     <div class="wrap-wide">
         <a href="index.html" class="logo" aria-label="FineLab">Fine<b>Lab</b></a>
         <div class="nav-links">
-            <a href="index.html" class="nav-back"><span class="ms">arrow_back</span> Beranda</a>
-            <a href="index.html#produk" class="nav-link-item">Produk</a>
-            <a href="index.html#blog" class="nav-link-item">Blog</a>
-            <a href="index.html#faq" class="nav-link-item">FAQ</a>
-            <a href="support.html" class="nav-link-item">Support</a>
-            <a href="index.html#produk" class="btn p nav-btn">Koleksi</a>
+            <a href="index.html" class="nav-back" id="nav-back-btn">
+                <span class="ms">arrow_back</span>
+                <span data-i18n="nav_back">Beranda</span>
+            </a>
+            <a href="index.html#produk" class="nav-link-item" data-i18n="nav_products">Produk</a>
+            <a href="index.html#blog" class="nav-link-item" data-i18n="nav_blog">Blog</a>
+            <a href="index.html#faq" class="nav-link-item" data-i18n="nav_faq">FAQ</a>
+            <a href="support.html" class="nav-link-item" data-i18n="nav_support">Support</a>
+            <a href="index.html#produk" class="btn p nav-btn" data-i18n="nav_collection">Koleksi</a>
+            <button class="lang-toggle" id="lang-btn" onclick="toggleLang()">EN</button>
         </div>
     </div>
 </nav>
@@ -352,7 +208,7 @@
         <div class="blog-meta">
             <span class="badge free">
                 <span class="ms">redeem</span>
-                100% Gratis
+                <span data-i18n="badge_free">100% Gratis</span>
             </span>
             <span class="badge ai">
                 <span class="ms">auto_awesome</span>
@@ -364,28 +220,32 @@
             </span>
             <span class="blog-date">
                 <span class="ms">schedule</span>
-                4 menit baca
+                <span data-i18n="badge_read_time">4 menit baca</span>
             </span>
         </div>
 
         <h1>
             <span class="accent">Autosubs</span> &mdash;<br>
-            Plugin Subtitle Gratis untuk DaVinci Resolve
+            <span data-i18n="hero_h1_line2">Plugin Subtitle Gratis untuk DaVinci Resolve</span>
         </h1>
 
-        <p class="lead">
+        <p class="lead" data-i18n="hero_lead">
             Buat subtitle otomatis berakurasi tinggi langsung di timeline DaVinci Resolve dengan AI OpenAI Whisper. Tanpa biaya langganan, tanpa upload cloud, dan 100% open-source.
         </p>
 
         <div class="hero-cta">
             <a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener" class="btn-gh primary" id="hero-download-btn">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                Download di GitHub
+                <span data-i18n="hero_btn_download">Download di GitHub</span>
             </a>
             <a href="#panduan-install" class="btn-gh secondary" id="hero-guide-btn">
                 <span class="ms">menu_book</span>
-                Panduan Install
+                <span data-i18n="hero_btn_guide">Panduan Install</span>
             </a>
+        </div>
+
+        <div class="hero-image-wrap">
+            <img src="img/autosubs.png" alt="Autosubs — Plugin Subtitle DaVinci Resolve" loading="lazy">
         </div>
     </div>
 </header>
@@ -393,50 +253,51 @@
 <main class="blog-content">
     <div class="wrap">
 
-        <!-- RINGKASAN KEUNGGULAN -->
         <section>
-            <h2>Kenapa Menggunakan Autosubs?</h2>
-            <p>
+            <h2 data-i18n="s1_title">Kenapa Menggunakan Autosubs?</h2>
+            <p data-i18n-html="s1_intro">
                 Mengetik dan menyesuaikan subtitle manual seringkali memakan waktu berjam-jam. <strong>Autosubs</strong> (karya Tiernan Moroney) memanfaatkan model pengenal suara AI OpenAI Whisper untuk mentranskripsi audio langsung menjadi node Text+ di DaVinci Resolve.
             </p>
-
             <div class="highlight-grid">
                 <div class="highlight-card">
                     <span class="ms">bolt</span>
-                    <strong>Selesai Hitungan Menit</strong>
-                    <span>Deteksi otomatis jeda bicara dan timestamp audio secara instan.</span>
+                    <strong data-i18n="card1_title">Selesai Hitungan Menit</strong>
+                    <span data-i18n="card1_desc">Deteksi otomatis jeda bicara dan timestamp audio secara instan.</span>
                 </div>
                 <div class="highlight-card">
                     <span class="ms">lock</span>
-                    <strong>100% Offline & Aman</strong>
-                    <span>File audio Anda tidak pernah dikirim ke cloud. Privasi proyek tetap terjaga.</span>
+                    <strong data-i18n="card2_title">100% Offline &amp; Aman</strong>
+                    <span data-i18n="card2_desc">File audio Anda tidak pernah dikirim ke cloud. Privasi proyek tetap terjaga.</span>
                 </div>
                 <div class="highlight-card">
                     <span class="ms">translate</span>
-                    <strong>Bahasa Indonesia & 90+ Lainnya</strong>
-                    <span>Mendukung multi-bahasa dengan akurasi pengenalan kata yang tinggi.</span>
+                    <strong data-i18n="card3_title">Bahasa Indonesia &amp; 90+ Lainnya</strong>
+                    <span data-i18n="card3_desc">Mendukung multi-bahasa dengan akurasi pengenalan kata yang tinggi.</span>
                 </div>
                 <div class="highlight-card">
                     <span class="ms">tune</span>
-                    <strong>Format Native Text+</strong>
-                    <span>Font, warna, animasi, dan posisi teks tetap bisa dikustomisasi sesuka hati.</span>
+                    <strong data-i18n="card4_title">Format Native Text+</strong>
+                    <span data-i18n="card4_desc">Font, warna, animasi, dan posisi teks tetap bisa dikustomisasi sesuka hati.</span>
                 </div>
             </div>
         </section>
 
+        <div class="content-image-wrap">
+            <img src="img/autosubs.png" alt="Autosubs interface inside DaVinci Resolve" loading="lazy">
+            <p class="img-caption" data-i18n="img_caption">Tampilan antarmuka Autosubs di dalam DaVinci Resolve</p>
+        </div>
+
         <hr class="divider">
 
-        <!-- PANDUAN INSTALASI MUDAH -->
         <section id="panduan-install">
-            <h2>Panduan Instalasi Mudah</h2>
-            <p>Pilih sistem operasi yang Anda gunakan untuk setup cepat dalam beberapa langkah:</p>
+            <h2 data-i18n="s2_title">Panduan Instalasi Mudah</h2>
+            <p data-i18n="s2_intro">Pilih sistem operasi yang Anda gunakan untuk setup cepat dalam beberapa langkah:</p>
 
-            <!-- MACOS TAB (HOMEBREW) -->
             <div class="install-box">
                 <div class="install-header">
                     <div class="install-title">
                         <span class="ms">laptop_mac</span>
-                        <span>Instalasi macOS (Paling Praktis via Homebrew)</span>
+                        <span data-i18n="macos_header">Instalasi macOS (Paling Praktis via Homebrew)</span>
                     </div>
                     <span class="install-badge">macOS</span>
                 </div>
@@ -444,50 +305,37 @@
                     <div class="install-step-item">
                         <div class="step-badge">1</div>
                         <div class="step-desc">
-                            <strong>Pasang Python &amp; FFmpeg via Homebrew</strong>
-                            Buka aplikasi <em>Terminal</em> di Mac Anda, lalu jalankan perintah ini:
-                            <div class="code-box">
-                                <code class="cmd">brew install <span class="c-blue">python</span> <span class="c-purple">ffmpeg</span></code>
-                            </div>
+                            <strong data-i18n="macos_s1_title">Pasang Python &amp; FFmpeg via Homebrew</strong>
+                            <span data-i18n="macos_s1_desc">Buka aplikasi Terminal di Mac Anda, lalu jalankan perintah ini:</span>
+                            <div class="code-box"><code class="cmd">brew install <span class="c-blue">python</span> <span class="c-purple">ffmpeg</span></code></div>
                         </div>
                     </div>
-
                     <div class="install-step-item">
                         <div class="step-badge">2</div>
                         <div class="step-desc">
-                            <strong>Download Autosubs &amp; Install Dependensi</strong>
-                            Unduh repositori dan pasang library Whisper dengan dua baris perintah ini:
-                            <div class="code-box">
-                                <code class="cmd">git clone https://github.com/tmoroney/auto-subs.git && cd auto-subs</code>
-                            </div>
-                            <div class="code-box" style="margin-top:6px;">
-                                <code class="cmd">pip3 install -r requirements.txt</code>
-                            </div>
+                            <strong data-i18n="macos_s2_title">Download Autosubs &amp; Install Dependensi</strong>
+                            <span data-i18n="macos_s2_desc">Unduh repositori dan pasang library Whisper dengan dua baris perintah ini:</span>
+                            <div class="code-box"><code class="cmd">git clone https://github.com/tmoroney/auto-subs.git &amp;&amp; cd auto-subs</code></div>
+                            <div class="code-box" style="margin-top:6px;"><code class="cmd">pip3 install -r requirements.txt</code></div>
                         </div>
                     </div>
-
                     <div class="install-step-item">
                         <div class="step-badge">3</div>
                         <div class="step-desc">
-                            <strong>Salin Script ke Folder DaVinci Resolve</strong>
-                            Pindahkan folder script ke direktori DaVinci Resolve dengan perintah terminal ini:
-                            <div class="code-box">
-                                <code class="cmd">cp -r . ~/Library/Application\ Support/Blackmagic\ Design/DaVinci\ Resolve/Fusion/Scripts/Utility/auto-subs</code>
-                            </div>
-                            <span style="font-size:.82rem;color:var(--ink2);display:block;margin-top:4px;">
-                                <em>Atau buka Finder &rarr; Go to Folder (Cmd + Shift + G) lalu paste path di atas dan drag folder auto-subs ke dalamnya.</em>
-                            </span>
+                            <strong data-i18n="macos_s3_title">Salin Script ke Folder DaVinci Resolve</strong>
+                            <span data-i18n="macos_s3_desc">Pindahkan folder script ke direktori DaVinci Resolve dengan perintah terminal ini:</span>
+                            <div class="code-box"><code class="cmd">cp -r . ~/Library/Application\ Support/Blackmagic\ Design/DaVinci\ Resolve/Fusion/Scripts/Utility/auto-subs</code></div>
+                            <span style="font-size:.82rem;color:var(--ink2);display:block;margin-top:6px;"><em data-i18n="macos_s3_hint">Atau buka Finder &rarr; Go to Folder (Cmd + Shift + G) lalu paste path di atas dan drag folder auto-subs ke dalamnya.</em></span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- WINDOWS TAB (WINGET / INSTALLER) -->
             <div class="install-box">
                 <div class="install-header">
                     <div class="install-title">
                         <span class="ms">desktop_windows</span>
-                        <span>Instalasi Windows (Mudah via Winget / CMD)</span>
+                        <span data-i18n="win_header">Instalasi Windows (Mudah via Winget / CMD)</span>
                     </div>
                     <span class="install-badge">Windows</span>
                 </div>
@@ -495,49 +343,38 @@
                     <div class="install-step-item">
                         <div class="step-badge">1</div>
                         <div class="step-desc">
-                            <strong>Pasang Python &amp; FFmpeg</strong>
-                            Buka Command Prompt (CMD) atau PowerShell, lalu jalankan perintah winget:
-                            <div class="code-box">
-                                <code class="cmd">winget install <span class="c-blue">Python.Python.3.11</span> <span class="c-purple">Gyan.FFmpeg</span></code>
-                            </div>
-                            <span style="font-size:.82rem;color:var(--ink2);display:block;margin-top:4px;">
-                                <em>Atau download installer manual di <a href="https://www.python.org/downloads/" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">python.org</a> (pastikan centang opsi <strong>"Add Python to PATH"</strong>).</em>
-                            </span>
+                            <strong data-i18n="win_s1_title">Pasang Python &amp; FFmpeg</strong>
+                            <span data-i18n="win_s1_desc">Buka Command Prompt (CMD) atau PowerShell, lalu jalankan perintah winget:</span>
+                            <div class="code-box"><code class="cmd">winget install <span class="c-blue">Python.Python.3.11</span> <span class="c-purple">Gyan.FFmpeg</span></code></div>
+                            <span style="font-size:.82rem;color:var(--ink2);display:block;margin-top:6px;"><em><span data-i18n="win_s1_hint">Atau download installer manual di </span><a href="https://www.python.org/downloads/" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">python.org</a> &mdash; <span data-i18n="win_s1_hint2">pastikan centang opsi</span> <strong>"Add Python to PATH"</strong>.</em></span>
                         </div>
                     </div>
-
                     <div class="install-step-item">
                         <div class="step-badge">2</div>
                         <div class="step-desc">
-                            <strong>Download Autosubs &amp; Install Dependensi</strong>
-                            Download ZIP dari <a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">GitHub Autosubs</a> &amp; ekstrak. Buka terminal di folder tersebut lalu jalankan:
-                            <div class="code-box">
-                                <code class="cmd">pip install -r requirements.txt</code>
-                            </div>
+                            <strong data-i18n="win_s2_title">Download Autosubs &amp; Install Dependensi</strong>
+                            <span><span data-i18n="win_s2_desc_pre">Download ZIP dari </span><a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;" data-i18n="win_s2_link">GitHub Autosubs</a> &amp; <span data-i18n="win_s2_desc_post">ekstrak. Buka terminal di folder tersebut lalu jalankan:</span></span>
+                            <div class="code-box"><code class="cmd">pip install -r requirements.txt</code></div>
                         </div>
                     </div>
-
                     <div class="install-step-item">
                         <div class="step-badge">3</div>
                         <div class="step-desc">
-                            <strong>Salin ke Folder Scripts Resolve</strong>
-                            Tekan <strong>Win + R</strong>, ketik path ini dan tekan Enter:
-                            <div class="code-box">
-                                <code>%APPDATA%\Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Utility</code>
-                            </div>
-                            Salin folder Autosubs ke dalam folder tersebut.
+                            <strong data-i18n="win_s3_title">Salin ke Folder Scripts Resolve</strong>
+                            <span data-i18n-html="win_s3_desc">Tekan <strong>Win + R</strong>, ketik path ini dan tekan Enter:</span>
+                            <div class="code-box"><code>%APPDATA%\Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Utility</code></div>
+                            <span style="display:block;margin-top:6px;" data-i18n="win_s3_post">Salin folder Autosubs ke dalam folder tersebut.</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CARA MENJALANKAN DI DAVINCI RESOLVE -->
             <div class="resolve-run-box">
                 <div class="resolve-run-head">
                     <span class="ms">play_circle</span>
-                    <span>Cara Menjalankan di DaVinci Resolve</span>
+                    <span data-i18n="resolve_title">Cara Menjalankan di DaVinci Resolve</span>
                 </div>
-                <p style="font-size:.92rem;line-height:1.6;">
+                <p style="font-size:.92rem;line-height:1.7;" data-i18n-html="resolve_steps">
                     1. Buka DaVinci Resolve dan timeline proyek video Anda.<br>
                     2. Masuk ke menu bar atas: <strong>Workspace &rarr; Scripts &rarr; Utility &rarr; Autosubs</strong>.<br>
                     3. Dialog Autosubs akan muncul. Pilih bahasa (misal: <em>Indonesian</em>), pilih ukuran model Whisper, lalu tekan tombol <strong>Generate Subtitles</strong>. Selesai! Subtitle Text+ otomatis masuk rapi di timeline.
@@ -545,62 +382,58 @@
             </div>
         </section>
 
-        <!-- TIPS MODEL -->
         <div class="callout success">
             <div class="callout-icon"><span class="ms">rocket_launch</span></div>
             <div class="callout-body">
-                <strong>Tips Memilih Model Whisper</strong>
-                <p>Saat menjalankan Autosubs, Anda dapat memilih ukuran model AI yang sesuai dengan spek laptop/PC:</p>
+                <strong data-i18n="tips_title">Tips Memilih Model Whisper</strong>
+                <p data-i18n="tips_intro">Saat menjalankan Autosubs, Anda dapat memilih ukuran model AI yang sesuai dengan spek laptop/PC:</p>
                 <ul class="model-pill-list">
-                    <li><span class="ms">check_circle</span> <strong>Base / Small:</strong> Pilihan super cepat untuk laptop tipis / RAM &le; 8 GB.</li>
-                    <li><span class="ms">check_circle</span> <strong>Medium (Paling Pas):</strong> Titik seimbang terbaik antara akurasi tinggi dan render cepat untuk konten video harian.</li>
-                    <li><span class="ms">check_circle</span> <strong>Large-v3:</strong> Akurasi maksimal untuk rekaman cepat / musik bising (disarankan jika memiliki GPU NVIDIA &ge; 16 GB RAM).</li>
+                    <li><span class="ms">check_circle</span> <span data-i18n-html="model1"><strong>Base / Small:</strong> Pilihan super cepat untuk laptop tipis / RAM &le; 8 GB.</span></li>
+                    <li><span class="ms">check_circle</span> <span data-i18n-html="model2"><strong>Medium (Paling Pas):</strong> Titik seimbang terbaik antara akurasi tinggi dan render cepat untuk konten video harian.</span></li>
+                    <li><span class="ms">check_circle</span> <span data-i18n-html="model3"><strong>Large-v3:</strong> Akurasi maksimal untuk rekaman cepat / musik bising (disarankan jika memiliki GPU NVIDIA &ge; 16 GB RAM).</span></li>
                 </ul>
-                <p style="font-size:.82rem;color:var(--ink2);margin-top:4px;">
-                    *Model hanya didownload sekali di awal, selanjutnya bekerja 100% offline.
-                </p>
+                <p style="font-size:.82rem;color:var(--ink2);margin-top:4px;" data-i18n="tips_note">*Model hanya didownload sekali di awal, selanjutnya bekerja 100% offline.</p>
             </div>
         </div>
 
         <hr class="divider">
 
-        <!-- TABEL PERBANDINGAN SINGKAT -->
         <section>
-            <h2>Autosubs vs Alternatif Lain</h2>
+            <h2 data-i18n="table_title">Autosubs vs Alternatif Lain</h2>
             <div class="comp-table-wrap">
                 <table class="comp-table">
                     <thead>
                         <tr>
-                            <th>Fitur</th>
+                            <th data-i18n="th_feature">Fitur</th>
                             <th>Autosubs</th>
-                            <th>Tool Cloud Berbayar</th>
-                            <th>Ketik Manual</th>
+                            <th data-i18n="th_cloud">Tool Cloud Berbayar</th>
+                            <th data-i18n="th_manual">Ketik Manual</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Biaya</td>
-                            <td><span class="check"><span class="ms">check_circle</span> Gratis Selamanya</span></td>
-                            <td>$10&ndash;50 / bulan</td>
-                            <td>Gratis</td>
+                            <td data-i18n="td_cost">Biaya</td>
+                            <td><span class="check"><span class="ms">check_circle</span> <span data-i18n="td_cost_auto">Gratis Selamanya</span></span></td>
+                            <td>$10&ndash;50 / <span data-i18n="td_month">bulan</span></td>
+                            <td data-i18n="td_free">Gratis</td>
                         </tr>
                         <tr>
-                            <td>Kecepatan</td>
-                            <td><span class="check"><span class="ms">check_circle</span> Otomatis AI (Cepat)</span></td>
-                            <td>Otomatis AI</td>
-                            <td><span class="cross"><span class="ms">cancel</span> Jam-jaman</span></td>
+                            <td data-i18n="td_speed">Kecepatan</td>
+                            <td><span class="check"><span class="ms">check_circle</span> <span data-i18n="td_speed_auto">Otomatis AI (Cepat)</span></span></td>
+                            <td data-i18n="td_speed_cloud">Otomatis AI</td>
+                            <td><span class="cross"><span class="ms">cancel</span> <span data-i18n="td_speed_manual">Jam-jaman</span></span></td>
                         </tr>
                         <tr>
-                            <td>Privasi</td>
-                            <td><span class="check"><span class="ms">check_circle</span> 100% Offline Lokal</span></td>
-                            <td><span class="cross"><span class="ms">cancel</span> Upload Cloud</span></td>
-                            <td>Lokal</td>
+                            <td data-i18n="td_privacy">Privasi</td>
+                            <td><span class="check"><span class="ms">check_circle</span> <span data-i18n="td_privacy_auto">100% Offline Lokal</span></span></td>
+                            <td><span class="cross"><span class="ms">cancel</span> <span data-i18n="td_privacy_cloud">Upload Cloud</span></span></td>
+                            <td data-i18n="td_privacy_manual">Lokal</td>
                         </tr>
                         <tr>
-                            <td>Format Resolve</td>
-                            <td><span class="check"><span class="ms">check_circle</span> Native Text+ Track</span></td>
-                            <td>Import file SRT</td>
-                            <td>Manual Text</td>
+                            <td data-i18n="td_format">Format Resolve</td>
+                            <td><span class="check"><span class="ms">check_circle</span> <span data-i18n="td_format_auto">Native Text+ Track</span></span></td>
+                            <td data-i18n="td_format_cloud">Import file SRT</td>
+                            <td data-i18n="td_format_manual">Manual Text</td>
                         </tr>
                     </tbody>
                 </table>
@@ -609,30 +442,24 @@
 
         <hr class="divider">
 
-        <!-- TENTANG PEMBUAT -->
         <div class="creator-box">
-            <div class="creator-avatar">
-                <span class="ms">person</span>
-            </div>
+            <div class="creator-avatar"><span class="ms">person</span></div>
             <div class="creator-info">
-                <h3>Tentang Pembuat: Tiernan Moroney</h3>
-                <p>
-                    Developer asal Irlandia yang mengembangkan Autosubs sebagai proyek open source untuk membantu editor video di seluruh dunia menghemat waktu berharga mereka.
-                </p>
+                <h3 data-i18n="creator_title">Tentang Pembuat: Tiernan Moroney</h3>
+                <p data-i18n="creator_desc">Developer asal Irlandia yang mengembangkan Autosubs sebagai proyek open source untuk membantu editor video di seluruh dunia menghemat waktu berharga mereka.</p>
                 <a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener" class="creator-link">
                     <span class="ms">open_in_new</span>
-                    Kunjungi Repositori GitHub @tmoroney/auto-subs
+                    <span data-i18n="creator_link">Kunjungi Repositori GitHub @tmoroney/auto-subs</span>
                 </a>
             </div>
         </div>
 
-        <!-- DOWNLOAD BANNER AKHIR -->
         <div class="download-banner">
-            <h2>Mulai Buat Subtitle Otomatis Hari Ini</h2>
-            <p>100% gratis, open-source berlisensi MIT, tanpa biaya langganan apapun.</p>
+            <h2 data-i18n="banner_title">Mulai Buat Subtitle Otomatis Hari Ini</h2>
+            <p data-i18n="banner_desc">100% gratis, open-source berlisensi MIT, tanpa biaya langganan apapun.</p>
             <a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener" class="btn-white">
                 <span class="ms">download</span>
-                Download Autosubs di GitHub
+                <span data-i18n="banner_btn">Download Autosubs di GitHub</span>
             </a>
         </div>
 
@@ -644,21 +471,135 @@
         <div class="footer-inner">
             <div>
                 <a href="index.html" class="logo" style="font-size:1rem;">Fine<b>Lab</b></a>
-                <p style="margin-top:4px;">Plugin &amp; Macro untuk DaVinci Resolve.</p>
+                <p style="margin-top:4px;" data-i18n="footer_tagline">Plugin &amp; Macro untuk DaVinci Resolve.</p>
             </div>
             <div class="footer-links">
-                <a href="index.html">Beranda</a>
-                <a href="index.html#produk">Produk</a>
-                <a href="index.html#blog">Blog</a>
-                <a href="support.html">Support</a>
-                <a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener">GitHub Autosubs</a>
+                <a href="index.html" data-i18n="footer_home">Beranda</a>
+                <a href="index.html#produk" data-i18n="footer_products">Produk</a>
+                <a href="index.html#blog" data-i18n="footer_blog">Blog</a>
+                <a href="support.html" data-i18n="footer_support">Support</a>
+                <a href="https://github.com/tmoroney/auto-subs" target="_blank" rel="noopener" data-i18n="footer_github">GitHub Autosubs</a>
             </div>
         </div>
-        <p style="margin-top:14px;font-size:.78rem;color:var(--ink2);">
-            Autosubs adalah proyek open-source independen milik Tiernan Moroney. FineLab membagikan tutorial ini untuk mendukung ekosistem video editor DaVinci Resolve.
-        </p>
+        <p style="margin-top:14px;font-size:.78rem;color:var(--ink2);" data-i18n="footer_note">Autosubs adalah proyek open-source independen milik Tiernan Moroney. FineLab membagikan tutorial ini untuk mendukung ekosistem video editor DaVinci Resolve.</p>
     </div>
 </footer>
+
+<script>
+const I18N = {
+    id: {
+        nav_back:'Beranda',nav_products:'Produk',nav_blog:'Blog',nav_faq:'FAQ',nav_support:'Support',nav_collection:'Koleksi',
+        badge_free:'100% Gratis',badge_read_time:'4 menit baca',
+        hero_h1_line2:'Plugin Subtitle Gratis untuk DaVinci Resolve',
+        hero_lead:'Buat subtitle otomatis berakurasi tinggi langsung di timeline DaVinci Resolve dengan AI OpenAI Whisper. Tanpa biaya langganan, tanpa upload cloud, dan 100% open-source.',
+        hero_btn_download:'Download di GitHub',hero_btn_guide:'Panduan Install',
+        s1_title:'Kenapa Menggunakan Autosubs?',
+        s1_intro:'Mengetik dan menyesuaikan subtitle manual seringkali memakan waktu berjam-jam. <strong>Autosubs</strong> (karya Tiernan Moroney) memanfaatkan model pengenal suara AI OpenAI Whisper untuk mentranskripsi audio langsung menjadi node Text+ di DaVinci Resolve.',
+        card1_title:'Selesai Hitungan Menit',card1_desc:'Deteksi otomatis jeda bicara dan timestamp audio secara instan.',
+        card2_title:'100% Offline & Aman',card2_desc:'File audio Anda tidak pernah dikirim ke cloud. Privasi proyek tetap terjaga.',
+        card3_title:'Bahasa Indonesia & 90+ Lainnya',card3_desc:'Mendukung multi-bahasa dengan akurasi pengenalan kata yang tinggi.',
+        card4_title:'Format Native Text+',card4_desc:'Font, warna, animasi, dan posisi teks tetap bisa dikustomisasi sesuka hati.',
+        img_caption:'Tampilan antarmuka Autosubs di dalam DaVinci Resolve',
+        s2_title:'Panduan Instalasi Mudah',s2_intro:'Pilih sistem operasi yang Anda gunakan untuk setup cepat dalam beberapa langkah:',
+        macos_header:'Instalasi macOS (Paling Praktis via Homebrew)',
+        macos_s1_title:'Pasang Python & FFmpeg via Homebrew',macos_s1_desc:'Buka aplikasi Terminal di Mac Anda, lalu jalankan perintah ini:',
+        macos_s2_title:'Download Autosubs & Install Dependensi',macos_s2_desc:'Unduh repositori dan pasang library Whisper dengan dua baris perintah ini:',
+        macos_s3_title:'Salin Script ke Folder DaVinci Resolve',macos_s3_desc:'Pindahkan folder script ke direktori DaVinci Resolve dengan perintah terminal ini:',
+        macos_s3_hint:'Atau buka Finder \u2192 Go to Folder (Cmd + Shift + G) lalu paste path di atas dan drag folder auto-subs ke dalamnya.',
+        win_header:'Instalasi Windows (Mudah via Winget / CMD)',
+        win_s1_title:'Pasang Python & FFmpeg',win_s1_desc:'Buka Command Prompt (CMD) atau PowerShell, lalu jalankan perintah winget:',
+        win_s1_hint:'Atau download installer manual di ',win_s1_hint2:'pastikan centang opsi',
+        win_s2_title:'Download Autosubs & Install Dependensi',win_s2_desc_pre:'Download ZIP dari ',win_s2_link:'GitHub Autosubs',win_s2_desc_post:'ekstrak. Buka terminal di folder tersebut lalu jalankan:',
+        win_s3_title:'Salin ke Folder Scripts Resolve',win_s3_desc:'Tekan <strong>Win + R</strong>, ketik path ini dan tekan Enter:',win_s3_post:'Salin folder Autosubs ke dalam folder tersebut.',
+        resolve_title:'Cara Menjalankan di DaVinci Resolve',
+        resolve_steps:'1. Buka DaVinci Resolve dan timeline proyek video Anda.<br>2. Masuk ke menu bar atas: <strong>Workspace &rarr; Scripts &rarr; Utility &rarr; Autosubs</strong>.<br>3. Dialog Autosubs akan muncul. Pilih bahasa (misal: <em>Indonesian</em>), pilih ukuran model Whisper, lalu tekan tombol <strong>Generate Subtitles</strong>. Selesai! Subtitle Text+ otomatis masuk rapi di timeline.',
+        tips_title:'Tips Memilih Model Whisper',tips_intro:'Saat menjalankan Autosubs, Anda dapat memilih ukuran model AI yang sesuai dengan spek laptop/PC:',
+        model1:'<strong>Base / Small:</strong> Pilihan super cepat untuk laptop tipis / RAM &le; 8 GB.',
+        model2:'<strong>Medium (Paling Pas):</strong> Titik seimbang terbaik antara akurasi tinggi dan render cepat untuk konten video harian.',
+        model3:'<strong>Large-v3:</strong> Akurasi maksimal untuk rekaman cepat / musik bising (disarankan jika memiliki GPU NVIDIA &ge; 16 GB RAM).',
+        tips_note:'*Model hanya didownload sekali di awal, selanjutnya bekerja 100% offline.',
+        table_title:'Autosubs vs Alternatif Lain',th_feature:'Fitur',th_cloud:'Tool Cloud Berbayar',th_manual:'Ketik Manual',
+        td_cost:'Biaya',td_cost_auto:'Gratis Selamanya',td_month:'bulan',td_free:'Gratis',
+        td_speed:'Kecepatan',td_speed_auto:'Otomatis AI (Cepat)',td_speed_cloud:'Otomatis AI',td_speed_manual:'Jam-jaman',
+        td_privacy:'Privasi',td_privacy_auto:'100% Offline Lokal',td_privacy_cloud:'Upload Cloud',td_privacy_manual:'Lokal',
+        td_format:'Format Resolve',td_format_auto:'Native Text+ Track',td_format_cloud:'Import file SRT',td_format_manual:'Manual Text',
+        creator_title:'Tentang Pembuat: Tiernan Moroney',
+        creator_desc:'Developer asal Irlandia yang mengembangkan Autosubs sebagai proyek open source untuk membantu editor video di seluruh dunia menghemat waktu berharga mereka.',
+        creator_link:'Kunjungi Repositori GitHub @tmoroney/auto-subs',
+        banner_title:'Mulai Buat Subtitle Otomatis Hari Ini',banner_desc:'100% gratis, open-source berlisensi MIT, tanpa biaya langganan apapun.',banner_btn:'Download Autosubs di GitHub',
+        footer_tagline:'Plugin & Macro untuk DaVinci Resolve.',footer_home:'Beranda',footer_products:'Produk',footer_blog:'Blog',footer_support:'Support',footer_github:'GitHub Autosubs',
+        footer_note:'Autosubs adalah proyek open-source independen milik Tiernan Moroney. FineLab membagikan tutorial ini untuk mendukung ekosistem video editor DaVinci Resolve.',
+    },
+    en: {
+        nav_back:'Home',nav_products:'Products',nav_blog:'Blog',nav_faq:'FAQ',nav_support:'Support',nav_collection:'Collection',
+        badge_free:'100% Free',badge_read_time:'4 min read',
+        hero_h1_line2:'Free Subtitle Plugin for DaVinci Resolve',
+        hero_lead:'Generate highly accurate automatic subtitles directly in your DaVinci Resolve timeline using OpenAI Whisper AI. No subscription fees, no cloud uploads, 100% open-source.',
+        hero_btn_download:'Download on GitHub',hero_btn_guide:'Install Guide',
+        s1_title:'Why Use Autosubs?',
+        s1_intro:'Manually typing and syncing subtitles can take hours. <strong>Autosubs</strong> (by Tiernan Moroney) uses OpenAI Whisper AI to transcribe audio directly into Text+ nodes on your DaVinci Resolve timeline.',
+        card1_title:'Done in Minutes',card1_desc:'Automatically detects speech gaps and audio timestamps instantly.',
+        card2_title:'100% Offline & Secure',card2_desc:'Your audio files are never sent to the cloud. Project privacy is fully protected.',
+        card3_title:'Indonesian & 90+ Languages',card3_desc:'Supports multiple languages with high word recognition accuracy.',
+        card4_title:'Native Text+ Format',card4_desc:'Font, color, animation, and text position remain fully customizable.',
+        img_caption:'Autosubs interface inside DaVinci Resolve',
+        s2_title:'Easy Installation Guide',s2_intro:'Choose your operating system for a quick setup in just a few steps:',
+        macos_header:'macOS Installation (Easiest via Homebrew)',
+        macos_s1_title:'Install Python & FFmpeg via Homebrew',macos_s1_desc:'Open the Terminal app on your Mac and run this command:',
+        macos_s2_title:'Download Autosubs & Install Dependencies',macos_s2_desc:'Clone the repository and install Whisper libraries with these two commands:',
+        macos_s3_title:'Copy Script to DaVinci Resolve Folder',macos_s3_desc:'Move the script folder to the DaVinci Resolve directory with this terminal command:',
+        macos_s3_hint:'Or open Finder \u2192 Go to Folder (Cmd + Shift + G), paste the path above and drag the auto-subs folder into it.',
+        win_header:'Windows Installation (Easy via Winget / CMD)',
+        win_s1_title:'Install Python & FFmpeg',win_s1_desc:'Open Command Prompt (CMD) or PowerShell and run the winget command:',
+        win_s1_hint:'Or download the manual installer at ',win_s1_hint2:'make sure to check',
+        win_s2_title:'Download Autosubs & Install Dependencies',win_s2_desc_pre:'Download the ZIP from ',win_s2_link:'GitHub Autosubs',win_s2_desc_post:'and extract it. Open a terminal in that folder and run:',
+        win_s3_title:'Copy to Resolve Scripts Folder',win_s3_desc:'Press <strong>Win + R</strong>, type this path and press Enter:',win_s3_post:'Copy the Autosubs folder into that directory.',
+        resolve_title:'How to Run in DaVinci Resolve',
+        resolve_steps:'1. Open DaVinci Resolve and your video project timeline.<br>2. Go to the top menu bar: <strong>Workspace &rarr; Scripts &rarr; Utility &rarr; Autosubs</strong>.<br>3. The Autosubs dialog will appear. Select your language (e.g., <em>Indonesian</em>), choose a Whisper model size, then click <strong>Generate Subtitles</strong>. Done! Text+ subtitles will appear neatly in your timeline.',
+        tips_title:'Tips for Choosing a Whisper Model',tips_intro:'When running Autosubs, you can choose an AI model size that matches your laptop/PC specs:',
+        model1:'<strong>Base / Small:</strong> Super fast option for thin laptops or systems with RAM &le; 8 GB.',
+        model2:'<strong>Medium (Best Balance):</strong> Ideal sweet spot between high accuracy and fast rendering for everyday video content.',
+        model3:'<strong>Large-v3:</strong> Maximum accuracy for fast speech or noisy recordings (recommended if you have an NVIDIA GPU with &ge; 16 GB RAM).',
+        tips_note:'*Models are only downloaded once initially, then run 100% offline.',
+        table_title:'Autosubs vs Alternatives',th_feature:'Feature',th_cloud:'Paid Cloud Tools',th_manual:'Manual Typing',
+        td_cost:'Cost',td_cost_auto:'Forever Free',td_month:'month',td_free:'Free',
+        td_speed:'Speed',td_speed_auto:'AI Automated (Fast)',td_speed_cloud:'AI Automated',td_speed_manual:'Hours',
+        td_privacy:'Privacy',td_privacy_auto:'100% Offline Local',td_privacy_cloud:'Cloud Upload',td_privacy_manual:'Local',
+        td_format:'Resolve Format',td_format_auto:'Native Text+ Track',td_format_cloud:'Import SRT file',td_format_manual:'Manual Text',
+        creator_title:'About the Creator: Tiernan Moroney',
+        creator_desc:'An Irish developer who built Autosubs as an open-source project to help video editors worldwide save valuable time.',
+        creator_link:'Visit GitHub Repository @tmoroney/auto-subs',
+        banner_title:'Start Creating Automatic Subtitles Today',banner_desc:'100% free, MIT open-source licensed \u2014 no subscriptions, ever.',banner_btn:'Download Autosubs on GitHub',
+        footer_tagline:'Plugins & Macros for DaVinci Resolve.',footer_home:'Home',footer_products:'Products',footer_blog:'Blog',footer_support:'Support',footer_github:'GitHub Autosubs',
+        footer_note:'Autosubs is an independent open-source project by Tiernan Moroney. FineLab shares this guide to support the DaVinci Resolve video editor community.',
+    }
+};
+
+let currentLang = localStorage.getItem('finelab_blog_lang') || 'id';
+
+function applyLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('finelab_blog_lang', lang);
+    document.documentElement.lang = lang;
+    const btn = document.getElementById('lang-btn');
+    if (btn) btn.textContent = lang === 'id' ? 'EN' : 'ID';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = I18N[lang][el.dataset.i18n];
+        if (v !== undefined) el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const v = I18N[lang][el.dataset.i18nHtml];
+        if (v !== undefined) el.innerHTML = v;
+    });
+    document.title = lang === 'en'
+        ? 'Autosubs \u2014 Free DaVinci Resolve Subtitle Plugin | FineLab Blog'
+        : 'Autosubs \u2014 Plugin Subtitle Gratis DaVinci Resolve | FineLab Blog';
+}
+
+function toggleLang() { applyLang(currentLang === 'id' ? 'en' : 'id'); }
+
+applyLang(currentLang);
+</script>
 
 </body>
 </html>
