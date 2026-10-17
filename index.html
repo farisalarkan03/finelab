@@ -1593,29 +1593,32 @@
         .blog-card-visual {
             position: relative;
             overflow: hidden;
-            min-height: 260px;
-            background: #0d1117;
+            background: linear-gradient(145deg, #0d1117 0%, #161b26 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(16px, 3.5vw, 26px);
         }
 
         .blog-card-visual img {
             width: 100%;
-            height: 100%;
-            min-height: 260px;
-            object-fit: cover;
-            object-position: top left;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 16px;
             display: block;
-            transition: transform .5s cubic-bezier(.16,1,.3,1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+            transition: transform .45s cubic-bezier(.16, 1, .3, 1), box-shadow .45s ease;
         }
 
         .blog-card:hover .blog-card-visual img {
-            transform: scale(1.04);
+            transform: scale(1.03);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.6);
         }
 
         .blog-visual-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.55) 100%);
-            pointer-events: none;
+            display: none;
         }
 
         .blog-card-body {
