@@ -129,8 +129,13 @@
         .callout.info .callout-icon .ms{color:var(--blue)}
         .callout.success .callout-icon .ms{color:var(--green)}
         .callout.warning .callout-icon .ms{color:var(--amber)}
-        .callout-body strong{display:block;margin-bottom:4px;font-weight:600}
-        .callout-body p{font-size:.9375rem;line-height:1.6;margin:0}
+        .callout-body strong{display:block;margin-bottom:6px;font-weight:600}
+        .callout-body p{font-size:.9375rem;line-height:1.65;margin:0}
+        .callout-list{margin:10px 0 12px;padding-left:20px;font-size:.9375rem;line-height:1.65;color:var(--ink)}
+        .callout-list li{margin-bottom:8px}
+        .callout-list li strong{display:inline;margin-bottom:0}
+        .callout-note{display:flex;align-items:flex-start;gap:8px;font-size:.875rem !important;color:var(--ink2);padding-top:10px;border-top:1px dashed rgba(52,199,89,.35);margin-top:10px !important}
+        .callout-note .ms{font-size:18px;color:var(--green);flex-shrink:0;margin-top:2px}
 
         /* FEATURE GRID */
         .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s3)}
@@ -533,8 +538,25 @@
         <div class="callout success reveal">
             <div class="callout-icon"><span class="ms">rocket_launch</span></div>
             <div class="callout-body">
-                <strong>Tips: Pilih Ukuran Model yang Tepat</strong>
-                <p>Untuk komputer dengan RAM terbatas (8GB ke bawah), gunakan model <strong>base</strong> atau <strong>small</strong> untuk hasil cepat. Untuk akurasi maksimal di komputer bertenaga tinggi (16GB RAM+, GPU Nvidia), gunakan model <strong>large-v3</strong>. Model <strong>medium</strong> adalah titik tengah terbaik untuk kebanyakan pengguna. Model hanya perlu diunduh sekali &mdash; setelahnya berjalan offline sepenuhnya.</p>
+                <strong>Tips: Panduan Memilih Ukuran Model Whisper yang Tepat</strong>
+                <p>
+                    OpenAI Whisper menyediakan beberapa varian model yang bisa Anda sesuaikan dengan spesifikasi komputer dan prioritas antara kecepatan render versus akurasi kata:
+                </p>
+                <ul class="callout-list">
+                    <li>
+                        <strong>Model Base / Small (Super Cepat):</strong> Pilihan ideal untuk laptop tipis atau komputer dengan RAM terbatas (&le; 8 GB) tanpa kartu grafis (GPU) dedicated. Transkripsi selesai dalam waktu sangat singkat dengan konsumsi resource yang ringan.
+                    </li>
+                    <li>
+                        <strong>Model Medium (Rekomendasi Terbaik):</strong> Titik keseimbangan (sweet spot) paling sempurna antara kecepatan proses dan akurasi tinggi. Sangat cocok untuk kebutuhan konten harian, vlog, podcast, maupun tutorial berbahasa Indonesia.
+                    </li>
+                    <li>
+                        <strong>Model Large-v3 (Akurasi Maksimal):</strong> Memberikan hasil paling presisi hingga tanda baca dan istilah teknis, bahkan pada rekaman suara yang cepat atau ada backsound musik. Disarankan untuk PC bertenaga tinggi (RAM &ge; 16 GB dan GPU NVIDIA RTX).
+                    </li>
+                </ul>
+                <p class="callout-note">
+                    <span class="ms">check_circle</span>
+                    <span>Setiap model hanya perlu diunduh <strong>satu kali</strong> saat pemakaian pertama. Setelah file tersimpan di komputer, seluruh proses pembuatan subtitle berjalan <strong>100% offline</strong> tanpa memakan kuota internet dan privasi audio Anda tetap aman di lokal.</span>
+                </p>
             </div>
         </div>
 
